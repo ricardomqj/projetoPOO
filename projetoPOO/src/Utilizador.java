@@ -41,9 +41,7 @@ public class Utilizador {
         this.produtosAdquiridos = umUtilizador.getProdutosAdquiridos();
     }
 
-    public Utilizador clone() {
-        return new Utilizador(this);
-    }
+    public Utilizador clone() {return new Utilizador(this);}
 
     public boolean equals(Object o) {
         if(this == o) return true;

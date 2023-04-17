@@ -14,8 +14,8 @@ public class Sapatilha extends Artigo{
         this.premium = false;
     }
 
-    public Sapatilha(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, LocalDate dataLancamento, int tamanho, boolean atacadores, String cor, boolean premium) {
-        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, precoAtual, dataLancamento);
+    public Sapatilha(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, LocalDate dataLancamento, int discount,int tamanho, boolean atacadores, String cor, boolean premium) {
+        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, precoAtual, discount,dataLancamento);
         this.tamanho = tamanho;
         this.temAtacadores = atacadores;
         this.cor = cor;
@@ -32,6 +32,28 @@ public class Sapatilha extends Artigo{
 
     public Sapatilha clone() {
         return new Sapatilha(this);
+    }
+
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null | o.getClass()!= this.getClass()) return false;
+
+        Sapatilha s = (Sapatilha) o;
+        return super.equals(s) && this.tamanho == s.getTamanho() &&
+                this.temAtacadores == ((Sapatilha) o).isTemAtacadores() &&
+                this.cor.equals(s.getCor()) && this.premium == s.isPremium();
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(super.toString());
+        sb.append("Tamanho da sapatilha: ").append(this.tamanho).append("\n");
+        sb.append("Tem atacadores? ").append(this.isTemAtacadores()).append("\n");
+        sb.append("Cor da sapatilha: ").append(this.cor).append("\n");
+        sb.append("Sapatilha é premium? ").append(this.premium).append("\n");
+
+        return sb.toString();
     }
 
     // getters e setters

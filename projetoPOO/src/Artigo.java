@@ -8,6 +8,7 @@ public class Artigo {
     private int avalEstado; // 1 a 5, sendo 1 novo
     private double precoBase;
     private double precoAtual;
+    private int desconto; // 0 a 100 -> 0 sem desconto
     private LocalDate dataLancamento;
 
     public Artigo() {
@@ -18,10 +19,11 @@ public class Artigo {
         this.avalEstado = 1;
         this.precoBase = 0.0;
         this.precoAtual = 0.0;
+        this.desconto = 0;
         this.dataLancamento = LocalDate.now();
     }
 
-    public Artigo(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, LocalDate dataLancamento) {
+    public Artigo(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, int desconto,LocalDate dataLancamento) {
         this.codBarras = codBarras;
         this.transportadora = transp;
         this.stock = stock;
@@ -29,6 +31,7 @@ public class Artigo {
         this.avalEstado = avlEstado;
         this.precoBase = precoBase;
         this.precoAtual = precoAtual;
+        this.desconto = desconto;
         this.dataLancamento = dataLancamento;
     }
 
@@ -40,6 +43,7 @@ public class Artigo {
         this.avalEstado = umArtigo.getAvalEstado();
         this.precoBase = umArtigo.getPrecoBase();
         this.precoAtual = umArtigo.getPrecoAtual();
+        this.desconto = umArtigo.getDesconto();
         this.dataLancamento = umArtigo.getDataLancamento();
     }
 
@@ -60,13 +64,13 @@ public class Artigo {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         sb.append("Código de barras: ").append(this.codBarras).append("\n");
         sb.append("Nome da Transportadora: ").append(this.transportadora).append("\n"); // alterar para this.transportadora.getNome()
         sb.append("Stock: ").append(this.stock).append("\n");
         sb.append("Número de donos: ").append(this.numDonos).append("\n");
         sb.append("Avaliação do estado(1 a 5): ").append(this.avalEstado).append("\n");
         sb.append("Preço base: ").append(this.precoBase).append("€\n");
+        sb.append("Desconto(%): ").append(this.desconto).append("%\n");
         sb.append("Preço atual: ").append(this.precoAtual).append("€\n");
         sb.append("Data de lançamento: ").append(this.dataLancamento).append("\n");
 
@@ -136,5 +140,13 @@ public class Artigo {
 
     public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
+    }
+
+    public int getDesconto() {
+        return this.desconto;
+    }
+
+    public void setDesconto(int desconto) {
+        this.desconto = desconto;
     }
 }
