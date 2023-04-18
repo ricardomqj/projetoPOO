@@ -1,6 +1,8 @@
 import java.time.LocalDate;
 
-public class Artigo {
+public abstract class Artigo {
+    // public abstract clone()???
+    private static final int IMPOSTO = 12;
     private String codBarras;
     private Transportadora transportadora;
     private int stock; // numero de itens deste artigo
@@ -47,9 +49,7 @@ public class Artigo {
         this.dataLancamento = umArtigo.getDataLancamento();
     }
 
-    public Artigo clone() {
-        return new Artigo(this);
-    }
+    public abstract Artigo clone();
 
     public boolean equals(Object o) {
         if(this == o) return true;
@@ -87,11 +87,11 @@ public class Artigo {
     }
 
     public Transportadora getTransportadora() {
-        return this.transportadora; // meter depois return this.transportadora.clone();
+        return this.transportadora.clone();
     }
 
     public void setTransportadora(Transportadora transportadora) {
-        this.transportadora = transportadora; // meter depois this.transportadora = transportadora.clone();
+        this.transportadora = transportadora.clone();
     }
 
     public int getStock() {
@@ -148,5 +148,9 @@ public class Artigo {
 
     public void setDesconto(int desconto) {
         this.desconto = desconto;
+    }
+
+    public int getImposto() {
+        return IMPOSTO;
     }
 }

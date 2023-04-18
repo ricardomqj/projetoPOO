@@ -1,4 +1,5 @@
 public class Transportadora {
+    // fazer getValorObtido usando apenas valor base e margemLucro
     private String nome;
     private double valorBase; // valor base para preco de expedição
     private double margemLucro; // percentagem margem de lucro para preço de expedição
@@ -41,13 +42,13 @@ public class Transportadora {
         sb.append("Nome da transportadora: ").append(this.nome).append("\n");
         sb.append("Valor de expedição base: ").append(this.valorBase).append("€\n");
         sb.append("Margem de lucro da transportadora: ").append(this.margemLucro).append("%\n");
-        sb.append("Valor de expedição total: ").append(this.valorExpedicao(this.valorBase,this.margemLucro, this.imposto)).append("\n");
+        sb.append("Valor de expedição total: ").append(this.valorExpedicao(this.valorBase,this.margemLucro)).append("\n");
 
         return sb.toString();
     }
 
-    public double valorExpedicao(double valorBase, double margemLucro, double imposto) {
-        return (valorBase * (1+(margemLucro/100))*(1+(imposto/100))*0.9);
+    public double valorExpedicao(double valorBase, double margemLucro) {
+        return (valorBase * (1+(margemLucro/100))*(1+(12/100))*0.9);
     }
 
     // getters e setters
