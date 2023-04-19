@@ -9,7 +9,7 @@ public abstract class Artigo {
     private int numDonos; // se for novo -> 0
     private int avalEstado; // 1 a 5, sendo 1 novo
     private double precoBase;
-    private double precoAtual;
+    //private double precoAtual;
     private int desconto; // 0 a 100 -> 0 sem desconto
     private LocalDate dataLancamento;
 
@@ -20,19 +20,19 @@ public abstract class Artigo {
         this.numDonos = 0;
         this.avalEstado = 1;
         this.precoBase = 0.0;
-        this.precoAtual = 0.0;
+        //this.precoAtual = 0.0;
         this.desconto = 0;
         this.dataLancamento = LocalDate.now();
     }
 
-    public Artigo(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, int desconto,LocalDate dataLancamento) {
+    public Artigo(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, int desconto,LocalDate dataLancamento) {
         this.codBarras = codBarras;
         this.transportadora = transp;
         this.stock = stock;
         this.numDonos = numOwners;
         this.avalEstado = avlEstado;
         this.precoBase = precoBase;
-        this.precoAtual = precoAtual;
+        //this.precoAtual = precoAtual;
         this.desconto = desconto;
         this.dataLancamento = dataLancamento;
     }
@@ -44,7 +44,7 @@ public abstract class Artigo {
         this.numDonos = umArtigo.getNumDonos();
         this.avalEstado = umArtigo.getAvalEstado();
         this.precoBase = umArtigo.getPrecoBase();
-        this.precoAtual = umArtigo.getPrecoAtual();
+        //this.precoAtual = umArtigo.getPrecoAtual();
         this.desconto = umArtigo.getDesconto();
         this.dataLancamento = umArtigo.getDataLancamento();
     }
@@ -58,8 +58,8 @@ public abstract class Artigo {
         Artigo a = (Artigo) o;
         return this.codBarras.equals(a.getCodBarras()) && this.transportadora.equals(a.getTransportadora()) &&
                 this.stock == a.getStock() && this.numDonos == a.getNumDonos() &&
-                this.avalEstado == a.getAvalEstado() && this.precoBase == a.getPrecoBase() &&
-                this.precoAtual == a.getPrecoAtual() && this.dataLancamento.equals(a.getDataLancamento());
+                this.avalEstado == a.getAvalEstado() && this.precoBase == a.getPrecoBase() && this.dataLancamento.equals(a.getDataLancamento());
+                //this.precoAtual == a.getPrecoAtual() && this.dataLancamento.equals(a.getDataLancamento());
     }
 
     public String toString() {
@@ -71,7 +71,7 @@ public abstract class Artigo {
         sb.append("Avaliação do estado(1 a 5): ").append(this.avalEstado).append("\n");
         sb.append("Preço base: ").append(this.precoBase).append("€\n");
         sb.append("Desconto(%): ").append(this.desconto).append("%\n");
-        sb.append("Preço atual: ").append(this.precoAtual).append("€\n");
+        //sb.append("Preço atual: ").append(this.precoAtual).append("€\n");
         sb.append("Data de lançamento: ").append(this.dataLancamento).append("\n");
 
         return sb.toString();
@@ -126,6 +126,7 @@ public abstract class Artigo {
         this.precoBase = precoBase;
     }
 
+    /*
     public double getPrecoAtual() {
         return this.precoAtual;
     }
@@ -133,6 +134,7 @@ public abstract class Artigo {
     public void setPrecoAtual(double precoAtual) {
         this.precoAtual = precoAtual;
     }
+     */
 
     public LocalDate getDataLancamento() {
         return this.dataLancamento;

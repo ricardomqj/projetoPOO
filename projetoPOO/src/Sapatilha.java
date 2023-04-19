@@ -14,8 +14,8 @@ public class Sapatilha extends Artigo{
         this.premium = false;
     }
 
-    public Sapatilha(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, LocalDate dataLancamento, int discount,int tamanho, boolean atacadores, String cor, boolean premium) {
-        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, precoAtual, discount,dataLancamento);
+    public Sapatilha(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, LocalDate dataLancamento, int discount,int tamanho, boolean atacadores, String cor, boolean premium) {
+        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, discount,dataLancamento);
         this.tamanho = tamanho;
         this.temAtacadores = atacadores;
         this.cor = cor;

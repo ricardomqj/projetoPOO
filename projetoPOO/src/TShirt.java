@@ -1,9 +1,14 @@
+import java.time.LocalDate;
+
 public class TShirt extends Artigo{
     public enum Tamanho{
+        XS,
         S,
         M,
         L,
-        XL
+        XL,
+        XXL,
+        XXXL
     }
     public enum Padrao{
         LISO,
@@ -18,7 +23,8 @@ public class TShirt extends Artigo{
         this.padrao = null;
     }
 
-    public TShirt(Tamanho tam, Padrao pattern) {
+    public TShirt(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, int desconto, LocalDate dataLancamento, Tamanho tam, Padrao pattern) {
+        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, desconto,dataLancamento);
         this.tam = tam;
         this.padrao = pattern;
     }

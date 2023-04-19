@@ -13,8 +13,8 @@ public class Mala extends Artigo{
         this.isPremium = false;
     }
 
-    public Mala(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, double precoAtual, int desconto, LocalDate dataLancamento, double largura, double altura, double profundidade, boolean premium) {
-        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, precoAtual, desconto, dataLancamento);
+    public Mala(String codBarras, Transportadora transp, int stock, int numOwners, int avlEstado, double precoBase, int desconto, LocalDate dataLancamento, double largura, double altura, double profundidade, boolean premium) {
+        super(codBarras, transp, stock, numOwners, avlEstado, precoBase, desconto, dataLancamento);
         this.largura = largura;
         this.altura = altura;
         this.profundidade = profundidade;
