@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Encomenda {
+    /*
     // pequena(1 art), medias (2 a 5 art), grandes (>5 arts)
     // get precoFinal, tendo em conta taxaSatisfacaoServico(0,5€ novo e 0,25€ usado) e custos de expedicao
     // get Dimensão (pequena, media ou grande)
@@ -11,22 +12,32 @@ public class Encomenda {
         NOVO,
         USADO
     }
+     */
     public enum StatusEncomenda {
         PENDENTE,
         FINALIZADO,
-        EXPEDIDO
+        EXPEDIDO,
     }
-    private Utilizador user;
-    private Estado estado;
+    //private Estado estado;
+
+    private Map<String, Artigo> artigos;
+    private String tamanho;
+    private double precoFinal;
+    private int satisfServ;
+    private double custosExpedicao;
     private StatusEncomenda status;
     private LocalDate data;
-    private Map<String, Artigo> artigos;
+    private Utilizador user;
 
     public Encomenda() {
-        this.estado = null;
+        this.tamanho = "";
+        this.precoFinal = 0.0;
+        this.satisfServ = 0;
+        this.custosExpedicao = 0.0;
         this.status = null;
         this.data = LocalDate.now();
         this.artigos = new HashMap<>();
+        this.user = null;
     }
 
     public Encomenda(Utilizador user, Estado novoUsed, StatusEncomenda status, LocalDate data, Map<String, Artigo> artigos) {
