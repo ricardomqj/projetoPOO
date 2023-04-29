@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class TShirt extends Artigo{
@@ -14,41 +15,22 @@ public class TShirt extends Artigo{
     }
     private Tamanho tam;
     private Padrao padrao;
-    private boolean usada;
-    private int desconto;
 
     public TShirt() {
         this.tam = null;
         this.padrao = null;
-        this.usada = false;
-        this.desconto = 0;
     }
 
-    public TShirt(Tamanho tam, Padrao pattern,boolean usada) {
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora,double precoBase, Tamanho tam, Padrao pattern) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase);
         this.tam = tam;
         this.padrao = pattern;
-        this.usada = usada;
-        if(this.usada)
-        {
-            if(this.padrao.equals("LISO"))
-            {
-                this.desconto = 0;
-            }
-            else
-            {
-                this.desconto = 50;
-            }
-        }
-        else
-        {
-            this.desconto = 0;
-        }
     }
 
     public TShirt(TShirt umaTShirt) {
+        super(umaTShirt);
         this.tam = umaTShirt.getTam();
         this.padrao = umaTShirt.getPadrao();
-        this.usada = umaTShirt.getUsada();
     }
 
     public TShirt clone() {
@@ -56,10 +38,12 @@ public class TShirt extends Artigo{
     }
 
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TShirt tShirt)) return false;
-        if (!super.equals(o)) return false;
-        return usada == tShirt.usada && desconto == tShirt.desconto && tam == tShirt.tam && padrao == tShirt.padrao;
+        if(o == this) return true;
+        if(o == null || o.getClass()!=this.getClass()) return false;
+
+        TShirt t = (TShirt) o;
+        return super.equals(t) && this.padrao.equals(t.getPadrao()) &&
+                this.tam.equals(t.getTam());
     }
 
     public String toString() {
@@ -89,13 +73,4 @@ public class TShirt extends Artigo{
         this.padrao = padrao;
     }
 
-    public boolean getUsada()
-    {
-        return this.usada;
-    }
-
-    public void setUsada(boolean usada)
-    {
-        this.usada = usada;
-    }
 }
