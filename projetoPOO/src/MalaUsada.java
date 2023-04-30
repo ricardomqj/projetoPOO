@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class MalaUsada extends Mala {
+public class MalaUsada extends Mala{
     private int numDonos;
     private int avalEstado;
 

@@ -1,4 +1,7 @@
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -10,7 +13,7 @@ public class Utilizador {
     private String nif;
     private double profit; // falta acabar - para fazer preciso de produtosVendidos - tendo isso fazer qq coisa para ir buscar o precobase de cada produto vendido
     private Map<String, Artigo> produtosAVenda; // identificado pelo codigo de barras(como key)
-    private Map<String, Encomenda> encomendasFeitas;
+    private List<Encomenda> encomendasFeitas;
     private Map<String, Artigo> produtosVendidos; // falta acabar
 
     public Utilizador() {
@@ -20,13 +23,13 @@ public class Utilizador {
         this.morada = "n/a";
         this.nif = "n/a";
         this.profit = 0.0;
-        this.encomendasFeitas = new HashMap<>();
+        this.encomendasFeitas = new ArrayList<>();
         this.produtosAVenda = new HashMap<>();
         this.produtosVendidos = new HashMap<>();
     }
 
-    public Utilizador(String codSis, String email, String name, String morada, String nif, int profit, Map<String, Artigo> produtosAVendaArg, Map<String, Encomenda> encomendasFeitasArg,
-    Map<String, Artigo> produtosVendidosArg) {
+    public Utilizador(String codSis, String email, String name, String morada, String nif, int profit, Map<String, Artigo> produtosAVendaArg, List<Encomenda> encomendasFeitasArg,
+                      Map<String, Artigo> produtosVendidosArg) {
         this.codigoSistema = codSis;
         this.email = email;
         this.nome = name;
@@ -78,7 +81,7 @@ public class Utilizador {
             sb.append(art.toString()).append("\n");
         }
         sb.append("Lista de produtos adquiridos: ").append("\n");
-        for(Encomenda art : this.encomendasFeitas.values()) {
+        for(Encomenda art : this.encomendasFeitas) {
             sb.append(art.toString()).append("\n");
         }
         sb.append("Lista de produtos vendidos: ").append("\n");
@@ -156,12 +159,12 @@ public class Utilizador {
         this.produtosAVenda = produtosAVenda.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
     }
 
-    public Map<String, Encomenda> getEncomendasFeitas() {
-        return this.encomendasFeitas.values().stream().collect(Collectors.toMap(Encomenda :: getIdEncomenda, Encomenda :: clone));
+    public List<Encomenda> getEncomendasFeitas() {
+        return this.encomendasFeitas.stream().map(Encomenda :: clone).collect(Collectors.toList());
     }
 
-    public void setEncomendasFeitas(Map<String, Encomenda> encomendasFeitas) {
-        this.encomendasFeitas = encomendasFeitas.values().stream().collect(Collectors.toMap(Encomenda :: getIdEncomenda, Encomenda :: clone));
+    public void setEncomendasFeitas(List<Encomenda> encomendasFeitas) {
+        this.encomendasFeitas = encomendasFeitas.stream().map(Encomenda :: clone).collect(Collectors.toList());
     }
 
     public Map<String, Artigo> getProdutosVendidos() {

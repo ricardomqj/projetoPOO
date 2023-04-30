@@ -9,8 +9,7 @@ public class Encomenda {
         FINALIZADO,
         EXPEDIDO,
     }
-    
-    private String id;
+
     private Utilizador user;
     private Map<String, Artigo> artigos;
     private String tamanho;
@@ -19,7 +18,6 @@ public class Encomenda {
     private LocalDate data;
 
     public Encomenda() {
-        this.id = "";
         this.user = null;
         this.artigos = new HashMap<>();
         this.tamanho = "";
@@ -28,8 +26,7 @@ public class Encomenda {
         this.data = LocalDate.now();
     }
 
-    public Encomenda(String id, Utilizador user, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data) {
-        this.id = id;
+    public Encomenda(Utilizador user, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data) {
         this.user = user.clone();
         this.artigos = this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         this.tamanho = tamanho;
@@ -39,7 +36,6 @@ public class Encomenda {
     }
 
     public Encomenda(Encomenda umaEncomenda) {
-        this.id = umaEncomenda.getIdEncomenda();
         this.user = umaEncomenda.getUser();
         this.artigos = umaEncomenda.getArtigos();
         this.tamanho = umaEncomenda.getTamanhoEncomenda();
@@ -58,7 +54,7 @@ public class Encomenda {
         if(o == null || o.getClass() != this.getClass()) return false;
 
         Encomenda e = (Encomenda) o;
-        return this.id.equals(e.getIdEncomenda()) && this.user.equals(e.getUser()) && this.artigos.equals(e.getArtigos()) &&
+        return this.user.equals(e.getUser()) && this.artigos.equals(e.getArtigos()) &&
                 this.tamanho.equals(e.getTamanhoEncomenda()) && this.precoFinal == e.getPrecoFinal() &&
                 this.status.equals(e.getStatus()) && this.data.equals(e.getData());
     }
@@ -66,7 +62,6 @@ public class Encomenda {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Id: ").append(this.id).append("\n");
         sb.append("Nome do utilizador: ").append(this.user.getNome()).append("\n");
         sb.append("Lista de artigos da encomenda: \n");
         for(Artigo artigo : this.artigos.values()) {
@@ -87,14 +82,12 @@ public class Encomenda {
         if(this.estado.equals(Estado.NOVO)) return 0.5;
         else return 0.25;
     }
-
     public String dimensaoEncomendaString() {
         if(this.artigos.size() < 1) return "SEM ARTIGOS";
         if(this.artigos.size() == 1) return "PEQUENA";
         if(this.artigos.size() >= 2 && this.artigos.size() <= 5) return "MÉDIA";
         else return "GRANDE";
     }
-
     */
 
     public double custoTotalExpedicao() {
@@ -115,6 +108,8 @@ public class Encomenda {
             Artigo value = entry.getValue();
             String className = value.getClass().getSimpleName();
 
+            custo += value.getPrecoBase();
+
             if (className.equals("MalaUsada") || className.equals("SapatilhaUsada") || className.equals("TshirtUsada")) {
                 custo += 0.25;
             }
@@ -129,16 +124,8 @@ public class Encomenda {
         return this.artigos.size();
     }
 
-    // GETTERS AND SETTERS
+    // GETTERS AND SETTERs
 
-    public String getIdEncomenda() {
-        return this.id;
-    }
-    
-    public void setIdEncomenda(String id) {
-        this.id = id;
-    }
-    
     public Utilizador getUser() {
         return this.user.clone();
     }
@@ -184,5 +171,4 @@ public class Encomenda {
     public void setData(LocalDate data) {
         this.data = data;
     }
-
 }
