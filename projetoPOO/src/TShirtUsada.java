@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class TShirtUsada extends TShirt{
+public class TShirtUsada extends TShirt {
     private int numDonos;
 
     private int avalEstado;
@@ -12,7 +12,7 @@ public class TShirtUsada extends TShirt{
         this.avalEstado = 0;
         this.desconto = 0;
     }
-    public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora, Tamanho tamanho, Padrao padrao, double precoBase, int numDonos, int avalEstado, int desconto) {
+    public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora, Tamanho tamanho, Padrao padrao,double precoBase,int numDonos, int avalEstado, int desconto) {
         super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, padrao);
         this.numDonos = numDonos;
         this.avalEstado = avalEstado;
@@ -69,3 +69,4 @@ public class TShirtUsada extends TShirt{
         this.desconto = desconto;
     }
 }
+
