@@ -22,7 +22,10 @@ public class Controller {
                     criaUtlizador();
                     break;
                 case 2:
-
+                    loginUtlizador();
+                    break;
+                default:
+                    System.out.println("OH BURRO DO CRLH NÃO VES QUE SÃO SÓ AQUELES NÚMEOROS!!!");
             }
         }
 
@@ -43,39 +46,45 @@ public class Controller {
             String nifUtilizador = scanner.nextLine();
 
             controllerUtlizador.criaUtlizador(emailUtilizador,nomeUtilizador,moradaUtilizador,nifUtilizador);
+
+            menuInicial();
         }
 
         public void loginUtlizador() {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Digite o email do utilizador:");
-            String emailUtilizador = scanner.nextLine();
+            String emailUtilizador = scanner.next();
 
-
+            if(controllerUtlizador.loginUtlizador(emailUtilizador))
+            {
+                System.out.println("Esse email está registado!");
+            }
+            else
+            {
+                System.out.println("Esse email não está registado!");
+                menuInicial();
+            }
         }
-        /*
+
         public void menu()
         {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("O que deseja fazer?");
-            System.out.println("1 - Criar um utilizador");
-            System.out.println("2 - Fazer login como Utilizador");
-            System.out.println("2 - Criar um artigo");
-            System.out.println("3 - Criar uma transportadora");
-            System.out.println("2 - Fazer login como Transportadora");
-            System.out.println("4 - Sair");
+            System.out.println("  que deseja fazer?");
+            System.out.println("1 - Criar um artigo");
+            System.out.println("2 - Sair");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                        cria_Utlizador();
-                case 2:
-
+                        break;
             }
         }
+
+        /*
 
     public void criaEncomendaController() {
 

@@ -15,7 +15,11 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
-    public void loginUtlizador()
+    public boolean loginUtlizador(String email)
+    {
+        return modelUtlizador.loginUtlizador(email);
+    }
+
     public void setViewerUtlizador(ViewerUtlizador viewerUtlizador) {
         this.viewerUtlizador = viewerUtlizador;
     }
