@@ -4,6 +4,10 @@ public class Controller {
         ViewerUtlizador viewerUtlizador = new ViewerUtlizador();
         ModelUtlizador modelUtlizador = new ModelUtlizador();
         ControllerUtlizador controllerUtlizador = new ControllerUtlizador(viewerUtlizador,modelUtlizador);
+
+        ViewerArtigo viewerArtigo = new ViewerArtigo();
+        ModelArtigo modelArtigo = new ModelArtigo();
+        ControllerArtigo controllerArtigo = new ControllerArtigo(viewerArtigo,modelArtigo);
         public void menuInicial()
         {
             Scanner scanner = new Scanner(System.in);
@@ -84,9 +88,69 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
-
+                        adicionarArtigoParaVenda();
                         break;
+                default:
+                    System.out.println("Essa opção não está diponível");
+                    menuUtlizador(utilizador);
+                    break;
             }
+        }
+
+        public void adicionarArtigoParaVenda() {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Que artigo deseja colocar à venda?")
+            System.out.println("1 - Sapatilha");
+            System.out.println("2 - T-Shirt");
+            System.out.println("3 -  Mala");
+            System.out.println("4 -  Outro");
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+
+            }
+        }
+
+        public void  registarSapatilha(){
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("Digite o código de barras do produto: ");
+            String codBarras = scanner.next();
+
+            System.out.println("Digite o preço de base do artigo: ");
+            double precoBase = scanner.nextDouble();
+
+            System.out.println("Digite o data no formato yyyy/mm/dd: ");
+            String dataString = scanner.next();
+
+            LocalDate dataop1 = LocalDate.parse(dataString);
+            System.out.println("Digite o nome da transportadora: ");
+            String nomeTrans = scanner.next();
+
+            Transportadora transArticle = transportadoras.get(nomeTrans);
+            if(transArticle == null) {
+                System.out.println("Transportadora não encontrada");
+            }
+
+            System.out.println("Insira o tamanho: ");
+            int tamanhoSpatilha = scanner.nextInt();
+
+            System.out.println("Sapatilha tem atacadores(true ou false)? ");
+            boolean temAtacadores = scanner.nextBoolean();
+
+            System.out.println("Cor da sapatilha? ");
+            String cor = scanner.next();
+
+            System.out.println("Sapatilha premium(true ou false)? ");
+            boolean isPremium = scanner.nextBoolean();
+
+            Sapatilha sap = new Sapatilha(codBarras, transArticle, stock, numDonos, avalEstado, precoBase, dataop1, desconto, tamanhoSpatilha, temAtacadores, cor, isPremium);
+            artigos.put(sap.getCodBarras(), sap.clone());
+            artigosVenda.put(sap.getCodBarras(), sap.clone());
         }
 
         /*
@@ -125,10 +189,6 @@ public class Controller {
         if (simnao.equals("S")) addArtigoEncomendaController(artigos);
 
     }
-
-
-
-
 
 
 
