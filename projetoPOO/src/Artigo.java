@@ -4,22 +4,22 @@ public abstract class Artigo {
     private String codBarras;
     private int stock;
     private LocalDate dataLancamento;
-    private Transportadora transportadora;
+    private String transportadora;
     private double precoBase;
 
     public Artigo() {
         this.codBarras = "n/a";
         this.stock = 0;
         this.dataLancamento = LocalDate.now();
-        this.transportadora = new Transportadora();
+        this.transportadora = "n/a";
         this.precoBase = 0.0;
     }
 
-    public Artigo(String codBarras, int stock, LocalDate dataLancamento, Transportadora trans, double precoBase) {
+    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase) {
         this.codBarras = codBarras;
         this.stock = stock;
         this.dataLancamento = dataLancamento;
-        this.transportadora = trans.clone();
+        this.transportadora = trans;
         this.precoBase = precoBase;
     }
 
@@ -80,12 +80,12 @@ public abstract class Artigo {
         this.dataLancamento = dataLancamento;
     }
 
-    public Transportadora getTransportadora() {
-        return this.transportadora.clone();
+    public String getTransportadora() {
+        return this.transportadora;
     }
 
-    public void setTransportadora(Transportadora transportadora) {
-        this.transportadora = transportadora.clone();
+    public void setTransportadora(String transportadora) {
+        this.transportadora = transportadora;
     }
 
     public double getPrecoBase() {

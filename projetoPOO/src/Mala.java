@@ -15,7 +15,7 @@ public class Mala extends Artigo {
         this.desconto = 0;
     }
 
-    public Mala(String codBarras, int stock, LocalDate dataLancamento, Transportadora trans, double precoBase, String tamanho, String material, int anoColecao, int desconto) {
+    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String tamanho, String material, int anoColecao, int desconto) {
         super(codBarras, stock, dataLancamento, trans, precoBase);
         this.tamanho = tamanho;
         this.material = material;

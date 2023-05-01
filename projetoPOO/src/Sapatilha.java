@@ -12,7 +12,7 @@ public class Sapatilha extends Artigo{
         this.cor = "n/a";
     }
 
-    public Sapatilha(String codBarras, int stock, LocalDate dataLancamento, Transportadora trans, double precoBase, int tamanho, boolean atacadores, String cor) {
+    public Sapatilha(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, int tamanho, boolean atacadores, String cor) {
         super(codBarras, stock, dataLancamento, trans, precoBase);
         this.tamanho = tamanho;
         this.temAtacadores = atacadores;

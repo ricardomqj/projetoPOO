@@ -1,9 +1,14 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Controller {
         ViewerUtlizador viewerUtlizador = new ViewerUtlizador();
         ModelUtlizador modelUtlizador = new ModelUtlizador();
         ControllerUtlizador controllerUtlizador = new ControllerUtlizador(viewerUtlizador,modelUtlizador);
+
+        ViewerTransportadora viewerTransportadora = new ViewerTransportadora();
+        ModelTransportadora modelTransportadora = new ModelTransportadora();
+        ControllerTransportadora controllerTransportadora = new ControllerTransportadora(viewerTransportadora, modelTransportadora);
 
         ViewerArtigo viewerArtigo = new ViewerArtigo();
         ModelArtigo modelArtigo = new ModelArtigo();
@@ -30,7 +35,7 @@ public class Controller {
                     loginUtlizador();
                     break;
                 default:
-                    System.out.println("OH BURRO DO CRLH NÃO VES QUE SÃO SÓ AQUELES NÚMEOROS!!!");
+                    System.out.println("Essa opção não está diponível");
             }
         }
 
@@ -61,9 +66,10 @@ public class Controller {
             System.out.println("Digite o email do utilizador:");
             String emailUtilizador = scanner.next();
 
-            if(controllerUtlizador.loginUtlizador(emailUtilizador))
+            Utilizador utilizador = controllerUtlizador.criaUtlizadorVazio();
+            if(utilizador != null)
             {
-                System.out.println("Esse email está registado!");
+                menuUtlizador(utilizador);
             }
             else
             {
@@ -88,7 +94,7 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
-                        adicionarArtigoParaVenda();
+                        adicionarArtigoParaVenda(utilizador);
                         break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -97,24 +103,187 @@ public class Controller {
             }
         }
 
-        public void adicionarArtigoParaVenda() {
+        public void adicionarArtigoParaVenda(Utilizador utilizador) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Que artigo deseja colocar à venda?")
+            System.out.println("Que artigo deseja colocar à venda?");
             System.out.println("1 - Sapatilha");
             System.out.println("2 - T-Shirt");
-            System.out.println("3 -  Mala");
-            System.out.println("4 -  Outro");
+            System.out.println("3 - Mala");
+            System.out.println("4 - Outro");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-
+                    break;
             }
         }
 
+            public void registarSapatilha(){
+                Scanner scanner = new Scanner(System.in);
+
+                System.out.println("Digite o código de barras do produto: ");
+                String codBarras = scanner.next();
+
+                System.out.println("Digite o preço de base do artigo: ");
+                double precoBase = scanner.nextDouble();
+
+                System.out.println("Digite a data de lançamento do artigo no formato yyyy/mm/dd: ");
+                String dataString = scanner.next();
+
+                LocalDate dataop = LocalDate.parse(dataString);
+
+                System.out.println("Digite o nome da transportadora: ");
+                String nomeTrans = scanner.next();
+
+                while(!controllerTransportadora.loginTransportadora(nomeTrans)) {
+                    System.out.println("Transportadora não encontrada");
+                    System.out.println("Digite o nome de outra transportadora: ");
+                    nomeTrans = scanner.next();
+                }
+
+                System.out.println("Insira o tamanho: ");
+                int tamanhoSapatilha = scanner.nextInt();
+
+                System.out.println("Sapatilha tem atacadores(true ou false)? ");
+                boolean temAtacadores = scanner.nextBoolean();
+
+                System.out.println("Cor da sapatilha? ");
+                String cor = scanner.next();
+
+                System.out.println("Sapatilha Nova (true ou false)? ");
+                boolean resposta = scanner.nextBoolean();
+
+                if(resposta == true) {
+                    controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor);
+                }
+                else {
+                    System.out.println("Quantos donos já teve: ");
+                    int numDonos = scanner.nextInt();
+
+                    System.out.println("Estado da Sapatilha (0-5): ");
+                    int avalEstado = scanner.nextInt();
+
+                    System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
+                    int desconto = scanner.nextInt();
+
+                    controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado, desconto);
+                }
+
+
+                //System.out.println("Sapatilha premium(true ou false)? ");
+                //boolean isPremium = scanner.nextBoolean();
+
+                //Sapatilha sap = new Sapatilha(codBarras, transArticle, stock, numDonos, avalEstado, precoBase, dataop1, desconto, tamanhoSpatilha, temAtacadores, cor, isPremium);
+                //artigos.put(sap.getCodBarras(), sap.clone());
+                //artigosVenda.put(sap.getCodBarras(), sap.clone());
+            }
+
+            public void registarMala() {
+                Scanner scanner = new Scanner(System.in);
+
+                System.out.println("Digite o código de barras do produto: ");
+                String codBarras = scanner.next();
+
+                System.out.println("Digite o preço de base do artigo: ");
+                double precoBase = scanner.nextDouble();
+
+                System.out.println("Digite a data de lançamento do artigo no formato yyyy/mm/dd: ");
+                String dataString = scanner.next();
+
+                LocalDate dataop = LocalDate.parse(dataString);
+
+                System.out.println("Digite o nome da transportadora: ");
+                String nomeTrans = scanner.next();
+
+                while(controllerTransportadora.loginTransportadora(nomeTrans) == false) {
+                    System.out.println("Transportadora não encontrada");
+                    System.out.println("Digite o nome de outra transportadora: ");
+                    nomeTrans = scanner.next();
+                }
+
+                System.out.println("Tamanho da Mala (S/M/L): ");
+                String tamanho = scanner.next();
+
+                System.out.println("Material da Mala: ");
+                String material = scanner.next();
+
+                System.out.println("Ano da coleção: ");
+                int anoColecao = scanner.nextInt();
+
+                System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
+                int desconto = scanner.nextInt();
+
+                System.out.println("Mala Nova (true ou false)? ");
+                boolean resposta = scanner.nextBoolean();
+
+                if(resposta == true) {
+                    controllerArtigo.registarMalaNova(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, desconto);
+                }
+                else {
+                    System.out.println("Quantos donos já teve: ");
+                    int numDonos = scanner.nextInt();
+
+                    System.out.println("Estado da Mala (0-5): ");
+                    int avalEstado = scanner.nextInt();
+
+                    controllerArtigo.registarMalaUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, desconto, numDonos, avalEstado);
+                }
+            }
+
+            public void registarTShirt() {
+                Scanner scanner = new Scanner(System.in);
+
+                System.out.println("Digite o código de barras do produto: ");
+                String codBarras = scanner.next();
+
+                System.out.println("Digite o preço de base do artigo: ");
+                double precoBase = scanner.nextDouble();
+
+                System.out.println("Digite a data de lançamento do artigo no formato yyyy/mm/dd: ");
+                String dataString = scanner.next();
+
+                LocalDate dataop = LocalDate.parse(dataString);
+
+                System.out.println("Digite o nome da transportadora: ");
+                String nomeTrans = scanner.next();
+
+                while (controllerTransportadora.loginTransportadora(nomeTrans) == false) {
+                    System.out.println("Transportadora não encontrada");
+                    System.out.println("Digite o nome de outra transportadora: ");
+                    nomeTrans = scanner.next();
+                }
+
+                System.out.println("Tamanho da TShirt (S/M/L/XL): ");
+                String tamanho = scanner.next();
+
+
+                System.out.println("Padrao da TShirt: \n(LISO, RISCAS ou PALMEIRAS)");
+                String padrao = scanner.next();
+
+                System.out.println("TShirt Nova (true ou false)? ");
+                boolean resposta = scanner.nextBoolean();
+
+                if(resposta == true) {
+                    controllerArtigo.registarTShirtNova(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
+                }
+                else {
+                    System.out.println("Quantos donos já teve: ");
+                    int numDonos = scanner.nextInt();
+
+                    System.out.println("Estado da TShirt (0-5): ");
+                    int avalEstado = scanner.nextInt();
+
+                    System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
+                    int desconto = scanner.nextInt();
+
+                    controllerArtigo.registarTShirtUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao, numDonos, avalEstado, desconto);
+                }
+        }
+
+        /*
         public void  registarSapatilha(){
             Scanner scanner = new Scanner(System.in);
 

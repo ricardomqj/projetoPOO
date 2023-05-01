@@ -12,7 +12,7 @@ public class SapatilhaUsada extends Sapatilha{
         this.desconto = 0;
     }
 
-    public SapatilhaUsada(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora, double precoBase, int tamanho, boolean temAtacadores, String cor, int numDonos, int avalEstado, int desconto) {
+    public SapatilhaUsada(String codBarras, int stock, LocalDate dataLancamento, String transportadora, double precoBase, int tamanho, boolean temAtacadores, String cor, int numDonos, int avalEstado, int desconto) {
         super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, temAtacadores, cor);
         this.numDonos = numDonos;
         this.avalEstado = avalEstado;

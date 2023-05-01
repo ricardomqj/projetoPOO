@@ -21,7 +21,7 @@ public class TShirt extends Artigo{
         this.padrao = null;
     }
 
-    public TShirt(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora,double precoBase, Tamanho tam, Padrao pattern) {
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, Tamanho tam, Padrao pattern) {
         super(codBarras, stock, dataLancamento, transportadora, precoBase);
         this.tam = tam;
         this.padrao = pattern;

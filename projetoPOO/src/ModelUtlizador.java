@@ -17,7 +17,11 @@ public class ModelUtlizador {
 
         this.listaUtilizadores.put(utilizador.getCodigoSistema(),utilizador.clone());
     }
-
+    public Utilizador criaUtlizadorSemNada()
+    {
+        Utilizador utlizador = new Utilizador();
+        return utlizador;
+    }
     private String gerarCodigoSistema(Map<String, Utilizador> listaUtilizadores)
     {
         String codigoSistema = UUID.randomUUID().toString();
@@ -28,15 +32,16 @@ public class ModelUtlizador {
         return codigoSistema;
     }
 
-    public boolean loginUtlizador(String email)
+    public Utilizador loginUtlizador(String email)
     {
-        if(getUserByEmail(email) == null)
+        Utilizador utilizador = getUserByEmail(email);
+        if(utilizador == null)
         {
-            return false;
+            return null;
         }
         else
         {
-            return true;
+            return utilizador;
         }
     }
     public Utilizador getUserByEmail(String email) {

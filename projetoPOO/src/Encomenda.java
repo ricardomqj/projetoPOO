@@ -90,6 +90,7 @@ public class Encomenda {
     }
     */
 
+    /* --------> VAI TER DE SER REPENSADA
     public double custoTotalExpedicao() {
         double count = 0.0;
 
@@ -99,6 +100,8 @@ public class Encomenda {
 
         return count;
     }
+
+     */
 
     public double custoTotal() {
         double custo = 0.0;
@@ -143,6 +146,7 @@ public class Encomenda {
     }
 
     public String getTamanhoEncomenda() {
+
         return this.tamanho;
     }
     public void setTamanhoEncomenda() {
@@ -155,7 +159,7 @@ public class Encomenda {
         return this.precoFinal;
     }
     public void setPrecoFinal() {
-        this.precoFinal = custoTotal() + custoTotalExpedicao();
+        this.precoFinal = custoTotal() + 0; // REPENSAR A FUNÇÃO TODA custoTotalExpedicao();
     }
 
     public StatusEncomenda getStatus() {

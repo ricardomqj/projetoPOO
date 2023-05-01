@@ -15,7 +15,12 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
-    public boolean loginUtlizador(String email)
+    public Utilizador criaUtlizadorVazio()
+    {
+        return this.modelUtlizador.criaUtlizadorSemNada();
+    }
+
+    public Utilizador loginUtlizador(String email)
     {
         return modelUtlizador.loginUtlizador(email);
     }
