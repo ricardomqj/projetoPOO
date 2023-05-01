@@ -13,6 +13,7 @@ public class Controller {
             System.out.println("2 - Efetuar login com utlizador");
             System.out.println("3 - Criar uma transportadora");
             System.out.println("4 - Efetuar login com transportadora");
+            System.out.println("5 - Funções gerais");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -67,19 +68,23 @@ public class Controller {
             }
         }
 
-        public void menu()
+        public void menuUtlizador(Utilizador utilizador)
         {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("  que deseja fazer?");
-            System.out.println("1 - Criar um artigo");
-            System.out.println("2 - Sair");
+            System.out.println("1 - Vender um artigo");
+            System.out.println("2 - Mostrar Artigos à venda");
+            System.out.println("3 - Efetuar uma encomenda");
+            System.out.println("4 - Devolver encomenda");
+            System.out.println("5 - Sair");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcao) {
                 case 1:
+
                         break;
             }
         }
