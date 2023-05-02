@@ -129,17 +129,17 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
-                    registarSapatilha();
+                    registarSapatilha(utilizador);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador);
                     break;
                 case 2:
-                    registarTShirt();
+                    registarTShirt(utilizador);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador);
                     break;
                 case 3:
-                    registarMala();
+                    registarMala(utilizador);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador);
                     break;
@@ -155,7 +155,7 @@ public class Controller {
             }
         }
 
-            public void registarSapatilha(){
+            public void registarSapatilha(Utilizador utilizador){
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -191,7 +191,8 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor);
+                    Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor);
+                    controllerUtlizador.registarSapatilhaUser(utilizador, sapatilha);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -203,7 +204,8 @@ public class Controller {
                     System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
                     int desconto = scanner.nextInt();
 
-                    controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
+                    Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
+                    controllerUtlizador.registarSapatilhaUsadaUser(utilizador, sapatilhausa);
                 }
 
 
@@ -215,7 +217,7 @@ public class Controller {
                 //artigosVenda.put(sap.getCodBarras(), sap.clone());
             }
 
-            public void registarMala() {
+            public void registarMala(Utilizador utilizador) {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -251,7 +253,8 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    controllerArtigo.registarMalaNova(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao);
+                    Mala mala = controllerArtigo.registarMalaNova(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao);
+                    controllerUtlizador.registarMalaUser(utilizador, mala);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -260,12 +263,13 @@ public class Controller {
                     System.out.println("Estado da Mala (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    controllerArtigo.registarMalaUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, numDonos, avalEstado);
+                    Mala malausa = controllerArtigo.registarMalaUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, numDonos, avalEstado);
+                    controllerUtlizador.registarMalaUsadaUser(utilizador, malausa);
                 }
             }
 
             // FEITO CARALHO
-            public void registarTShirt() {
+            public void registarTShirt(Utilizador utilizador) {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -318,7 +322,9 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta) {
-                    controllerArtigo.registarTShirtNova(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
+                    TShirt tshirt = controllerArtigo.registarTShirtNova(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
+                    controllerUtlizador.registarTShirtUser(utilizador, tshirt);
+
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -327,7 +333,8 @@ public class Controller {
                     System.out.println("Estado da TShirt (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    controllerArtigo.registarTShirtUsada(codBarras, dataop, nomeTrans, precoBase, tamanho, padrao, numDonos, avalEstado);
+                    TShirt tshirtusa = controllerArtigo.registarTShirtUsada(utilizador, codBarras, dataop, nomeTrans, precoBase, tamanho, padrao, numDonos, avalEstado);
+                    controllerUtlizador.registarTShirtUsadaUser(utilizador, tshirtusa);
                 }
         }
 
