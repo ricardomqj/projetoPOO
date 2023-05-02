@@ -18,6 +18,12 @@ public class TShirtUsada extends TShirt {
         this.avalEstado = avalEstado;
         this.desconto = desconto;
     }
+    public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, String transportadora, int tamanho, int padrao,double precoBase,int numDonos, int avalEstado, int desconto) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, padrao);
+        this.numDonos = numDonos;
+        this.avalEstado = avalEstado;
+        this.desconto = desconto;
+    }
     public TShirtUsada(TShirtUsada shirt)
     {
         super(shirt);

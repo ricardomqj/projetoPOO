@@ -27,6 +27,39 @@ public class TShirt extends Artigo{
         this.padrao = pattern;
     }
 
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, int tam, int pattern) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase);
+        if(tam == 1)
+        {
+            this.tam = Tamanho.S;
+        }
+        if(tam == 2)
+        {
+            this.tam = Tamanho.M;
+        }
+        if(tam == 3)
+        {
+            this.tam = Tamanho.L;
+        }
+        if(tam == 4)
+        {
+            this.tam = Tamanho.XL;
+        }
+
+        if(pattern == 1)
+        {
+            this.padrao = Padrao.LISO;
+        }
+        if(pattern == 2)
+        {
+            this.padrao = Padrao.RISCAS;
+        }
+        if(pattern == 3)
+        {
+            this.padrao = Padrao.PALMEIRAS;
+        }
+    }
+
     public TShirt(TShirt umaTShirt) {
         super(umaTShirt);
         this.tam = umaTShirt.getTam();

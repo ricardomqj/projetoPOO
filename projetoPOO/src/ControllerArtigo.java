@@ -33,14 +33,14 @@ public class ControllerArtigo {
         this.modelArtigo.registarMalaUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, desconto, numDonos, avalEstado);
     }
 
-    public void registarTShirtNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                   String padrao) {
+    public void registarTShirtNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanho,
+                                   int padrao) {
 
         this.modelArtigo.registarTShirtNova(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
     }
 
-    public void registarTShirtUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                    String padrao, int numDonos, int avalEstado, int desconto) {
+    public void registarTShirtUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanho,
+                                    int padrao, int numDonos, int avalEstado, int desconto) {
 
         this.modelArtigo.registarTShirtUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao, numDonos, avalEstado, desconto);
     }

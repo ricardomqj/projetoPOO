@@ -250,23 +250,42 @@ public class Controller {
                 System.out.println("Digite o nome da transportadora: ");
                 String nomeTrans = scanner.next();
 
-                while (controllerTransportadora.loginTransportadora(nomeTrans) == false) {
+                while (!controllerTransportadora.loginTransportadora(nomeTrans)) {
                     System.out.println("Transportadora não encontrada");
                     System.out.println("Digite o nome de outra transportadora: ");
                     nomeTrans = scanner.next();
                 }
 
-                System.out.println("Tamanho da TShirt (S/M/L/XL): ");
-                String tamanho = scanner.next();
+                int tamanho;
+                do {
+                    System.out.println("Tamanho da TShirt (S/M/L/XL): ");
+                    System.out.println("1 - S");
+                    System.out.println("2 - M");
+                    System.out.println("3 - L");
+                    System.out.println("4 - XL");
+                    tamanho = scanner.nextInt();
+                    if(tamanho < 1 || tamanho > 4)
+                    {
+                        System.out.println("Essa opção não está diponível");
+                    }
+                } while(tamanho < 1 || tamanho > 4);
 
-
-                System.out.println("Padrao da TShirt: \n(LISO, RISCAS ou PALMEIRAS)");
-                String padrao = scanner.next();
+                int padrao;
+                do {
+                    System.out.println("Padrao da TShirt: \n(LISO, RISCAS ou PALMEIRAS)");
+                    System.out.println("1 - LISO");
+                    System.out.println("2 - RISCAS");
+                    System.out.println("3 - PALMEIRAS");
+                    padrao = scanner.nextInt();
+                    if(padrao < 1 || padrao > 3){
+                        System.out.println("Essa opção não está diponível");
+                    }
+                }while(padrao < 1 || padrao > 3);
 
                 System.out.println("TShirt Nova (true ou false)? ");
                 boolean resposta = scanner.nextBoolean();
 
-                if(resposta == true) {
+                if(resposta) {
                     controllerArtigo.registarTShirtNova(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
                 }
                 else {

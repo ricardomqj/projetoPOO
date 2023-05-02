@@ -47,12 +47,10 @@ public class ModelArtigo {
         // falta stock
     }
 
-    public void registarTShirtUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                    TShirt.Padrao padrao, int numDonos, int avalEstado, int desconto) {
-            //////-----> PENSAR TAMANHOS E PADRAO
+    public void registarTShirtUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanho,
+                                    int padrao, int numDonos, int avalEstado, int desconto) {
 
         TShirtUsada tshirtUsa = new TShirtUsada(codBarras,1, dataop, nomeTrans, precoBase,tamanho,
                 padrao, numDonos, avalEstado, desconto);
-        // falta stock
     }
 }
