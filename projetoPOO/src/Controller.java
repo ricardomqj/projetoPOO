@@ -18,8 +18,8 @@ public class Controller {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("O que deseja fazer?");
-            System.out.println("1 - Criar um utlizador");
-            System.out.println("2 - Efetuar login com utlizador");
+            System.out.println("1 - Criar um utlizador");                 //feito
+            System.out.println("2 - Efetuar login com utlizador");        //feito
             System.out.println("3 - Criar uma transportadora");
             System.out.println("4 - Efetuar login com transportadora");
             System.out.println("5 - Funções gerais");
@@ -82,11 +82,11 @@ public class Controller {
         {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("  que deseja fazer?");
+            System.out.println("O que deseja fazer?");
             System.out.println("1 - Vender um artigo");
-            System.out.println("2 - Mostrar Artigos à venda");
+            System.out.println("2 - Ver artigos à venda no momento");
             System.out.println("3 - Efetuar uma encomenda");
-            System.out.println("4 - Devolver encomenda");
+            System.out.println("4 - Devolver uma encomenda");
             System.out.println("5 - Sair");
 
             int opcao = scanner.nextInt();
@@ -94,8 +94,20 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
-                        adicionarArtigoParaVenda(utilizador);
-                        break;
+                    adicionarArtigoParaVenda(utilizador);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+                    menuInicial();
+                    break;
                 default:
                     System.out.println("Essa opção não está diponível");
                     menuUtlizador(utilizador);
@@ -117,11 +129,33 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
+                    registarSapatilha(utilizador);
+                    System.out.println("O artigo foi colocado à venda!");
+                    menuUtlizador(utilizador);
+                    break;
+                case 2:
+                    registarTShirt(utilizador);
+                    System.out.println("O artigo foi colocado à venda!");
+                    menuUtlizador(utilizador);
+                    break;
+                case 3:
+                    registarMala(utilizador);
+                    System.out.println("O artigo foi colocado à venda!");
+                    menuUtlizador(utilizador);
+                    break;
+                case 4:
+                    //fazer ainda
+                    System.out.println("O artigo foi colocado à venda!");
+                    menuUtlizador(utilizador);
+                    break;
+                default:
+                    System.out.println("Essa opção não está diponível otário");
+                    adicionarArtigoParaVenda(utilizador);
                     break;
             }
         }
 
-            public void registarSapatilha(){
+            public void registarSapatilha(Utilizador utilizador){
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -130,7 +164,7 @@ public class Controller {
                 System.out.println("Digite o preço de base do artigo: ");
                 double precoBase = scanner.nextDouble();
 
-                System.out.println("Digite a data de lançamento do artigo no formato yyyy/mm/dd: ");
+                System.out.println("Digite a data de lançamento do artigo no formato yyyy-mm-dd: ");
                 String dataString = scanner.next();
 
                 LocalDate dataop = LocalDate.parse(dataString);
@@ -157,7 +191,8 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor);
+                    Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor);
+                    controllerUtlizador.registarSapatilhaUser(utilizador, sapatilha);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -166,10 +201,17 @@ public class Controller {
                     System.out.println("Estado da Sapatilha (0-5): ");
                     int avalEstado = scanner.nextInt();
 
+                    System.out.println("Marca: ");
+                    String marca = scanner.next();
+
+                    System.out.println("Descrição: ");
+                    String descricao = scanner.next();
+
                     System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
                     int desconto = scanner.nextInt();
 
-                    controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado, desconto);
+                    Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
+                    controllerUtlizador.registarSapatilhaUsadaUser(utilizador, sapatilhausa);
                 }
 
 
@@ -181,7 +223,7 @@ public class Controller {
                 //artigosVenda.put(sap.getCodBarras(), sap.clone());
             }
 
-            public void registarMala() {
+            public void registarMala(Utilizador utilizador) {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -213,14 +255,12 @@ public class Controller {
                 System.out.println("Ano da coleção: ");
                 int anoColecao = scanner.nextInt();
 
-                System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
-                int desconto = scanner.nextInt();
-
                 System.out.println("Mala Nova (true ou false)? ");
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    controllerArtigo.registarMalaNova(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, desconto);
+                    Mala mala = controllerArtigo.registarMalaNova(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao);
+                    controllerUtlizador.registarMalaUser(utilizador, mala);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -229,11 +269,13 @@ public class Controller {
                     System.out.println("Estado da Mala (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    controllerArtigo.registarMalaUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, desconto, numDonos, avalEstado);
+                    Mala malausa = controllerArtigo.registarMalaUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, material, anoColecao, numDonos, avalEstado);
+                    controllerUtlizador.registarMalaUsadaUser(utilizador, malausa);
                 }
             }
 
-            public void registarTShirt() {
+            // FEITO CARALHO
+            public void registarTShirt(Utilizador utilizador) {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Digite o código de barras do produto: ");
@@ -286,7 +328,9 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta) {
-                    controllerArtigo.registarTShirtNova(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
+                    TShirt tshirt = controllerArtigo.registarTShirtNova(utilizador, codBarras, dataop, precoBase, nomeTrans, tamanho, padrao);
+                    controllerUtlizador.registarTShirtUser(utilizador, tshirt);
+
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -295,10 +339,8 @@ public class Controller {
                     System.out.println("Estado da TShirt (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
-                    int desconto = scanner.nextInt();
-
-                    controllerArtigo.registarTShirtUsada(codBarras, dataop, precoBase, nomeTrans, tamanho, padrao, numDonos, avalEstado, desconto);
+                    TShirt tshirtusa = controllerArtigo.registarTShirtUsada(utilizador, codBarras, dataop, nomeTrans, precoBase, tamanho, padrao, numDonos, avalEstado);
+                    controllerUtlizador.registarTShirtUsadaUser(utilizador, tshirtusa);
                 }
         }
 

@@ -15,6 +15,30 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
+    public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
+        this.modelUtlizador.registarSapatilhaUser(user, sapatilha);
+    }
+
+    public void registarSapatilhaUsadaUser (Utilizador user, Sapatilha sapatilha) {
+        this.modelUtlizador.registarSapatilhaUsadaUser(user, sapatilha);
+    }
+
+    public void registarTShirtUser(Utilizador user, TShirt tshirt) {
+        this.modelUtlizador.registarTShirtUser(user, tshirt);
+    }
+
+    public void registarTShirtUsadaUser (Utilizador user, TShirt tshirt) {
+        this.modelUtlizador.registarTShirtUsadaUser(user, tshirt);
+    }
+
+    public void registarMalaUser(Utilizador user, Mala mala) {
+        this.modelUtlizador.registarMalaUser(user, mala);
+    }
+
+    public void registarMalaUsadaUser (Utilizador user, Mala mala) {
+        this.modelUtlizador.registarMalaUsadaUser(user, mala);
+    }
+
     public Utilizador criaUtlizadorVazio()
     {
         return this.modelUtlizador.criaUtlizadorSemNada();

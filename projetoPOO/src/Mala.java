@@ -15,12 +15,22 @@ public class Mala extends Artigo {
         this.desconto = 0;
     }
 
-    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String tamanho, String material, int anoColecao, int desconto) {
+    // MALA NOVA
+
+    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String tamanho, String material, int anoColecao) {
         super(codBarras, stock, dataLancamento, trans, precoBase);
         this.tamanho = tamanho;
         this.material = material;
         this.anoColecao = anoColecao;
-        this.desconto = desconto;
+    }
+
+    // MALA USADA
+
+    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String tamanho, String material, int anoColecao, int numDonos, int avalEstado) {
+        super(codBarras, stock, dataLancamento, trans, precoBase, numDonos, avalEstado);
+        this.tamanho = tamanho;
+        this.material = material;
+        this.anoColecao = anoColecao;
     }
 
     public Mala(Mala umaMala) {

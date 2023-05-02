@@ -1,8 +1,8 @@
+/*
 import java.time.LocalDate;
 
 public class TShirtUsada extends TShirt {
     private int numDonos;
-
     private int avalEstado;
     private int desconto;
 
@@ -10,14 +10,13 @@ public class TShirtUsada extends TShirt {
         super();
         this.numDonos = 0;
         this.avalEstado = 0;
-        this.desconto = 0;
     }
-    public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, String transportadora, Tamanho tamanho, Padrao padrao,double precoBase,int numDonos, int avalEstado, int desconto) {
-        super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, padrao);
-        this.numDonos = numDonos;
-        this.avalEstado = avalEstado;
-        this.desconto = desconto;
-    }
+    //public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, String transportadora, Tamanho tamanho, Padrao padrao,double precoBase,int numDonos, int avalEstado, int desconto) {
+    //    super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, padrao);
+    //    this.numDonos = numDonos;
+    //    this.avalEstado = avalEstado;
+    //    this.desconto = desconto;
+    //}
     public TShirtUsada(String codBarras, int stock, LocalDate dataLancamento, String transportadora, int tamanho, int padrao,double precoBase,int numDonos, int avalEstado, int desconto) {
         super(codBarras, stock, dataLancamento, transportadora, precoBase, tamanho, padrao);
         this.numDonos = numDonos;
@@ -75,4 +74,4 @@ public class TShirtUsada extends TShirt {
         this.desconto = desconto;
     }
 }
-
+ */

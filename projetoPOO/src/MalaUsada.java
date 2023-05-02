@@ -1,3 +1,4 @@
+/*
 import java.time.LocalDate;
 
 public class MalaUsada extends Mala{
@@ -57,3 +58,5 @@ public class MalaUsada extends Mala{
     public void setAvalEstado(int avalEstado) {this.avalEstado = avalEstado;}
 
 }
+
+ */

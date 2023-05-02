@@ -17,6 +17,37 @@ public class ModelUtlizador {
 
         this.listaUtilizadores.put(utilizador.getCodigoSistema(),utilizador.clone());
     }
+
+    public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(sapatilha.getCodBarras(),sapatilha);
+    }
+
+    public void registarSapatilhaUsadaUser(Utilizador user, Sapatilha sapatilha) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(sapatilha.getCodBarras(),sapatilha);
+    }
+
+    public void registarTShirtUser(Utilizador user, TShirt tshirt) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(tshirt.getCodBarras(),tshirt);
+    }
+
+    public void registarTShirtUsadaUser (Utilizador user, TShirt tshirt) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(tshirt.getCodBarras(),tshirt);
+    }
+
+    public void registarMalaUser(Utilizador user, Mala mala) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(mala.getCodBarras(),mala);
+    }
+
+    public void registarMalaUsadaUser (Utilizador user, Mala mala) {
+        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
+        produtos.put(mala.getCodBarras(),mala);
+    }
+
     public Utilizador criaUtlizadorSemNada()
     {
         Utilizador utlizador = new Utilizador();
@@ -54,4 +85,5 @@ public class ModelUtlizador {
         }
         return ret;
     }
+
 }

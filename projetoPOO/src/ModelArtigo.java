@@ -7,50 +7,55 @@ public class ModelArtigo {
     //private Map<String, Mala> listaMalas;
     //private Map<String, TShirt> listaTShirts;
 
-    public void registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanhoSapatilha,
+    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 
-        Sapatilha sapatilha = new Sapatilha(codBarras,1, dataop,nomeTrans, precoBase,
+        Sapatilha sapatilha = new Sapatilha(codBarras,1, dataop, nomeTrans, precoBase,
                  tamanhoSapatilha, temAtacadores, cor);
+
         // STOCK A 1
+        return sapatilha;
     }
 
-    public void registarSapatilhaUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanhoSapatilha,
-                                       boolean temAtacadores, String cor, int numDonos, int avalEstado, int desconto) {
+    public Sapatilha registarSapatilhaUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanhoSapatilha,
+                                       boolean temAtacadores, String cor, int numDonos, int avalEstado) {
 
-        SapatilhaUsada sapatilhaUsa = new SapatilhaUsada(codBarras,1, dataop, nomeTrans, precoBase, tamanhoSapatilha,
-                temAtacadores, cor, numDonos, avalEstado, desconto);
+        Sapatilha sapatilhaUsa = new Sapatilha(codBarras,1, dataop, nomeTrans, precoBase, tamanhoSapatilha,
+                temAtacadores, cor, numDonos, avalEstado);
         // falta stock
+        return sapatilhaUsa;
     }
 
-    public void registarMalaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                 String material, int anoColecao, int desconto) {
+    public Mala registarMalaNova(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
+                                 String material, int anoColecao) {
 
-        Mala mala = new Mala(codBarras,1, dataop, nomeTrans, precoBase,
-                 tamanho, material, anoColecao, desconto);
+        Mala mala = new Mala(codBarras,1, dataop, nomeTrans, precoBase, tamanho, material, anoColecao);
         // falta stock
+        return mala;
     }
 
-    public void registarMalaUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                  String material, int anoColecao, int desconto, int numDonos, int avalEstado) {
+    public Mala registarMalaUsada(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
+                                  String material, int anoColecao, int numDonos, int avalEstado) {
 
-        MalaUsada malaUsa = new MalaUsada(codBarras,1, dataop,  nomeTrans, precoBase,tamanho,
-                material, anoColecao, desconto, numDonos, avalEstado);
+        Mala malausa = new Mala(codBarras,1, dataop,  nomeTrans, precoBase,tamanho,
+                material, anoColecao, numDonos, avalEstado);
         // falta stock
+        return malausa;
     }
 
-    public void registarTShirtNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String tamanho,
-                                   String padrao) {
+    public TShirt registarTShirtNova(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanho,
+                                   int padrao) {
 
-        TShirt tshirt = new TShirt(codBarras,1, dataop, nomeTrans, precoBase,
-                 tamanho, padrao);
-        // falta stock
+        TShirt tshirt = new TShirt(codBarras, 1, dataop, nomeTrans, precoBase, tamanho, padrao);
+
+        return tshirt;
     }
 
-    public void registarTShirtUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, int tamanho,
-                                    int padrao, int numDonos, int avalEstado, int desconto) {
+    public TShirt registarTShirtUsada(Utilizador utilizador, String codBarras, LocalDate dataop, String nomeTrans, double precoBase, int tamanho,
+                                    int padrao, int numDonos, int avalEstado) {
 
-        TShirtUsada tshirtUsa = new TShirtUsada(codBarras,1, dataop, nomeTrans, precoBase,tamanho,
-                padrao, numDonos, avalEstado, desconto);
+        TShirt tshirtUsa = new TShirt(codBarras,1, dataop, nomeTrans, precoBase, tamanho, padrao, numDonos, avalEstado);
+
+        return tshirtUsa;
     }
 }

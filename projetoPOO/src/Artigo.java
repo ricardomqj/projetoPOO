@@ -6,21 +6,40 @@ public abstract class Artigo {
     private LocalDate dataLancamento;
     private String transportadora;
     private double precoBase;
+    private String marca;
+    private String descricao;
+    private Estado estado;
 
     public Artigo() {
         this.codBarras = "n/a";
         this.stock = 0;
         this.dataLancamento = LocalDate.now();
         this.transportadora = "n/a";
+        this.marca = "n/a";
+        this.descricao = "n/a";
         this.precoBase = 0.0;
     }
 
-    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase) {
+    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int numDonos, int avalEstado) {
         this.codBarras = codBarras;
         this.stock = stock;
         this.dataLancamento = dataLancamento;
         this.transportadora = trans;
         this.precoBase = precoBase;
+        this.marca = marca;
+        this.descricao = marca;
+        this.estado = new Usado();
+    }
+
+    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao) {
+        this.codBarras = codBarras;
+        this.stock = stock;
+        this.dataLancamento = dataLancamento;
+        this.transportadora = trans;
+        this.precoBase = precoBase;
+        this.marca = marca;
+        this.descricao = marca;
+        this.estado = new Novo();
     }
 
     public Artigo(Artigo umArtigo) {
@@ -29,6 +48,8 @@ public abstract class Artigo {
         this.dataLancamento = umArtigo.getDataLancamento();
         this.transportadora = umArtigo.getTransportadora();
         this.precoBase = umArtigo.getPrecoBase();
+        this.marca = umArtigo.getMarca();
+        this.descricao = umArtigo.getDescricao();
     }
 
     public abstract Artigo clone();
@@ -94,5 +115,21 @@ public abstract class Artigo {
 
     public void setPrecoBase(double precoBase) {
         this.precoBase = precoBase;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getMarca() {
+        return this.marca;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
     }
 }

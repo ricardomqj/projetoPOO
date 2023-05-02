@@ -105,6 +105,10 @@ public class Utilizador {
 
     public double profitTotal;
 
+    public void addArtigoToListaAVenda(Map<String, Artigo> produtosAVenda, Artigo artigo) {
+
+    }
+
     // getters e setters
     public String getCodigoSistema() {
         return this.codigoSistema;
