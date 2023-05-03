@@ -1,3 +1,4 @@
+/*
 import java.time.LocalDate;
 
 public class MalaUsada extends Mala{
@@ -10,7 +11,7 @@ public class MalaUsada extends Mala{
         this.avalEstado = 0;
     }
 
-    public MalaUsada(String codBarras, int stock, LocalDate dataLancamento, Transportadora trans, double precoBase, String tamanho, String material, int anoColecao,
+    public MalaUsada(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String tamanho, String material, int anoColecao,
                      int numDonos, int avalEstado, int desconto) {
         super(codBarras, stock, dataLancamento, trans, precoBase, tamanho, material, anoColecao, desconto);
         this.numDonos = numDonos;
@@ -57,3 +58,5 @@ public class MalaUsada extends Mala{
     public void setAvalEstado(int avalEstado) {this.avalEstado = avalEstado;}
 
 }
+
+ */

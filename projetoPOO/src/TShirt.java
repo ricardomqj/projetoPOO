@@ -21,10 +21,82 @@ public class TShirt extends Artigo{
         this.padrao = null;
     }
 
-    public TShirt(String codBarras, int stock, LocalDate dataLancamento, Transportadora transportadora,double precoBase, Tamanho tam, Padrao pattern) {
-        super(codBarras, stock, dataLancamento, transportadora, precoBase);
-        this.tam = tam;
-        this.padrao = pattern;
+    //public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, Tamanho tam, Padrao pattern) {
+    //    super(codBarras, stock, dataLancamento, transportadora, precoBase);
+    //    this.tam = tam;
+    //    this.padrao = pattern;
+    //}
+
+    //TSHIRT NOVA
+
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, String marca, String descricao, int desconto, int tam, int pattern) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase, marca, descricao, desconto);
+        if(tam == 1)
+        {
+            this.tam = Tamanho.S;
+        }
+        if(tam == 2)
+        {
+            this.tam = Tamanho.M;
+        }
+        if(tam == 3)
+        {
+            this.tam = Tamanho.L;
+        }
+        if(tam == 4)
+        {
+            this.tam = Tamanho.XL;
+        }
+
+        if(pattern == 1)
+        {
+            this.padrao = Padrao.LISO;
+        }
+        if(pattern == 2)
+        {
+            this.padrao = Padrao.RISCAS;
+        }
+        if(pattern == 3)
+        {
+            this.padrao = Padrao.PALMEIRAS;
+        }
+    }
+
+    //TSHIRT USADA
+
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora, double precoBase, String marca, String descricao, int desconto, int tam, int pattern, int numDonos, int avalEstado) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase, marca, descricao, desconto, numDonos, avalEstado);
+
+        if(tam == 1)
+        {
+            this.tam = Tamanho.S;
+        }
+        if(tam == 2)
+        {
+            this.tam = Tamanho.M;
+        }
+        if(tam == 3)
+        {
+            this.tam = Tamanho.L;
+        }
+        if(tam == 4)
+        {
+            this.tam = Tamanho.XL;
+        }
+
+        if(pattern == 1)
+        {
+            this.padrao = Padrao.LISO;
+        }
+        if(pattern == 2)
+        {
+            this.padrao = Padrao.RISCAS;
+        }
+        if(pattern == 3)
+        {
+            this.padrao = Padrao.PALMEIRAS;
+        }
+
     }
 
     public TShirt(TShirt umaTShirt) {

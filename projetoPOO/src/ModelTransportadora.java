@@ -19,6 +19,32 @@ public class ModelTransportadora {
         else return true;
     }
 
+    public String getInfoTransportadoraByName(String nomeTrans) {
+        return this.listaTransportadoras.get(nomeTrans).toString();
+    }
+
+    public void changeValBaseExpTransportadora(String nomeTrans, double newValBase) {
+        Transportadora trans = this.listaTransportadoras.get(nomeTrans);
+        trans.setValorBase(newValBase);
+        this.listaTransportadoras.put(trans.getNome(), trans.clone());
+    }
+
+    public void changeMargemLucroTransportadora(String nomeTrans, double newMargemLucro) {
+        Transportadora trans = this.listaTransportadoras.get(nomeTrans);
+        trans.setMargemLucro(newMargemLucro);
+        this.listaTransportadoras.put(trans.getNome(), trans.clone());
+    }
+
+    public String infoTodasAsTransportadoras() {
+        StringBuilder sb = new StringBuilder();
+
+        for(Transportadora trans : this.listaTransportadoras.values()) {
+            sb.append(trans.toString()).append("\n__________________________\n");
+        }
+
+        return sb.toString();
+    }
+
     public Transportadora getTransportadoraByName(String name) {
         return this.listaTransportadoras.get(name);
     }
