@@ -48,6 +48,17 @@ public class ModelUtlizador {
         produtos.put(mala.getCodBarras(),mala);
     }
 
+    public Map<String, Artigo> percorreUsers() {
+        Map<String, Artigo> todosProdutos = new HashMap<>();
+
+        for(Map.Entry<String, Utilizador> entry : this.listaUtilizadores.entrySet()) {
+            Utilizador utilizador = entry.getValue();
+            Map<String, Artigo> produtosAVenda = utilizador.getProdutosAVenda();
+            todosProdutos.putAll(produtosAVenda);
+        }
+        return todosProdutos;
+    }
+
     public Utilizador criaUtlizadorSemNada()
     {
         Utilizador utlizador = new Utilizador();

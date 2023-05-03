@@ -29,8 +29,8 @@ public class TShirt extends Artigo{
 
     //TSHIRT NOVA
 
-    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, int tam, int pattern) {
-        super(codBarras, stock, dataLancamento, transportadora, precoBase);
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora,double precoBase, String marca, String descricao, int desconto, int tam, int pattern) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase, marca, descricao, desconto);
         if(tam == 1)
         {
             this.tam = Tamanho.S;
@@ -64,8 +64,8 @@ public class TShirt extends Artigo{
 
     //TSHIRT USADA
 
-    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora, double precoBase, int tam, int pattern, int numDonos, int avalEstado) {
-        super(codBarras, stock, dataLancamento, transportadora, precoBase, numDonos, avalEstado);
+    public TShirt(String codBarras, int stock, LocalDate dataLancamento, String transportadora, double precoBase, String marca, String descricao, int desconto, int tam, int pattern, int numDonos, int avalEstado) {
+        super(codBarras, stock, dataLancamento, transportadora, precoBase, marca, descricao, desconto, numDonos, avalEstado);
 
         if(tam == 1)
         {

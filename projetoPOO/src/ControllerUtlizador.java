@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Scanner;
 
 public class ControllerUtlizador {
@@ -13,6 +14,11 @@ public class ControllerUtlizador {
     public void criaUtlizador(String email,String nome,String morada,String nif)
     {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
+    }
+
+    public Utilizador criaUtlizadorVazio()
+    {
+        return this.modelUtlizador.criaUtlizadorSemNada();
     }
 
     public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
@@ -39,9 +45,10 @@ public class ControllerUtlizador {
         this.modelUtlizador.registarMalaUsadaUser(user, mala);
     }
 
-    public Utilizador criaUtlizadorVazio()
-    {
-        return this.modelUtlizador.criaUtlizadorSemNada();
+    public Map<String, Artigo> percorreUsers() {
+        Map<String, Artigo> produtos = this.modelUtlizador.percorreUsers();
+
+        return produtos;
     }
 
     public Utilizador loginUtlizador(String email)
