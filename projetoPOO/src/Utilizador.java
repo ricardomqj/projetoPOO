@@ -105,8 +105,8 @@ public class Utilizador {
 
     public double profitTotal;
 
-    public void addArtigoToListaAVenda(Map<String, Artigo> produtosAVenda, Artigo artigo) {
-
+    public void addArtigoToListaAVenda(Artigo artigo) {
+        this.produtosAVenda.put(artigo.getCodBarras(), artigo.clone());
     }
 
     // getters e setters

@@ -59,6 +59,28 @@ public class ModelUtlizador {
         return todosProdutos;
     }
 
+    public String infoUserByEmail(String email) {
+        String ret = null;
+
+        for(Utilizador user : this.listaUtilizadores.values()) {
+            if(user.getEmail().equals(email)) {
+                ret = user.toString();
+                break;
+            }
+        }
+        return ret;
+    }
+
+    public String infoTodosUsers() {
+        StringBuilder sb = new StringBuilder();
+
+        for(Utilizador user : this.listaUtilizadores.values()) {
+            sb.append(user.toString()).append("\n___________________________\n");
+        }
+
+        return sb.toString();
+    }
+
     public Utilizador criaUtlizadorSemNada()
     {
         Utilizador utlizador = new Utilizador();

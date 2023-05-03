@@ -25,6 +25,7 @@ public class Controller {
             System.out.println("4 - Efetuar login com transportadora");
             System.out.println("5 - Funções gerais");
             System.out.println("6 - Ver lista de transportadoras disponíveis");
+            System.out.println("7 - Ver lista de utilizadores criados");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -36,16 +37,17 @@ public class Controller {
                 case 2:
                     loginUtlizador();
                     break;
-
                 case 3 :
                     criaTransportadora();
                     break;
-
                 case 4:
                     loginTransportadora();
                     break;
                 case 6:
                     infosTransportadoras();
+                    break;
+                case 7:
+                    infosTodosUsers();
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -131,6 +133,10 @@ public class Controller {
             }
         }
 
+        // Funções do user
+
+
+
         public void criaUtlizador() {
 
             Scanner scanner = new Scanner(System.in);
@@ -158,7 +164,7 @@ public class Controller {
             System.out.println("Digite o email do utilizador:");
             String emailUtilizador = scanner.next();
 
-            Utilizador utilizador = controllerUtlizador.loginUtlizador(emailUtilizador);
+            Utilizador utilizador = modelUtlizador.getUserByEmail(emailUtilizador);
             if(utilizador != null)
             {
                 menuUtlizador(utilizador);
@@ -175,11 +181,12 @@ public class Controller {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("O que deseja fazer?");
-            System.out.println("1 - Vender um artigo");
-            System.out.println("2 - Ver artigos à venda no momento");
-            System.out.println("3 - Efetuar uma encomenda");
-            System.out.println("4 - Devolver uma encomenda");
-            System.out.println("5 - Sair");
+            System.out.println("1 - Vender um artigo.");
+            System.out.println("2 - Ver artigos à venda no momento.");
+            System.out.println("3 - Efetuar uma encomenda.");
+            System.out.println("4 - Devolver uma encomenda.");
+            System.out.println("5 - Consultar informações do utilizador.");
+            System.out.println("6 - Sair.");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -197,7 +204,11 @@ public class Controller {
                 case 4:
 
                     break;
+
                 case 5:
+                    infoUser(utilizador.getEmail());
+                    break;
+                case 6:
                     menuInicial();
                     break;
                 default:
@@ -205,6 +216,16 @@ public class Controller {
                     menuUtlizador(utilizador);
                     break;
             }
+        }
+
+        public void infosTodosUsers() {
+            System.out.println(modelUtlizador.infoTodosUsers());
+            menuInicial();
+        }
+
+        public void infoUser(String email) {
+            System.out.println(modelUtlizador.infoUserByEmail(email));
+            menuUtlizador(modelUtlizador.getUserByEmail(email));
         }
 
         public void adicionarArtigoParaVenda(Utilizador utilizador) {
