@@ -82,6 +82,9 @@ public abstract class Artigo {
         sb.append("Marca: ").append(this.marca).append("\n");
         sb.append("Descricao: ").append(this.descricao).append("\n");
         sb.append("Desconto: ").append(this.desconto).append("\n");
+        if(this.estado!=null) {
+            sb.append(this.estado.toString()).append("\n");
+        }
 
         return sb.toString();
     }

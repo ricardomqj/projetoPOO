@@ -1,6 +1,6 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import jdk.jshell.execution.Util;
+
+import java.util.*;
 
 public class ModelUtlizador {
     private Map<String,Utilizador> listaUtilizadores;
@@ -19,33 +19,79 @@ public class ModelUtlizador {
     }
 
     public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(sapatilha.getCodBarras(),sapatilha);
+        Utilizador utiRet = null;
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(sapatilha);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public void registarSapatilhaUsadaUser(Utilizador user, Sapatilha sapatilha) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(sapatilha.getCodBarras(),sapatilha);
+        Utilizador utiRet = null;
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(sapatilha);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public void registarTShirtUser(Utilizador user, TShirt tshirt) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(tshirt.getCodBarras(),tshirt);
+        Utilizador utiRet = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(tshirt);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public void registarTShirtUsadaUser (Utilizador user, TShirt tshirt) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(tshirt.getCodBarras(),tshirt);
+        Utilizador utiRet = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(tshirt);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public void registarMalaUser(Utilizador user, Mala mala) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(mala.getCodBarras(),mala);
+        Utilizador utiRet = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(mala);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public void registarMalaUsadaUser (Utilizador user, Mala mala) {
-        Map<String, Artigo> produtos = this.listaUtilizadores.get(user.getCodigoSistema()).getProdutosAVenda();
-        produtos.put(mala.getCodBarras(),mala);
+        Utilizador utiRet = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(user.getEmail())) {
+                utiRet = uti;
+                break;
+            }
+        }
+        utiRet.addArtigoToListaAVenda(mala);
+        this.listaUtilizadores.put(utiRet.getCodigoSistema(), utiRet.clone());
     }
 
     public Map<String, Artigo> percorreUsers() {
@@ -57,6 +103,17 @@ public class ModelUtlizador {
             todosProdutos.putAll(produtosAVenda);
         }
         return todosProdutos;
+    }
+
+    public Utilizador getObjectUserByEmail(String email) {
+        Utilizador uti = null;
+
+        for(Utilizador user : this.listaUtilizadores.values()) {
+            if(user.getEmail().equals(email)) {
+                uti = user;
+            }
+        }
+        return uti;
     }
 
     public String infoUserByEmail(String email) {
@@ -71,11 +128,50 @@ public class ModelUtlizador {
         return ret;
     }
 
+    public String infoTodosArtigosAVenda() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Utilizador user : this.listaUtilizadores.values()) {
+            for(Artigo article : user.getProdutosAVenda().values()) {
+                sb.append(article.toString()).append(article.getClass().getSimpleName()).append("\n____________________\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+
+    public String toStringArtigosVendaUser(String email) {
+        StringBuilder sb = new StringBuilder();
+        Utilizador uti = getObjectUserByEmail(email);
+        for(Artigo art : uti.getProdutosAVenda().values()) {
+            sb.append(art.toString());
+            sb.append("\n________________________\n");
+        }
+
+        return sb.toString();
+    }
+
     public String infoTodosUsers() {
         StringBuilder sb = new StringBuilder();
 
         for(Utilizador user : this.listaUtilizadores.values()) {
             sb.append(user.toString()).append("\n___________________________\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String toStringArtigoAVendaByType(String type) {
+        StringBuilder sb = new StringBuilder();
+
+        for(Utilizador user : this.listaUtilizadores.values()) {
+            for(Artigo art : user.getProdutosAVenda().values()) {
+                if(art.getClass().getSimpleName().equals(type)) {
+                    sb.append(art.toString());
+                    sb.append("\n_________________\n");
+                }
+            }
         }
 
         return sb.toString();

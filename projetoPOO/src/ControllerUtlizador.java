@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Scanner;
 
 public class ControllerUtlizador {
     private ViewerUtlizador viewerUtlizador;
@@ -56,8 +55,32 @@ public class ControllerUtlizador {
         return modelUtlizador.loginUtlizador(email);
     }
 
+    public Utilizador getUserByEmail(String email) {
+        return this.modelUtlizador.getUserByEmail(email);
+    }
+
+    public String infoTodosUsers() {
+        return this.modelUtlizador.infoTodosUsers();
+    }
+
+    public String infoUserByEmail(String email) {
+        return this.modelUtlizador.infoUserByEmail(email);
+    }
+
     public void setViewerUtlizador(ViewerUtlizador viewerUtlizador) {
         this.viewerUtlizador = viewerUtlizador;
+    }
+
+    public String infoTodosArtigosAVenda() {
+        return this.modelUtlizador.infoTodosArtigosAVenda();
+    }
+
+    public String toStringArtigosVendaUser(String email) {
+        return this.modelUtlizador.toStringArtigosVendaUser(email);
+    }
+
+    public String toStringArtigoAVendaByType(String type) {
+        return this.modelUtlizador.toStringArtigoAVendaByType(type);
     }
 
     public void setModelUtlizador(ModelUtlizador modelUtlizador) {

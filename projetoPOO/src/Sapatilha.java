@@ -53,7 +53,8 @@ public class Sapatilha extends Artigo{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(super.getCodBarras());
+        sb.append("Informações da Sapatilha: \n");
+        sb.append(super.toString());
         sb.append("Tamanho: ").append(this.tamanho).append("\n");
         sb.append("Tem atacadores? ").append(this.temAtacadores).append("\n");
         sb.append("Cor: ").append(this.cor).append("\n");

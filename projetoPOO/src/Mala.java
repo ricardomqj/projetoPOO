@@ -55,6 +55,7 @@ public class Mala extends Artigo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("Informações da Mala: \n");
         sb.append(super.toString());
         sb.append("Tamanho: ").append(this.tamanho).append("\n");
         sb.append("Material: ").append(this.material).append("\n");
