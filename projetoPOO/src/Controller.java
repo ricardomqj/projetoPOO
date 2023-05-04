@@ -284,14 +284,12 @@ public class Controller {
                 System.out.println("Digite o nome da transportadora: ");
                 String nomeTrans = scanner.next();
 
-                /*
                 while(!controllerTransportadora.loginTransportadora(nomeTrans)) {
                     System.out.println("Transportadora não encontrada");
                     System.out.println("Digite o nome de outra transportadora: ");
                     nomeTrans = scanner.next();
                 }
-                */
-
+                
                 System.out.println("Insira o tamanho: ");
                 int tamanhoSapatilha = scanner.nextInt();
 
@@ -417,6 +415,7 @@ public class Controller {
 
                 System.out.println("Digite o nome da transportadora: ");
                 String nomeTrans = scanner.next();
+
 
                 while (!controllerTransportadora.loginTransportadora(nomeTrans)) {
                     System.out.println("Transportadora não encontrada");
