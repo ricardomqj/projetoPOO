@@ -15,7 +15,7 @@ public abstract class Artigo {
         this.codBarras = "n/a";
         this.stock = 0;
         this.dataLancamento = LocalDate.now();
-        this.transportadora = "n/a";
+        this.transportadora = "";
         this.precoBase = 0.0;
         this.marca = "n/a";
         this.descricao = "n/a";
@@ -50,7 +50,7 @@ public abstract class Artigo {
         this.codBarras = umArtigo.getCodBarras();
         this.stock = umArtigo.getStock();
         this.dataLancamento = umArtigo.getDataLancamento();
-        this.transportadora = umArtigo.getTransportadora();
+        this.transportadora = umArtigo.getNomeTransportadora();
         this.precoBase = umArtigo.getPrecoBase();
         this.marca = umArtigo.getMarca();
         this.descricao = umArtigo.getDescricao();
@@ -66,7 +66,7 @@ public abstract class Artigo {
         Artigo art = (Artigo) o;
         return this.codBarras.equals(art.getCodBarras()) && this.stock==art.getStock() &&
                 this.dataLancamento.equals(art.getDataLancamento()) &&
-                this.transportadora.equals(art.getTransportadora()) &&
+                this.transportadora.equals(art.getNomeTransportadora()) &&
                 this.precoBase == art.getPrecoBase() && this.marca.equals(art.getDescricao()) &&
                 this.descricao.equals(art.getDescricao()) && this.desconto == art.getDesconto();
 
@@ -87,6 +87,16 @@ public abstract class Artigo {
         }
 
         return sb.toString();
+    }
+
+    // Métodos
+
+    public double getProfitVintage() { // neste caso assumo que a vintage fica com 5% do valor da compra
+        return this.precoBase * 0.05;
+    }
+
+    public double getPrecoTotalArtigo() {
+        return this.precoBase * 1.05;
     }
 
     // getters e setters
@@ -114,7 +124,7 @@ public abstract class Artigo {
         this.dataLancamento = dataLancamento;
     }
 
-    public String getTransportadora() {
+    public String getNomeTransportadora() {
         return this.transportadora;
     }
 
@@ -152,4 +162,6 @@ public abstract class Artigo {
     public void setDesconto(int desconto) {
         this.desconto = desconto;
     }
+
+    public Estado getEstado() {return this.estado;}
 }

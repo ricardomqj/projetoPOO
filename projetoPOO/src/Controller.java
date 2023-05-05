@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Controller {
@@ -13,6 +15,11 @@ public class Controller {
         ViewerArtigo viewerArtigo = new ViewerArtigo();
         ModelArtigo modelArtigo = new ModelArtigo();
         ControllerArtigo controllerArtigo = new ControllerArtigo(viewerArtigo,modelArtigo);
+
+        ViewerEncomenda viewerEncomenda = new ViewerEncomenda();
+        ModelEncomenda modelEncomenda = new ModelEncomenda();
+        ControllerEncomenda controllerEncomenda = new ControllerEncomenda(viewerEncomenda,modelEncomenda);
+
         public void menuInicial()
         {
             Scanner scanner = new Scanner(System.in);
@@ -25,6 +32,7 @@ public class Controller {
             System.out.println("5 - Funções gerais");
             System.out.println("6 - Ver lista de transportadoras disponíveis");
             System.out.println("7 - Ver lista de utilizadores criados");
+            System.out.println("8 - Ver lista de encomendas");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -48,6 +56,8 @@ public class Controller {
                 case 7:
                     infosTodosUsers();
                     break;
+                case 8:
+
                 default:
                     System.out.println("Essa opção não está diponível");
             }
@@ -198,7 +208,7 @@ public class Controller {
                     menuArtigosAvenda();
                     break;
                 case 3:
-
+                    efetuaEncomenda(utilizador);
                     break;
                 case 4:
 
@@ -532,82 +542,102 @@ public class Controller {
                 System.out.println(controllerUtlizador.toStringArtigoAVendaByType(type));
             }
 
-        /*
-        public void  registarSapatilha(){
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.println("Digite o código de barras do produto: ");
-            String codBarras = scanner.next();
-
-            System.out.println("Digite o preço de base do artigo: ");
-            double precoBase = scanner.nextDouble();
-
-            System.out.println("Digite o data no formato yyyy/mm/dd: ");
-            String dataString = scanner.next();
-
-            LocalDate dataop1 = LocalDate.parse(dataString);
-            System.out.println("Digite o nome da transportadora: ");
-            String nomeTrans = scanner.next();
-
-            Transportadora transArticle = transportadoras.get(nomeTrans);
-            if(transArticle == null) {
-                System.out.println("Transportadora não encontrada");
+            public void verInfoTodasEncomendas(){
+                System.out.println(controllerEncomenda.infoTodasEncomendas());
             }
 
-            System.out.println("Insira o tamanho: ");
-            int tamanhoSpatilha = scanner.nextInt();
+        public void efetuaEncomenda(Utilizador userComprador) {
 
-            System.out.println("Sapatilha tem atacadores(true ou false)? ");
-            boolean temAtacadores = scanner.nextBoolean();
+            Scanner scanner = new Scanner(System.in);
+            Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
 
-            System.out.println("Cor da sapatilha? ");
-            String cor = scanner.next();
+            //System.out.println("Quantos artigos deseja encomendar?");
 
-            System.out.println("Sapatilha premium(true ou false)? ");
-            boolean isPremium = scanner.nextBoolean();
 
-            Sapatilha sap = new Sapatilha(codBarras, transArticle, stock, numDonos, avalEstado, precoBase, dataop1, desconto, tamanhoSpatilha, temAtacadores, cor, isPremium);
-            artigos.put(sap.getCodBarras(), sap.clone());
-            artigosVenda.put(sap.getCodBarras(), sap.clone());
+            /*
+            int numArt = scanner.nextInt();
+            for(int i = 0; i < numArt; i++) {
+                System.out.println("Insira o código de barras do produto: ");
+                String codBarras = scanner.next();
+                Artigo art = controllerArtigo.getArtigoByCod(codBarras);
+                lstArtigos.put(art.getCodBarras(), art.clone());
+            }
+            */
+            String codBarras;
+            System.out.println("Digite o codigo de barras do artigo: ");
+            codBarras = scanner.next();
+
+            Artigo art = controllerArtigo.getArtigoByCod(codBarras);
+            /*
+            while(art == null) {
+                System.out.println("Código de barras errado.");
+                System.out.println("Digite o código de barras novamente: ");
+                codBarras = scanner.next();
+            } */
+            art = controllerArtigo.getArtigoByCod(codBarras);
+            System.out.println("get artigo feito");
+            lstArtigos.put(art.getCodBarras(), art.clone());
+
+
+            while(true) {
+                System.out.println("Deseja adicionar mais algum produto? (S ou N)");
+                String resposta = scanner.next();
+
+                if(resposta.equals("N")) break;
+                else{
+                    System.out.println("Digite o código de barras do artigo que deseja adicionar à encomenda: ");
+                    codBarras = scanner.next();
+                    Artigo art2 = controllerArtigo.getArtigoByCod(codBarras);
+                    lstArtigos.put(art2.getCodBarras(), art2.clone());
+                }
+            }
+            controllerEncomenda.criaEncomenda(userComprador, lstArtigos);
+            controllerUtlizador.addEncomendaUser(userComprador, lstArtigos);
+            for(Artigo article : lstArtigos.values()) {
+                Utilizador uti = controllerUtlizador.getUserByArtigo(article);
+                uti.removeArtigoAVenda(article);
+                controllerUtlizador.criaUtilizador2(uti);
+            }
+
         }
 
+
         /*
+        public void criaEncomendaController() {
 
-    public void criaEncomendaController() {
+            Scanner scanner = new Scanner(System.in);
 
-        Scanner scanner = new Scanner(System.in);
+            Map<String, Artigo> artigos = new HashMap<>();
 
-        Map<String, Artigo> artigos = new HashMap<>();
+            System.out.println("Digite o email associado ao utilizador:");
+            String emailUser = scanner.next();
 
-        System.out.println("Digite o email associado ao utilizador:");
-        String emailUser = scanner.next();
+            ModelEncomenda.criaEncomendaModel(emailUser);
 
-        ModelEncomenda.criaEncomendaModel(emailUser);
+            addArtigoEncomendaController(artigos);
 
-        addArtigoEncomendaController(artigos);
-
-        menu();
-    }
+            menu();
+        }
 
 
-    public void addArtigoEncomendaController(Map<String, Artigo> artigos) {
+        public void addArtigoEncomendaController(Map<String, Artigo> artigos) {
 
-        Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Digite o código de barras do Artigo que deseja adicionar: ");
-        String codBarras = scanner.next();
+            System.out.println("Digite o código de barras do Artigo que deseja adicionar: ");
+            String codBarras = scanner.next();
 
-        //Artigo retrievedArtigo = Model.getListaArtigos.get(codBarras);
+            //Artigo retrievedArtigo = Model.getListaArtigos.get(codBarras);
 
-        ModelEncomenda.addArtigoEncomendaModel(artigos, codBarras);
+            ModelEncomenda.addArtigoEncomendaModel(artigos, codBarras);
 
-        System.out.println("Deseja adicionar mais algum artigo? (S/N)");
-        String simnao = scanner.next();
+            System.out.println("Deseja adicionar mais algum artigo? (S/N)");
+            String simnao = scanner.next();
 
-        if (simnao.equals("S")) addArtigoEncomendaController(artigos);
+            if (simnao.equals("S")) addArtigoEncomendaController(artigos);
 
-    }
-
+        }
+        */
 
 
 

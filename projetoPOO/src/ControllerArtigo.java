@@ -9,6 +9,12 @@ public class ControllerArtigo {
         this.setModelArtigo(modelArtigo);
         this.setViewerArtigo(viewerArtigo);
     }
+
+    public Artigo getArtigoByCod(String codBarras) {
+
+        return this.modelArtigo.getArtigoByCod(codBarras);
+    }
+
     public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,  int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 

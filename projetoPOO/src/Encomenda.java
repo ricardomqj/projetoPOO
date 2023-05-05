@@ -4,46 +4,78 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Encomenda {
+
     public enum StatusEncomenda {
         PENDENTE,
         FINALIZADO,
         EXPEDIDO,
     }
 
+    private String codSistema;
     private Utilizador user;
     private Map<String, Artigo> artigos;
     private String tamanho;
     private double precoFinal;
     private StatusEncomenda status;
     private LocalDate data;
+    private double vintageProfit;
 
     public Encomenda() {
+        this.codSistema = "";
         this.user = null;
         this.artigos = new HashMap<>();
         this.tamanho = "";
         this.precoFinal = 0.0;
         this.status = null;
         this.data = LocalDate.now();
+        this.vintageProfit = 0.0;
     }
 
-    public Encomenda(Utilizador user, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data) {
+    public Encomenda(String codSistema, Utilizador user, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data, double vintageProfit) {
+        this.codSistema = codSistema;
         this.user = user.clone();
-        this.artigos = this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+        this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         this.tamanho = tamanho;
         this.precoFinal = precoFinal;
         this.status = status;
         this.data = data;
+        this.vintageProfit = vintageProfit;
+    }
+
+    public Encomenda(String codSistema, Utilizador user, Map<String, Artigo> artigos) {
+        this.status = StatusEncomenda.PENDENTE;
+        this.codSistema = codSistema;
+        this.user = user;
+        this.tamanho = getTamanhoEncomendaString(artigos);
+        this.precoFinal = artigos.values().stream().mapToDouble(Artigo::getPrecoTotalArtigo).sum();
+        this.data = LocalDate.now();
+        this.vintageProfit = artigos.values().stream().mapToDouble(Artigo::getProfitVintage).sum();
+    }
+
+    public Encomenda(String codSistema, Utilizador user) { // ????
+        this.codSistema = codSistema;
+        this.user = user.clone();
+        this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+        this.tamanho = tamanho;
+        this.precoFinal = precoFinal;
+        this.status = status;
+        this.data = data;
+        this.vintageProfit = vintageProfit;
     }
 
     public Encomenda(Encomenda umaEncomenda) {
+        this.codSistema = umaEncomenda.getCodSistema();
         this.user = umaEncomenda.getUser();
         this.artigos = umaEncomenda.getArtigos();
         this.tamanho = umaEncomenda.getTamanhoEncomenda();
         this.precoFinal = umaEncomenda.getPrecoFinal();
         this.status = umaEncomenda.getStatus();
         this.data = umaEncomenda.getData();
+        this.vintageProfit = umaEncomenda.getVintageProfit();
 
     }
+
+    // Methods
 
     public Encomenda clone() {
         return new Encomenda(this);
@@ -56,7 +88,8 @@ public class Encomenda {
         Encomenda e = (Encomenda) o;
         return this.user.equals(e.getUser()) && this.artigos.equals(e.getArtigos()) &&
                 this.tamanho.equals(e.getTamanhoEncomenda()) && this.precoFinal == e.getPrecoFinal() &&
-                this.status.equals(e.getStatus()) && this.data.equals(e.getData());
+                this.status.equals(e.getStatus()) && this.data.equals(e.getData()) &&
+                this.vintageProfit == e.getVintageProfit();
     }
 
     public String toString() {
@@ -76,6 +109,10 @@ public class Encomenda {
     }
 
     // METHODS
+
+    public void insereUmArtigo(Artigo artigo) {
+        this.artigos.put(artigo.getCodBarras(), artigo);
+    }
 
     /*
     public double taxaDeSatisfacao() {
@@ -103,24 +140,46 @@ public class Encomenda {
 
      */
 
-    public double custoTotal() {
+    public double custoProdutos() {
+
         double custo = 0.0;
 
         for (Map.Entry<String, Artigo> entry : this.artigos.entrySet()) {
             String key = entry.getKey();
             Artigo value = entry.getValue();
-            String className = value.getClass().getSimpleName();
 
             custo += value.getPrecoBase();
+        }
 
-            if (className.equals("MalaUsada") || className.equals("SapatilhaUsada") || className.equals("TshirtUsada")) {
-                custo += 0.25;
+        return custo;
+    }
+
+    public double custoTotalEncomenda(Map<String, Artigo> lstArtigos) {
+        double count = 0.0;
+
+        for(Artigo art : lstArtigos.values()) {
+            count += art.getPrecoTotalArtigo();
+        }
+
+        return count;
+    }
+
+    public double vintageProfit() {
+        double lucro = 0.0;
+
+        for (Map.Entry<String, Artigo> entry : this.artigos.entrySet()) {
+            String key = entry.getKey();
+            Artigo value = entry.getValue();
+
+            if (value.getEstado() instanceof Usado) {
+                lucro += 0.25;
             }
-            if (className.equals("Mala") || className.equals("Sapatilha") || className.equals("Tshirt")) {
-                custo += 0.5;
+            if (value.getEstado() instanceof Novo) {
+                lucro += 0.5;
             }
         }
-        return custo;
+
+        return lucro;
     }
 
     public int DimensaoEncomenda() {
@@ -128,6 +187,14 @@ public class Encomenda {
     }
 
     // GETTERS AND SETTERs
+
+    public String getCodSistema() {
+        return codSistema;
+    }
+
+    public void setCodSistema(String codSistema) {
+        this.codSistema = codSistema;
+    }
 
     public Utilizador getUser() {
         return this.user.clone();
@@ -149,17 +216,20 @@ public class Encomenda {
 
         return this.tamanho;
     }
-    public void setTamanhoEncomenda() {
-        if (DimensaoEncomenda() == 1) this.tamanho = "Small";
-        if (DimensaoEncomenda() <= 5 && DimensaoEncomenda() >= 2) this.tamanho = "Medium";
-        if (DimensaoEncomenda() > 5) this.tamanho = "Large";
+
+    public String getTamanhoEncomendaString(Map<String, Artigo> listaArtigos) {
+        String ret = null;
+        if (listaArtigos.size()==1) ret = "Small";
+        if (listaArtigos.size() <= 5 && listaArtigos.size() >= 2) ret = "Medium";
+        if (listaArtigos.size() > 5) ret = "Large";
+        return ret;
     }
 
     public double getPrecoFinal() {
         return this.precoFinal;
     }
     public void setPrecoFinal() {
-        this.precoFinal = custoTotal() + 0; // REPENSAR A FUNÇÃO TODA custoTotalExpedicao();
+        this.precoFinal = custoProdutos() + this.vintageProfit; // REPENSAR A FUNÇÃO TODA custoTotalExpedicao();
     }
 
     public StatusEncomenda getStatus() {
@@ -174,5 +244,13 @@ public class Encomenda {
     }
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public double getVintageProfit() {
+        return this.vintageProfit;
+    }
+
+    public void setVintageProfit() {
+        this.vintageProfit = vintageProfit();
     }
 }

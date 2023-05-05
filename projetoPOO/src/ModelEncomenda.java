@@ -1,8 +1,64 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ModelEncomenda {
+
+    private Map<String, Encomenda> listaEncomendas;
+
+    //methods
+
+    public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArtigos) {
+
+        String codigoEncomenda = gerarCodigoSistema(this.listaEncomendas);
+
+        Encomenda enc = new Encomenda(codigoEncomenda, user, lstArtigos);
+
+        this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
+    }
+
+    public void addArtigoEncomenda (Encomenda enc, Artigo artigo) {
+        enc.insereUmArtigo(artigo);
+    }
+
+    /*
+    public Artigo getArtigoByCod(String codBarras) {
+
+        Artigo art = null;
+
+        for (Artigo artigo: this.listaArtigos.values()) {
+            if(artigo.getCodBarras().equals(codBarras)) art = artigo;
+        }
+
+        return art;
+    }
+     */
+
+    public Map<String, Encomenda> getListaTodasEncomendas() {
+        return this.listaEncomendas.values().stream().collect(Collectors.toMap(Encomenda::getCodSistema, Encomenda::clone));
+    }
+
+    public String infoTodasAsEncomendas() {
+        StringBuilder sb = new StringBuilder();
+
+        for(Encomenda enc : this.listaEncomendas.values()) {
+            sb.append(enc.toString()).append("\n__________________________________\n");
+        }
+
+        return sb.toString();
+    }
+
+    private String gerarCodigoSistema(Map<String, Encomenda> listaEncomendas)
+    {
+        String codigoSistema = UUID.randomUUID().toString();
+        while (listaEncomendas.containsKey(codigoSistema))
+        {
+            codigoSistema = UUID.randomUUID().toString();
+        }
+        return codigoSistema;
+    }
 
     /*
     public void criaEncomendaModel(String emailUser) {

@@ -15,6 +15,10 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
+    public void criaUtilizador2(Utilizador user) {
+        this.modelUtlizador.criaUtilizador2(user);
+    }
+
     public Utilizador criaUtlizadorVazio()
     {
         return this.modelUtlizador.criaUtlizadorSemNada();
@@ -50,6 +54,10 @@ public class ControllerUtlizador {
         return produtos;
     }
 
+    public Utilizador getUserByArtigo(Artigo art) {
+        return modelUtlizador.getUserByArtigoAVenda(art);
+    }
+
     public Utilizador loginUtlizador(String email)
     {
         return modelUtlizador.loginUtlizador(email);
@@ -71,6 +79,10 @@ public class ControllerUtlizador {
         this.viewerUtlizador = viewerUtlizador;
     }
 
+    public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
+        modelUtlizador.removeVariosArtigosUser(user, lst);
+    }
+
     public String infoTodosArtigosAVenda() {
         return this.modelUtlizador.infoTodosArtigosAVenda();
     }
@@ -81,6 +93,10 @@ public class ControllerUtlizador {
 
     public String toStringArtigoAVendaByType(String type) {
         return this.modelUtlizador.toStringArtigoAVendaByType(type);
+    }
+
+    public void addEncomendaUser(Utilizador user, Map<String, Artigo> lstArt) {
+        this.modelUtlizador.addEncomendaUser(user, lstArt);
     }
 
     public void setModelUtlizador(ModelUtlizador modelUtlizador) {

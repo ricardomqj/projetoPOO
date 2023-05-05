@@ -192,6 +192,40 @@ public class ModelUtlizador {
         return codigoSistema;
     }
 
+    public void addEncomendaUser(Utilizador user, Map<String, Artigo> lst) {
+        Utilizador uti = this.listaUtilizadores.get(user.getCodigoSistema());
+        Encomenda enc = new Encomenda(user.getCodigoSistema(), user, lst);
+        uti.addEncomendaListaEncomendas(enc);
+        this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
+    }
+
+    public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
+        Map<String, Artigo> lstArtigosNova = user.getProdutosAVenda();
+        for(Artigo art : lst.values()) {
+            lstArtigosNova.remove(art.getCodBarras());
+        }
+        user.setProdutosAVenda(lstArtigosNova);
+        this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
+    }
+
+    public Utilizador getUserByArtigoAVenda(Artigo art) {
+        Utilizador ret = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            for(Artigo article : uti.getProdutosAVenda().values()) {
+                if(article.getCodBarras().equals(art.getCodBarras())) {
+                    ret = null;
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public void criaUtilizador2(Utilizador user) {
+        this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
+    }
+
     public Utilizador loginUtlizador(String email)
     {
         Utilizador utilizador = getUserByEmail(email);
@@ -208,7 +242,7 @@ public class ModelUtlizador {
         Utilizador ret = null;
         for(Utilizador user : this.listaUtilizadores.values()) {
             if(user.getEmail().equals(email)) {
-                ret = user;
+                ret = user.clone();
                 break;
             }
         }

@@ -9,15 +9,6 @@ public class Usado extends Estado{
         this.avalEstado = 0;
     }
 
-    /*
-    public Usado(Usado usado)
-    {
-        super(usado);
-        this.numDonos = usado.getNumDonos();
-        this.avalEstado = usado.getAvalEstado();
-    }
-    */
-
     //public Usado clone() { return new Usado(this);}
 
     public String toString() {
@@ -47,4 +38,5 @@ public class Usado extends Estado{
     public void setNumDonos(int numDonos) {
         this.numDonos = numDonos;
     }
+
 }

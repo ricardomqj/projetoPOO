@@ -109,6 +109,14 @@ public class Utilizador {
         this.produtosAVenda.put(artigo.getCodBarras(), artigo.clone());
     }
 
+    public void addEncomendaListaEncomendas(Encomenda enc) {
+        this.encomendasFeitas.add(enc);
+    }
+
+    public void removeArtigoAVenda(Artigo art) {
+        this.produtosAVenda.remove(art.getCodBarras());
+    }
+
     // getters e setters
     public String getCodigoSistema() {
         return this.codigoSistema;
