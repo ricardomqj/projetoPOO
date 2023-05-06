@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ModelEncomenda {
@@ -9,6 +6,9 @@ public class ModelEncomenda {
     private Map<String, Encomenda> listaEncomendas;
 
     //methods
+    public ModelEncomenda() {
+        this.listaEncomendas = new HashMap<String, Encomenda>();
+    }
 
     public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArtigos) {
 
@@ -35,6 +35,15 @@ public class ModelEncomenda {
         return art;
     }
      */
+
+    public String addEncomenda(List<Artigo> lstArt, Utilizador user) {
+        Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
+        lstArtigos = lstArt.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+        String codEncomenda = gerarCodigoSistema(listaEncomendas);
+        Encomenda enc = new Encomenda(codEncomenda, user, lstArtigos);
+        this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
+        return codEncomenda;
+    }
 
     public Map<String, Encomenda> getListaTodasEncomendas() {
         return this.listaEncomendas.values().stream().collect(Collectors.toMap(Encomenda::getCodSistema, Encomenda::clone));

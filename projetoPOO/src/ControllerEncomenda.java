@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class ControllerEncomenda {
@@ -22,6 +23,14 @@ public class ControllerEncomenda {
 
     public String infoTodasEncomendas() {
         return modelEncomenda.infoTodasAsEncomendas();
+    }
+
+    public Map<String, Encomenda> getListaTodasEncomendas() {
+        return modelEncomenda.getListaTodasEncomendas();
+    }
+
+    public String addEncomenda(List<Artigo> lstArt, Utilizador user) {
+        return modelEncomenda.addEncomenda(lstArt, user);
     }
 
     //getters e setters

@@ -15,10 +15,18 @@ public class ControllerArtigo {
         return this.modelArtigo.getArtigoByCod(codBarras);
     }
 
-    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,  int tamanhoSapatilha,
+    public Sapatilha registarSapatilhaNova(Sapatilha umaSap) {
+        return this.modelArtigo.registarSapatilhaNova(umaSap);
+    }
+
+    public void setDiscountArtigo(String codBarras, int desconto) {
+        this.modelArtigo.setDiscountArtigo(codBarras, desconto);
+    }
+
+    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 
-        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanhoSapatilha, temAtacadores, cor);
+        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, marca, descricao, tamanhoSapatilha, temAtacadores, cor);
 
         return sapatilha;
     }

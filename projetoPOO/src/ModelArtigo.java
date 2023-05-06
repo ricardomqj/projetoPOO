@@ -8,24 +8,32 @@ public class ModelArtigo {
     //private Map<String, Mala> listaMalas;
     //private Map<String, TShirt> listaTShirts;
 
-    public Artigo getArtigoByCod(String codBarras) {
-        return this.listaArtigos.values().stream().filter(art -> art.getCodBarras().equals(codBarras)).findFirst().get();
-        /*
-        Artigo art = null;
-
-        for (Artigo artigo: this.listaArtigos.values()) {
-            if(artigo.getCodBarras().equals(codBarras)) art = artigo;
-        }
-
-        return art;*/
+    public ModelArtigo() {
+        this.listaArtigos = new HashMap<String, Artigo>();
     }
 
-    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,  int tamanhoSapatilha,
+    public Artigo getArtigoByCod(String codBarras) {
+        return this.listaArtigos.get(codBarras);
+    }
+
+    public Sapatilha registarSapatilhaNova(Sapatilha umaSap) {
+        this.listaArtigos.put(umaSap.getCodBarras(), umaSap.clone());
+        return umaSap.clone();
+    }
+
+    public void setDiscountArtigo(String codBarras, int desconto) {
+        Artigo art = getArtigoByCod(codBarras);
+        double precoBaseArt = art.getPrecoAtual();
+        art.setDesconto(desconto);
+        art.setPrecoAtual(precoBaseArt * (1-(desconto/100)));
+        this.listaArtigos.put(art.getCodBarras(), art.clone());
+    }
+
+    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 
-        Sapatilha sapatilha = new Sapatilha(codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, desconto,
-                 tamanhoSapatilha, temAtacadores, cor);
-
+        Sapatilha sapatilha = new Sapatilha(codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
+        this.listaArtigos.put(sapatilha.getCodBarras(), sapatilha.clone());
         // STOCK A 1
         return sapatilha;
     }
@@ -37,6 +45,14 @@ public class ModelArtigo {
                 temAtacadores, cor, numDonos, avalEstado);
         // falta stock
         return sapatilhaUsa;
+    }
+
+    public String getTipoArtigo(String codBarras) {
+        StringBuilder sb = new StringBuilder();
+        Artigo art = getArtigoByCod(codBarras);
+        String type = art.getEstado().getClass().getSimpleName();
+        sb.append(art.getClass().getSimpleName()).append(type);
+        return sb.toString();
     }
 
     public Mala registarMalaNova(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,

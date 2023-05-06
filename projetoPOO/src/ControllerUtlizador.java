@@ -15,6 +15,10 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
+    public boolean userTemArtigo(String codBarras) {
+        return this.modelUtlizador.userTemArtigo(codBarras);
+    }
+
     public void criaUtilizador2(Utilizador user) {
         this.modelUtlizador.criaUtilizador2(user);
     }
@@ -22,6 +26,10 @@ public class ControllerUtlizador {
     public Utilizador criaUtlizadorVazio()
     {
         return this.modelUtlizador.criaUtlizadorSemNada();
+    }
+
+    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
+        return this.modelUtlizador.getArtigoAVendaByUser(user, codBarras);
     }
 
     public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
@@ -81,6 +89,26 @@ public class ControllerUtlizador {
 
     public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
         modelUtlizador.removeVariosArtigosUser(user, lst);
+    }
+
+    public void addArtigoCarrinho(String email, Artigo art) {
+        modelUtlizador.addArtigoCarrinho(email, art);
+    }
+
+    public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEnc) {
+        modelUtlizador.addCarrinhoToEncomendas(email, lstEnc);
+    }
+
+    public String getInfoCarrinho(Utilizador user) {
+        return modelUtlizador.getInfoCarrinho(user);
+    }
+
+    public void removeArtigoCarrinho(Utilizador user, String codBarras) {
+        modelUtlizador.removeArtigoCarrinho(user, codBarras);
+    }
+
+    public void setDiscountUser(String codSis, String codBarras, int desconto) {
+        this.modelUtlizador.setDiscountUser(codSis, codBarras, desconto);
     }
 
     public String infoTodosArtigosAVenda() {

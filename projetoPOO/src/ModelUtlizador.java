@@ -1,6 +1,7 @@
 import jdk.jshell.execution.Util;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ModelUtlizador {
     private Map<String,Utilizador> listaUtilizadores;
@@ -224,6 +225,111 @@ public class ModelUtlizador {
 
     public void criaUtilizador2(Utilizador user) {
         this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
+    }
+
+    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
+        Artigo ret = null;
+
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            for(Artigo art : uti.getProdutosAVenda().values()) {
+                if(art.getCodBarras().equals(codBarras)) {
+                    ret = art;
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public void removeArtigoCarrinho(Utilizador user, String codBarras) {
+        Utilizador uti = new Utilizador();
+        for(Utilizador elem : this.listaUtilizadores.values()) {
+            if(elem.getEmail().equals(user.getEmail())) {
+                uti = elem;
+                break;
+            }
+        }
+        List<Artigo> newCarrinho = uti.getArtigosCarrinho();
+        for(Artigo art : newCarrinho) {
+            if(art.getCodBarras().equals(codBarras)) {
+                newCarrinho.remove(art);
+                break;
+            }
+        }
+        uti.setArtigosCarrinho(newCarrinho);
+        this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
+    }
+
+    public void addArtigoCarrinho(String email, Artigo art) {
+        Utilizador ret = new Utilizador();
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(email)) {
+                ret = uti;
+                break;
+            }
+        }
+        List<Artigo> carrinho = new ArrayList<>();
+        carrinho.addAll(ret.getArtigosCarrinho());
+        carrinho.add(art);
+        ret.setArtigosCarrinho(carrinho);
+        this.listaUtilizadores.put(ret.getCodigoSistema(), ret.clone());
+    }
+
+    public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEncomendas) {
+        Utilizador ret = new Utilizador();
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            if(uti.getEmail().equals(email)) {
+                ret = uti;
+                break;
+            }
+        }
+        List<Artigo> carrinho = new ArrayList<>();
+        carrinho.addAll(ret.getArtigosCarrinho());
+        String codEnc = gerarCodigoEncomenda(lstEncomendas);
+        Map<String, Artigo> carrinhoMap = carrinho.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+        Encomenda enc = new Encomenda(codEnc, ret, carrinhoMap);
+        ret.addEncomendaListaEncomendas(enc);
+        this.listaUtilizadores.put(ret.getCodigoSistema(),ret.clone());
+    }
+
+    public String getInfoCarrinho(Utilizador user) {
+        StringBuilder sb = new StringBuilder();
+
+        for(Artigo art : user.getArtigosCarrinho()) {
+            sb.append(art.toString()).append("\n_____________________________\n");
+        }
+
+        return sb.toString();
+    }
+
+    private String gerarCodigoEncomenda(Map<String, Encomenda> listaEncomendas) {
+        String codigoSistema = UUID.randomUUID().toString();
+        while(listaEncomendas.containsKey(codigoSistema)) {
+            codigoSistema = UUID.randomUUID().toString();
+        }
+        return codigoSistema;
+    }
+
+    public void setDiscountUser(String codSis, String codBarras, int desconto) {
+        Utilizador user = this.listaUtilizadores.get(codSis);
+        Map<String, Artigo> lstArtVenda = user.getProdutosAVenda();
+        Artigo art = lstArtVenda.get(codBarras);
+        double precoAtual = art.getPrecoAtual();
+        art.setDesconto(desconto);
+        art.setPrecoAtual(precoAtual * (1-(desconto/100)));
+        lstArtVenda.put(art.getCodBarras(), art.clone());
+        user.setProdutosAVenda(lstArtVenda);
+        this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
+    }
+
+    public boolean userTemArtigo(String codBarras) {
+        for(Utilizador uti : this.listaUtilizadores.values()) {
+            for(Artigo art : uti.getProdutosAVenda().values()) {
+                if(art.getCodBarras().equals(codBarras))
+                    return true;
+            }
+        }
+        return false;
     }
 
     public Utilizador loginUtlizador(String email)

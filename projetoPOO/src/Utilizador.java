@@ -11,6 +11,7 @@ public class Utilizador {
     private double profit; // falta acabar - para fazer preciso de produtosVendidos - tendo isso fazer qq coisa para ir buscar o precobase de cada produto vendido
     private Map<String, Artigo> produtosAVenda; // identificado pelo codigo de barras(como key)
     private List<Encomenda> encomendasFeitas;
+    private List<Artigo> artigosCarrinho;
     private Map<String, Artigo> produtosVendidos; // falta acabar
 
     public Utilizador() {
@@ -23,10 +24,11 @@ public class Utilizador {
         this.encomendasFeitas = new ArrayList<>();
         this.produtosAVenda = new HashMap<>();
         this.produtosVendidos = new HashMap<>();
+        this.artigosCarrinho = new ArrayList<>();
     }
 
     public Utilizador(String codSis, String email, String name, String morada, String nif, int profit, Map<String, Artigo> produtosAVendaArg, List<Encomenda> encomendasFeitasArg,
-                      Map<String, Artigo> produtosVendidosArg) {
+                      Map<String, Artigo> produtosVendidosArg, List<Artigo> artsCarrinho) {
         this.codigoSistema = codSis;
         this.email = email;
         this.nome = name;
@@ -36,6 +38,7 @@ public class Utilizador {
         this.produtosAVenda = produtosAVendaArg;
         this.encomendasFeitas = encomendasFeitasArg;
         this.produtosVendidos = produtosVendidosArg;
+        this.artigosCarrinho = artsCarrinho;
     }
 
     public Utilizador(String codSis, String email, String name, String morada, String nif) {
@@ -48,6 +51,7 @@ public class Utilizador {
         this.encomendasFeitas = new ArrayList<>();
         this.produtosAVenda = new HashMap<>();
         this.produtosVendidos = new HashMap<>();
+        this.artigosCarrinho = new ArrayList<Artigo>();
     }
 
     public Utilizador(Utilizador umUtilizador) {
@@ -60,6 +64,7 @@ public class Utilizador {
         this.produtosAVenda = umUtilizador.getProdutosAVenda();
         this.encomendasFeitas = umUtilizador.getEncomendasFeitas();
         this.produtosVendidos = umUtilizador.getProdutosVendidos();
+        this.artigosCarrinho = umUtilizador.getArtigosCarrinho();
     }
 
     public Utilizador clone() {return new Utilizador(this);}
@@ -194,5 +199,13 @@ public class Utilizador {
 
     public void setProdutosVendidos(Map<String, Artigo> produtosVendidos) {
         this.produtosVendidos = produtosVendidos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    }
+
+    public List<Artigo> getArtigosCarrinho() {
+        return this.artigosCarrinho.stream().map(Artigo::clone).collect(Collectors.toList());
+    }
+
+    public void setArtigosCarrinho(List<Artigo> artigosCarrinho) {
+        this.artigosCarrinho = artigosCarrinho.stream().map(Artigo::clone).collect(Collectors.toList());
     }
 }
