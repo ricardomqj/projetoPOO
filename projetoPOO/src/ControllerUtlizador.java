@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.Map;
 
 public class ControllerUtlizador {
     private ViewerUtlizador viewerUtlizador;
@@ -15,28 +15,12 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
-    public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
-        this.modelUtlizador.registarSapatilhaUser(user, sapatilha);
+    public boolean userTemArtigo(String codBarras) {
+        return this.modelUtlizador.userTemArtigo(codBarras);
     }
 
-    public void registarSapatilhaUsadaUser (Utilizador user, Sapatilha sapatilha) {
-        this.modelUtlizador.registarSapatilhaUsadaUser(user, sapatilha);
-    }
-
-    public void registarTShirtUser(Utilizador user, TShirt tshirt) {
-        this.modelUtlizador.registarTShirtUser(user, tshirt);
-    }
-
-    public void registarTShirtUsadaUser (Utilizador user, TShirt tshirt) {
-        this.modelUtlizador.registarTShirtUsadaUser(user, tshirt);
-    }
-
-    public void registarMalaUser(Utilizador user, Mala mala) {
-        this.modelUtlizador.registarMalaUser(user, mala);
-    }
-
-    public void registarMalaUsadaUser (Utilizador user, Mala mala) {
-        this.modelUtlizador.registarMalaUsadaUser(user, mala);
+    public void criaUtilizador2(Utilizador user) {
+        this.modelUtlizador.criaUtilizador2(user);
     }
 
     public Utilizador criaUtlizadorVazio()
@@ -44,13 +28,83 @@ public class ControllerUtlizador {
         return this.modelUtlizador.criaUtlizadorSemNada();
     }
 
+    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
+        return this.modelUtlizador.getArtigoAVendaByUser(user, codBarras);
+    }
+
+    public void registarArtigoNoUtlizador(Utilizador user, String codBarras) {
+        this.modelUtlizador.registarArtigoNoUtlizador(user,codBarras);
+    }
+
+    public Map<String, Artigo> percorreUsers() {
+        Map<String, Artigo> produtos = this.modelUtlizador.percorreUsers();
+
+        return produtos;
+    }
+
+    public Utilizador getUserByArtigo(Artigo art) {
+        return modelUtlizador.getUserByArtigoAVenda(art);
+    }
+
     public Utilizador loginUtlizador(String email)
     {
         return modelUtlizador.loginUtlizador(email);
     }
 
+    public Utilizador getUserByEmail(String email) {
+        return this.modelUtlizador.getUserByEmail(email);
+    }
+
+    public String infoTodosUsers() {
+        return this.modelUtlizador.infoTodosUsers();
+    }
+
+    public String infoUserByEmail(String email) {
+        return this.modelUtlizador.infoUserByEmail(email);
+    }
+
     public void setViewerUtlizador(ViewerUtlizador viewerUtlizador) {
         this.viewerUtlizador = viewerUtlizador;
+    }
+
+    public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
+        modelUtlizador.removeVariosArtigosUser(user, lst);
+    }
+
+    public void addArtigoCarrinho(String email, Artigo art) {
+        modelUtlizador.addArtigoCarrinho(email, art);
+    }
+
+    public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEnc) {
+        modelUtlizador.addCarrinhoToEncomendas(email, lstEnc);
+    }
+
+    public String getInfoCarrinho(Utilizador user) {
+        return modelUtlizador.getInfoCarrinho(user);
+    }
+
+    public void removeArtigoCarrinho(Utilizador user, String codBarras) {
+        modelUtlizador.removeArtigoCarrinho(user, codBarras);
+    }
+
+    public void setDiscountUser(String codSis, String codBarras, int desconto) {
+        this.modelUtlizador.setDiscountUser(codSis, codBarras, desconto);
+    }
+
+    public String infoTodosArtigosAVenda() {
+        return this.modelUtlizador.infoTodosArtigosAVenda();
+    }
+
+    public String toStringArtigosVendaUser(String email) {
+        return this.modelUtlizador.toStringArtigosVendaUser(email);
+    }
+
+    public String toStringArtigoAVendaByType(String type) {
+        return this.modelUtlizador.toStringArtigoAVendaByType(type);
+    }
+
+    public void addEncomendaUser(Utilizador user, Map<String, Artigo> lstArt) {
+        this.modelUtlizador.addEncomendaUser(user, lstArt);
     }
 
     public void setModelUtlizador(ModelUtlizador modelUtlizador) {

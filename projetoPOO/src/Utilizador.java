@@ -9,8 +9,9 @@ public class Utilizador {
     private String morada;
     private String nif;
     private double profit; // falta acabar - para fazer preciso de produtosVendidos - tendo isso fazer qq coisa para ir buscar o precobase de cada produto vendido
-    private Map<String, Artigo> produtosAVenda; // identificado pelo codigo de barras(como key)
+    private List<String> produtosAVendaCodBarras;
     private List<Encomenda> encomendasFeitas;
+    private List<Artigo> artigosCarrinho;
     private Map<String, Artigo> produtosVendidos; // falta acabar
 
     public Utilizador() {
@@ -21,21 +22,23 @@ public class Utilizador {
         this.nif = "n/a";
         this.profit = 0.0;
         this.encomendasFeitas = new ArrayList<>();
-        this.produtosAVenda = new HashMap<>();
+        this.produtosAVendaCodBarras = new ArrayList<>();
         this.produtosVendidos = new HashMap<>();
+        this.artigosCarrinho = new ArrayList<>();
     }
 
-    public Utilizador(String codSis, String email, String name, String morada, String nif, int profit, Map<String, Artigo> produtosAVendaArg, List<Encomenda> encomendasFeitasArg,
-                      Map<String, Artigo> produtosVendidosArg) {
+    public Utilizador(String codSis, String email, String name, String morada, String nif, int profit, List<String> produtosAVendaArg, List<Encomenda> encomendasFeitasArg,
+                      Map<String, Artigo> produtosVendidosArg, List<Artigo> artsCarrinho) {
         this.codigoSistema = codSis;
         this.email = email;
         this.nome = name;
         this.morada = morada;
         this.nif = nif;
         this.profit = profit;
-        this.produtosAVenda = produtosAVendaArg;
+        this.produtosAVendaCodBarras = produtosAVendaArg;
         this.encomendasFeitas = encomendasFeitasArg;
         this.produtosVendidos = produtosVendidosArg;
+        this.artigosCarrinho = artsCarrinho;
     }
 
     public Utilizador(String codSis, String email, String name, String morada, String nif) {
@@ -46,8 +49,9 @@ public class Utilizador {
         this.nif = nif;
         this.profit = 0;
         this.encomendasFeitas = new ArrayList<>();
-        this.produtosAVenda = new HashMap<>();
+        this.produtosAVendaCodBarras = new ArrayList<>();
         this.produtosVendidos = new HashMap<>();
+        this.artigosCarrinho = new ArrayList<Artigo>();
     }
 
     public Utilizador(Utilizador umUtilizador) {
@@ -57,9 +61,10 @@ public class Utilizador {
         this.morada = umUtilizador.getMorada();
         this.nif = umUtilizador.getNif();
         this.profit = umUtilizador.getProfit();
-        this.produtosAVenda = umUtilizador.getProdutosAVenda();
+        this.produtosAVendaCodBarras = umUtilizador.getProdutosAVenda();
         this.encomendasFeitas = umUtilizador.getEncomendasFeitas();
         this.produtosVendidos = umUtilizador.getProdutosVendidos();
+        this.artigosCarrinho = umUtilizador.getArtigosCarrinho();
     }
 
     public Utilizador clone() {return new Utilizador(this);}
@@ -72,9 +77,10 @@ public class Utilizador {
         Utilizador user = (Utilizador) o;
         return this.codigoSistema.equals(user.getCodigoSistema()) && this.email.equals(user.getEmail()) &&
                 this.nome.equals(user.getNome()) && this.morada.equals(user.getMorada()) &&
-                this.nif.equals(user.getNif()) && this.profit == user.getProfit() && this.produtosAVenda.equals(user.getProdutosAVenda()) &&
+                this.nif.equals(user.getNif()) && this.profit == user.getProfit() && this.produtosAVendaCodBarras.equals(user.getProdutosAVenda()) &&
                 this.encomendasFeitas.equals(user.getEncomendasFeitas()) && this.produtosVendidos.equals(user.getProdutosVendidos());
     }
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -85,9 +91,9 @@ public class Utilizador {
         sb.append("Morada: ").append(this.morada).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");
         sb.append("Profit: ").append(this.profit).append("\n");
-        sb.append("Lista de produtos à venda: ").append("\n");
-        for(Artigo art : this.produtosAVenda.values()) {
-            sb.append(art.toString()).append("\n");
+        sb.append("Lista de produtos à venda CodBarras: ").append("\n");
+        for(String art : this.produtosAVendaCodBarras) {
+            sb.append(art).append("\n");
         }
         sb.append("Lista de produtos adquiridos: ").append("\n");
         for(Encomenda art : this.encomendasFeitas) {
@@ -105,8 +111,16 @@ public class Utilizador {
 
     public double profitTotal;
 
-    public void addArtigoToListaAVenda(Map<String, Artigo> produtosAVenda, Artigo artigo) {
+    public void addArtigoToListaAVendaCodBarras(String codBarras) {
+        this.produtosAVendaCodBarras.add(codBarras);
+    }
 
+    public void addEncomendaListaEncomendas(Encomenda enc) {
+        this.encomendasFeitas.add(enc);
+    }
+
+    public void removeArtigoAVenda(String codBarras) {
+        this.produtosAVendaCodBarras.remove(codBarras);
     }
 
     // getters e setters
@@ -164,12 +178,11 @@ public class Utilizador {
         }
     }
 
-    public Map<String, Artigo> getProdutosAVenda() {
-        return this.produtosAVenda.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    public List<String> getProdutosAVenda() {
+        return this.produtosAVendaCodBarras;
     }
-
-    public void setProdutosAVenda(Map<String, Artigo> produtosAVenda) {
-        this.produtosAVenda = produtosAVenda.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    public void setProdutosAVendaCodBarras(List<String> produtosAVendaCodBarras) {
+        this.produtosAVendaCodBarras = produtosAVendaCodBarras;
     }
 
     public List<Encomenda> getEncomendasFeitas() {
@@ -186,5 +199,13 @@ public class Utilizador {
 
     public void setProdutosVendidos(Map<String, Artigo> produtosVendidos) {
         this.produtosVendidos = produtosVendidos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    }
+
+    public List<Artigo> getArtigosCarrinho() {
+        return this.artigosCarrinho.stream().map(Artigo::clone).collect(Collectors.toList());
+    }
+
+    public void setArtigosCarrinho(List<Artigo> artigosCarrinho) {
+        this.artigosCarrinho = artigosCarrinho.stream().map(Artigo::clone).collect(Collectors.toList());
     }
 }

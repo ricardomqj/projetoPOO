@@ -9,16 +9,17 @@ public class Usado extends Estado{
         this.avalEstado = 0;
     }
 
-    /*
-    public Usado(Usado usado)
-    {
-        super(usado);
-        this.numDonos = usado.getNumDonos();
-        this.avalEstado = usado.getAvalEstado();
+    public Usado(int numDonos, int avalEstado) {
+        this.numDonos = numDonos;
+        this.avalEstado = avalEstado;
     }
-    */
 
-    //public Usado clone() { return new Usado(this);}
+    public Usado(Usado used) {
+        this.numDonos  = used.getNumDonos();
+        this.avalEstado = used.getAvalEstado();
+    }
+
+    public Usado clone() { return new Usado(this);}
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -47,4 +48,5 @@ public class Usado extends Estado{
     public void setNumDonos(int numDonos) {
         this.numDonos = numDonos;
     }
+
 }
