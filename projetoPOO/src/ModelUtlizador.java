@@ -30,7 +30,7 @@ public class ModelUtlizador {
 
         */
 
-        String filePath = System.getProperty("user.dir") + "data/users.txt"; // VER ISTO DEPOIS
+        String filePath = System.getProperty("src/utilizadores.txt"); // VER ISTO DEPOIS
         File file = new File(filePath);
 
         try {
@@ -71,7 +71,7 @@ public class ModelUtlizador {
                 // ------------------------- ENCOMENDAS FEITAS -------------------------//
                 // ------------------------- ENCOMENDAS FEITAS -------------------------//
 
-                List<String> encomendasFeitas = new ArrayList<>();
+                //List<String> encomendasFeitas = new ArrayList<>();
                 String[] encFeitas = fields[7].split(";");
 
                 for (String enc : encFeitas) {
@@ -178,7 +178,7 @@ public class ModelUtlizador {
                 // ------------------------- ARTIGOS CARRINHO -------------------------//
 
                 // Preenche a lista de ARTIGOS CARRINHO
-                List<Artigo> artigosCarrinho = new ArrayList<>();
+                //List<Artigo> artigosCarrinho = new ArrayList<>();
                 String[] artigosCarrinhoArray = fields[8].split(";");
 
                 for (String prod : artigosCarrinhoArray) {

@@ -26,7 +26,7 @@ public class ControllerArtigo {
     public Sapatilha registarSapatilhaNova(String nome, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 
-        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(nome, codBarras, dataop, precoBase, nomeTrans, marca, descricao, tamanhoSapatilha, temAtacadores, cor);
+        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(nome, codBarras, dataop, precoBase, nomeTrans, marca, descricao, tamanhoSapatilha, temAtacadores, cor); //falta desconto
 
         return sapatilha;
     }
