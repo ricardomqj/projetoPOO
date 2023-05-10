@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.List;
 
 public class ControllerArtigo {
     private ViewerArtigo viewerArtigo;
@@ -15,6 +16,13 @@ public class ControllerArtigo {
         return this.modelArtigo.getArtigoByCod(codBarras);
     }
 
+    public String getArtigosParaVenda(List<Artigo> list)
+    {
+        modelArtigo.getArtigosParaVenda(list);
+
+        return viewerArtigo.listaDeArtigosParaVenda(list);
+    }
+
     public Sapatilha registarSapatilhaNova(Sapatilha umaSap) {
         return this.modelArtigo.registarSapatilhaNova(umaSap);
     }
@@ -23,49 +31,49 @@ public class ControllerArtigo {
         this.modelArtigo.setDiscountArtigo(codBarras, desconto);
     }
 
-    public Sapatilha registarSapatilhaNova(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,int tamanhoSapatilha,
+    public Sapatilha registarSapatilhaNova(String nome, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto,int tamanhoSapatilha,
                                       boolean temAtacadores, String cor) {
 
-        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, marca, descricao, tamanhoSapatilha, temAtacadores, cor);
+        Sapatilha sapatilha = this.modelArtigo.registarSapatilhaNova(nome, codBarras, dataop, precoBase, nomeTrans, marca, descricao, tamanhoSapatilha, temAtacadores, cor); //falta desconto
 
         return sapatilha;
     }
 
-    public Sapatilha registarSapatilhaUsada(String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanhoSapatilha,
+    public Sapatilha registarSapatilhaUsada(String nome, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanhoSapatilha,
                                        boolean temAtacadores, String cor, int numDonos, int avalEstado) {
 
-        Sapatilha sapatilhausa = this.modelArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
+        Sapatilha sapatilhausa = this.modelArtigo.registarSapatilhaUsada(nome, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
 
         return sapatilhausa;
     }
 
-    public Mala registarMalaNova(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
+    public Mala registarMalaNova(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
                                  String material, int anoColecao) {
 
-        Mala mala = this.modelArtigo.registarMalaNova(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
+        Mala mala = this.modelArtigo.registarMalaNova(nome, utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
 
         return mala;
     }
 
-    public Mala registarMalaUsada(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
+    public Mala registarMalaUsada(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
                                   String material, int anoColecao, int numDonos, int avalEstado) {
 
-        Mala malausa = this.modelArtigo.registarMalaUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
+        Mala malausa = this.modelArtigo.registarMalaUsada(nome, utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
 
         return malausa;
     }
 
-    public TShirt registarTShirtNova(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
+    public TShirt registarTShirtNova(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
                                    int padrao) {
 
-        TShirt tshirt = this.modelArtigo.registarTShirtNova(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
+        TShirt tshirt = this.modelArtigo.registarTShirtNova(nome, utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
         return tshirt;
     }
 
-    public TShirt registarTShirtUsada(Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
+    public TShirt registarTShirtUsada(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
                                     int padrao, int numDonos, int avalEstado) {
 
-        TShirt tshirtusa = this.modelArtigo.registarTShirtUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
+        TShirt tshirtusa = this.modelArtigo.registarTShirtUsada(nome, utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
         return tshirtusa;
     }
 

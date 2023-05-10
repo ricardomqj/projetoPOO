@@ -1,16 +1,24 @@
+import java.util.List;
 import java.util.Map;
 
 public class ViewerArtigo {
-    public String artigosToString(Map<String, Artigo> artigos) {
+    private String artigosToString(Artigo artigo,StringBuilder ultimateString) {
 
+        ultimateString.append("Código de barras: ");
+        ultimateString.append(artigo.getCodBarras().toString());
+        ultimateString.append("\nPreço Base: ");
+        ultimateString.append(artigo.getPrecoBase());
+        return ultimateString.toString();
+    }
+
+    public String listaDeArtigosParaVenda(List<Artigo> list)
+    {
         StringBuilder ultimateString = new StringBuilder();
 
-        for(Map.Entry<String, Artigo> entry : artigos.entrySet()) {
-            Artigo artigo = entry.getValue();
-
-            System.out.println(artigo.toString() + "\n^^^Artigo^^^");
-
-            ultimateString.append(artigo.toString());
+        for(Artigo artigo : list)
+        {
+            ultimateString.append("\n---- Artigo ----\n");
+            artigosToString(artigo,ultimateString);
         }
 
         return ultimateString.toString();

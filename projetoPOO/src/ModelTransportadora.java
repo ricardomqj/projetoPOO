@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ModelTransportadora {
@@ -12,6 +15,33 @@ public class ModelTransportadora {
     public void criaTransportadora(String nome, double valBase, double margemLucro) {
         Transportadora trans = new Transportadora(nome, valBase, margemLucro);
         this.listaTransportadoras.put(trans.getNome(), trans.clone());
+    }
+
+    public void loadTransportadoras() {
+        String filePath = System.getProperty("src/transportadoras.txt"); // VER ISTO DEPOIS
+        File file = new File(filePath);
+
+        try {
+            Scanner scanner = new Scanner(file);
+
+            // Loop para ler todas as linhas do arquivo
+            while (scanner.hasNextLine()) {
+
+                String line = scanner.nextLine();
+
+                // Divide a linha em campos usando o separador ":"
+                String[] fields = line.split(":");
+
+                // Cria um novo objeto Utilizador e preenche suas informações
+                Transportadora transportadora = new Transportadora();
+                transportadora.setNome(fields[0]);
+                transportadora.setValorBase(Double.parseDouble(fields[1]));
+                transportadora.setMargemLucro(Double.parseDouble(fields[2]));
+                //transportadora.setImposto(fields[3]);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean loginTransportadora(String nomeTrans) {

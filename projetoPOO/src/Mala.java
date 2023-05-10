@@ -15,8 +15,8 @@ public class Mala extends Artigo {
 
     // MALA NOVA
 
-    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String tamanho, String material, int anoColecao) {
-        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto);
+    public Mala(String nome, String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String tamanho, String material, int anoColecao) {
+        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, nome);
         this.tamanho = tamanho;
         this.material = material;
         this.anoColecao = anoColecao;
@@ -24,8 +24,8 @@ public class Mala extends Artigo {
 
     // MALA USADA
 
-    public Mala(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String tamanho, String material, int anoColecao, int numDonos, int avalEstado) {
-        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, numDonos, avalEstado);
+    public Mala(String nome, String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String tamanho, String material, int anoColecao, int numDonos, int avalEstado) {
+        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, nome, numDonos, avalEstado);
         this.tamanho = tamanho;
         this.material = material;
         this.anoColecao = anoColecao;

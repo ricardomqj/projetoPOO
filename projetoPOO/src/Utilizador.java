@@ -114,9 +114,14 @@ public class Utilizador {
     public void addArtigoToListaAVendaCodBarras(String codBarras) {
         this.produtosAVendaCodBarras.add(codBarras);
     }
-
+    public void addArtigoCarrinho(Artigo artigo) {
+        this.artigosCarrinho.add(artigo);
+    }
     public void addEncomendaListaEncomendas(Encomenda enc) {
         this.encomendasFeitas.add(enc);
+    }
+    public void addArtigoToProdutosVendidos(Artigo artigo) {
+        this.produtosVendidos.put(artigo.getCodBarras(), artigo);
     }
 
     public void removeArtigoAVenda(String codBarras) {

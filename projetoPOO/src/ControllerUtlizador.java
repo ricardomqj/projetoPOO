@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class ControllerUtlizador {
@@ -28,23 +29,20 @@ public class ControllerUtlizador {
         return this.modelUtlizador.criaUtlizadorSemNada();
     }
 
-    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
-        return this.modelUtlizador.getArtigoAVendaByUser(user, codBarras);
-    }
-
     public void registarArtigoNoUtlizador(Utilizador user, String codBarras) {
         this.modelUtlizador.registarArtigoNoUtlizador(user,codBarras);
     }
 
-    public Map<String, Artigo> percorreUsers() {
-        Map<String, Artigo> produtos = this.modelUtlizador.percorreUsers();
+    public List<String> percorreUsers() {
+        List<String> produtos = this.modelUtlizador.percorreUsers();
 
         return produtos;
     }
-
+    /*
     public Utilizador getUserByArtigo(Artigo art) {
         return modelUtlizador.getUserByArtigoAVenda(art);
     }
+     */
 
     public Utilizador loginUtlizador(String email)
     {
@@ -67,7 +65,7 @@ public class ControllerUtlizador {
         this.viewerUtlizador = viewerUtlizador;
     }
 
-    public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
+    public void removeVariosArtigosUser(Utilizador user, List<String> lst) {
         modelUtlizador.removeVariosArtigosUser(user, lst);
     }
 
@@ -87,14 +85,10 @@ public class ControllerUtlizador {
         modelUtlizador.removeArtigoCarrinho(user, codBarras);
     }
 
-    public void setDiscountUser(String codSis, String codBarras, int desconto) {
-        this.modelUtlizador.setDiscountUser(codSis, codBarras, desconto);
-    }
-
     public String infoTodosArtigosAVenda() {
         return this.modelUtlizador.infoTodosArtigosAVenda();
     }
-
+    /*
     public String toStringArtigosVendaUser(String email) {
         return this.modelUtlizador.toStringArtigosVendaUser(email);
     }
@@ -102,6 +96,8 @@ public class ControllerUtlizador {
     public String toStringArtigoAVendaByType(String type) {
         return this.modelUtlizador.toStringArtigoAVendaByType(type);
     }
+
+     */
 
     public void addEncomendaUser(Utilizador user, Map<String, Artigo> lstArt) {
         this.modelUtlizador.addEncomendaUser(user, lstArt);

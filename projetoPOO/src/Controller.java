@@ -1,7 +1,5 @@
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller {
         ViewerUtlizador viewerUtlizador = new ViewerUtlizador();
@@ -241,7 +239,7 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta) {
-                    Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova(codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
+                    Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                 }
                 else {
@@ -251,7 +249,7 @@ public class Controller {
                     System.out.println("Estado da Sapatilha (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada(codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
+                    Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
 
 
@@ -314,7 +312,7 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    Mala mala = controllerArtigo.registarMalaNova(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
+                    Mala mala = controllerArtigo.registarMalaNova("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                 }
                 else {
@@ -324,7 +322,7 @@ public class Controller {
                     System.out.println("Estado da Mala (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    Mala malausa = controllerArtigo.registarMalaUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
+                    Mala malausa = controllerArtigo.registarMalaUsada("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                 }
             }
@@ -392,7 +390,7 @@ public class Controller {
                 boolean resposta = scanner.nextBoolean();
 
                 if (resposta) {
-                    TShirt tshirt = controllerArtigo.registarTShirtNova(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
+                    TShirt tshirt = controllerArtigo.registarTShirtNova("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
 
                 } else {
@@ -402,7 +400,7 @@ public class Controller {
                     System.out.println("Estado da TShirt (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    TShirt tshirtusa = controllerArtigo.registarTShirtUsada(utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
+                    TShirt tshirtusa = controllerArtigo.registarTShirtUsada("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                 }
 
@@ -432,19 +430,19 @@ public class Controller {
                     case 2:
                         System.out.println("Digite o email do utilizador: ");
                         String email = scanner.next();
-                        verArtigosVendaUser(email);
+                        //verArtigosVendaUser(email);
                         menuArtigosAvenda(user);
                         break;
                     case 3:
-                        artigosAVendaPorTipo("Sapatilha");
+                        //artigosAVendaPorTipo("Sapatilha");
                         menuArtigosAvenda(user);
                         break;
                     case 4:
-                        artigosAVendaPorTipo("TShirt");
+                        //artigosAVendaPorTipo("TShirt");
                         menuArtigosAvenda(user);
                         break;
                     case 5:
-                        artigosAVendaPorTipo("Mala");
+                        //artigosAVendaPorTipo("Mala");
                         menuArtigosAvenda(user);
                         break;
                     case 6:
@@ -452,7 +450,7 @@ public class Controller {
                         menuArtigosAvenda(user);
                         break;
                     case 7:
-                        verArtigosVendaUser(user.getEmail());
+                        //verArtigosVendaUser(user.getEmail());
                         menuArtigosAvenda(user);
                         break;
                     case 0:
@@ -476,15 +474,18 @@ public class Controller {
 
                 System.out.println("Insira o valor do desconto(0 a 60%):");
                 int desconto = sc.nextInt();
-                controllerUtlizador.setDiscountUser(user.getCodigoSistema(), codBarras, desconto);
+
                 controllerArtigo.setDiscountArtigo(codBarras, desconto);
                 System.out.println("Desconto inserido!");
             }
 
             public void verTodosArtigosVenda() {
-            System.out.println(controllerUtlizador.infoTodosArtigosAVenda());
+            List<Artigo> listArtigos = new ArrayList<Artigo>();
+
+            System.out.println(controllerArtigo.getArtigosParaVenda(listArtigos));
             }
 
+            /*
             public void verArtigosVendaUser(String email) {
                 System.out.println(controllerUtlizador.toStringArtigosVendaUser(email));
             }
@@ -496,6 +497,7 @@ public class Controller {
             public void verInfoTodasEncomendas(){
                 System.out.println(controllerEncomenda.infoTodasEncomendas());
             }
+             */
 
         private void efetuaEncomenda(Utilizador userComprador) {
             Scanner scanner = new Scanner(System.in);

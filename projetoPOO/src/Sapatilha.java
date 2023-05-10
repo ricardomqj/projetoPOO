@@ -14,8 +14,8 @@ public class Sapatilha extends Artigo{
 
     // SAPATILHA NOVA
 
-    public Sapatilha(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, int tamanho, boolean atacadores, String cor) {
-        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto);
+    public Sapatilha(String nome, String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, int tamanho, boolean atacadores, String cor) {
+        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, nome);
         this.tamanho = tamanho;
         this.temAtacadores = atacadores;
         this.cor = cor;
@@ -23,8 +23,8 @@ public class Sapatilha extends Artigo{
 
     // SAPATILHA USADA
 
-    public Sapatilha(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, int tamanho, boolean atacadores, String cor, int numDonos, int avalEstado) {
-        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, numDonos, avalEstado);
+    public Sapatilha(String nome, String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, int tamanho, boolean atacadores, String cor, int numDonos, int avalEstado) {
+        super(codBarras, stock, dataLancamento, trans, precoBase, marca, descricao, desconto, nome, numDonos, avalEstado);
         this.tamanho = tamanho;
         this.temAtacadores = atacadores;
         this.cor = cor;
