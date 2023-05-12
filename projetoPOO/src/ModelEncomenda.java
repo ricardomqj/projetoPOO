@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,14 +13,132 @@ public class ModelEncomenda {
         this.listaEncomendas = new HashMap<String, Encomenda>();
     }
 
-    public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArtigos) {
+    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArtigos) {
 
         String codigoEncomenda = gerarCodigoSistema(this.listaEncomendas);
 
-        Encomenda enc = new Encomenda(codigoEncomenda, user, lstArtigos);
+        Encomenda enc = new Encomenda(codigoEncomenda, codSistemaUtlizador, lstArtigos);
 
         this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
     }
+
+    /*
+    public void loadEncomendas() {
+        String filePath = ("src/encomendas.txt");
+
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            try {
+                Scanner scanner = new Scanner(file);
+
+                // Loop para ler todas as linhas do arquivo
+                while (scanner.hasNextLine()) {
+
+                    String line = scanner.nextLine();
+
+                    // Divide a linha em campos usando o separador ":"
+                    String[] fields = line.split(":");
+
+                    Encomenda encomenda = new Encomenda();
+
+                    encomenda.setCodSistema(fields[0]);
+                    //encomenda.setUser(); // PROBLEMA USER
+
+                    String[] encprods = fields[2].split("/");
+
+                    for (String prod : encprods) {
+
+                        String[] prodencfields = prod.split(".");
+
+                        if (prodencfields[9].equals("sapatilha")) {
+                            Sapatilha tilha = new Sapatilha();
+
+                            tilha.setCodBarras(prodencfields[0]);
+                            tilha.setStock(Integer.parseInt(prodencfields[1]));
+                            tilha.setDataLancamento(LocalDate.parse(prodencfields[2]));
+                            tilha.setTransportadora(prodencfields[3]);
+                            tilha.setPrecoBase(Double.parseDouble(prodencfields[4]));
+                            tilha.setMarca(prodencfields[5]);
+                            tilha.setDescricao(prodencfields[6]);
+                            tilha.setEstado(prodencfields[7]);
+                            tilha.setDesconto(Integer.parseInt(prodencfields[8]));
+                            tilha.setNome(prodencfields[9]);
+                            tilha.setTamanho(Integer.parseInt(prodencfields[10]));
+                            tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[11]));
+                            tilha.setCor(prodencfields[12]);
+
+                            if (prodencfields.length > 13) {
+                                //tilha.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                                //tilha.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                            }
+
+                            encomenda.insereUmArtigo(tilha);
+                        }
+
+                        if (prodencfields[9].equals("mala")) {
+                            Mala mala = new Mala();
+
+                            mala.setCodBarras(prodencfields[0]);
+                            mala.setStock(Integer.parseInt(prodencfields[1]));
+                            mala.setDataLancamento(LocalDate.parse(prodencfields[2]));
+                            mala.setTransportadora(prodencfields[3]);
+                            mala.setPrecoBase(Double.parseDouble(prodencfields[4]));
+                            mala.setMarca(prodencfields[5]);
+                            mala.setDescricao(prodencfields[6]);
+                            mala.setEstado(prodencfields[7]);
+                            mala.setDesconto(Integer.parseInt(prodencfields[8]));
+                            mala.setNome(prodencfields[9]);
+                            mala.setTamanho(prodencfields[10]);
+                            mala.setMaterial(prodencfields[11]);
+                            mala.setAnoColecao(Integer.parseInt(prodencfields[12]));
+
+                            if (prodencfields.length > 13) {
+                                //mala.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                                //mala.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                            }
+
+                            encomenda.insereUmArtigo(mala);
+                        }
+                        if (prodencfields[9].equals("tshirt")) {
+                            TShirt tshirt = new TShirt();
+
+                            tshirt.setCodBarras(prodencfields[0]);
+                            tshirt.setStock(Integer.parseInt(prodencfields[1]));
+                            tshirt.setDataLancamento(LocalDate.parse(prodencfields[2]));
+                            tshirt.setTransportadora(prodencfields[3]);
+                            tshirt.setPrecoBase(Double.parseDouble(prodencfields[4]));
+                            tshirt.setMarca(prodencfields[5]);
+                            tshirt.setDescricao(prodencfields[6]);
+                            tshirt.setEstado(prodencfields[7]);
+                            tshirt.setDesconto(Integer.parseInt(prodencfields[8]));
+                            tshirt.setNome(prodencfields[9]);
+                            tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[10]));
+                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[11]));
+
+                            if (prodencfields.length > 12) {
+                                //tshirt.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                                //tshirt.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
+                            }
+
+                            encomenda.insereUmArtigo(tshirt);
+                        }
+                    }
+
+                    encomenda.setTamanhoEncomenda();
+                    encomenda.setPrecoFinal();
+                    encomenda.setStatus(Encomenda.StatusEncomenda.valueOf(fields[3])); // NAO SEI
+                    encomenda.setData(LocalDate.parse(fields[4]));
+                    encomenda.setVintageProfit();
+
+                }
+            } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+        }
+        else System.out.println("File does not exist!");
+    }
+     */
 
     public void addArtigoEncomenda (Encomenda enc, Artigo artigo) {
         enc.insereUmArtigo(artigo);
@@ -36,11 +157,11 @@ public class ModelEncomenda {
     }
      */
 
-    public String addEncomenda(List<Artigo> lstArt, Utilizador user) {
+    public String addEncomenda(List<Artigo> lstArt, String codSistemaUtlizador) {
         Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
         lstArtigos = lstArt.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         String codEncomenda = gerarCodigoSistema(listaEncomendas);
-        Encomenda enc = new Encomenda(codEncomenda, user, lstArtigos);
+        Encomenda enc = new Encomenda(codEncomenda, codSistemaUtlizador, lstArtigos);
         this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
         return codEncomenda;
     }

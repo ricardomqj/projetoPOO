@@ -12,7 +12,7 @@ public class Encomenda {
     }
 
     private String codSistema;
-    private Utilizador user;
+    private String codSistemaUtlizador;
     private Map<String, Artigo> artigos;
     private String tamanho;
     private double precoFinal;
@@ -22,7 +22,7 @@ public class Encomenda {
 
     public Encomenda() {
         this.codSistema = "";
-        this.user = null;
+        this.codSistemaUtlizador = null;
         this.artigos = new HashMap<>();
         this.tamanho = "";
         this.precoFinal = 0.0;
@@ -31,9 +31,9 @@ public class Encomenda {
         this.vintageProfit = 0.0;
     }
 
-    public Encomenda(String codSistema, Utilizador user, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data, double vintageProfit) {
+    public Encomenda(String codSistema, String codSistemaUtlizador, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data, double vintageProfit) {
         this.codSistema = codSistema;
-        this.user = user.clone();
+        this.codSistemaUtlizador = codSistemaUtlizador;
         this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         this.tamanho = tamanho;
         this.precoFinal = precoFinal;
@@ -42,10 +42,10 @@ public class Encomenda {
         this.vintageProfit = vintageProfit;
     }
 
-    public Encomenda(String codSistema, Utilizador user, Map<String, Artigo> artigos) {
+    public Encomenda(String codSistema, String codSistemaUtlizador, Map<String, Artigo> artigos) {
         this.status = StatusEncomenda.PENDENTE;
         this.codSistema = codSistema;
-        this.user = user;
+        this.codSistemaUtlizador = codSistemaUtlizador;
         this.tamanho = getTamanhoEncomendaString(artigos);
         this.precoFinal = artigos.values().stream().mapToDouble(Artigo::getPrecoTotalArtigo).sum();
         this.data = LocalDate.now();
@@ -54,7 +54,7 @@ public class Encomenda {
 
     public Encomenda(String codSistema, Utilizador user) { // ????
         this.codSistema = codSistema;
-        this.user = user.clone();
+        this.codSistemaUtlizador = codSistemaUtlizador;
         this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         this.tamanho = tamanho;
         this.precoFinal = precoFinal;
@@ -65,7 +65,7 @@ public class Encomenda {
 
     public Encomenda(Encomenda umaEncomenda) {
         this.codSistema = umaEncomenda.getCodSistema();
-        this.user = umaEncomenda.getUser();
+        this.codSistemaUtlizador = umaEncomenda.getcodSistemaUtlizador();
         this.artigos = umaEncomenda.getArtigos();
         this.tamanho = umaEncomenda.getTamanhoEncomenda();
         this.precoFinal = umaEncomenda.getPrecoFinal();
@@ -86,13 +86,31 @@ public class Encomenda {
         if(o == null || o.getClass() != this.getClass()) return false;
 
         Encomenda e = (Encomenda) o;
-        return this.user.equals(e.getUser()) && this.artigos.equals(e.getArtigos()) &&
+        return this.codSistemaUtlizador.equals(e.getcodSistemaUtlizador()) && this.artigos.equals(e.getArtigos()) &&
                 this.tamanho.equals(e.getTamanhoEncomenda()) && this.precoFinal == e.getPrecoFinal() &&
                 this.status.equals(e.getStatus()) && this.data.equals(e.getData()) &&
                 this.vintageProfit == e.getVintageProfit();
     }
 
     public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("O código de Sistema do utlizador é: ").append(this.codSistemaUtlizador).append("\n");
+        sb.append("Lista de artigos da encomenda: \n");
+        for(Artigo artigo : this.artigos.values()) {
+            sb.append(artigo.toString());
+        }
+        sb.append("Tamanho da Encomenda: ").append(this.tamanho).append("\n");
+        sb.append("Preço Total: ").append(this.precoFinal).append("\n");
+        sb.append("Estado da encomenda: ").append(this.status).append("\n");
+        sb.append("Data da encomenda: ").append(this.data).append("\n");
+
+        return sb.toString();
+    }
+/*
+FAZER O toStringTxt
+
+    public String toStringTxt() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Nome do utilizador: ").append(this.user.getNome()).append("\n");
@@ -108,9 +126,12 @@ public class Encomenda {
         return sb.toString();
     }
 
+ */
+
     // METHODS
 
-    public void insereUmArtigo(Artigo artigo) {
+    public void insereUmArtigo(Artigo artigo)
+    {
         this.artigos.put(artigo.getCodBarras(), artigo);
     }
 
@@ -150,7 +171,6 @@ public class Encomenda {
 
             custo += value.getPrecoBase();
         }
-
         return custo;
     }
 
@@ -196,12 +216,12 @@ public class Encomenda {
         this.codSistema = codSistema;
     }
 
-    public Utilizador getUser() {
-        return this.user.clone();
+    public String getcodSistemaUtlizador() {
+        return this.codSistemaUtlizador;
     }
 
-    public void setUser(Utilizador user) {
-        this.user = user.clone();
+    public void setcodSistemaUtlizador(String codSistemaUtlizador) {
+        this.codSistemaUtlizador = codSistemaUtlizador;
     }
 
     public Map<String, Artigo> getArtigos() {
@@ -255,7 +275,6 @@ public class Encomenda {
     public double getVintageProfit() {
         return this.vintageProfit;
     }
-
     public void setVintageProfit() {
         this.vintageProfit = vintageProfit();
     }

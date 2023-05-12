@@ -11,9 +11,13 @@ public class ControllerUtlizador {
         this.setViewerUtlizador(viewerUtlizador);
     }
 
-    public void criaUtlizador(String email,String nome,String morada,String nif)
+    public Utilizador criaUtlizador(String email,String nome,String morada,String nif)
     {
-        this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
+        return this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
+    }
+
+    public String loadUtilizadores() {
+        return this.modelUtlizador.loadUtilizadores();
     }
 
     public boolean userTemArtigo(String codBarras) {
@@ -105,5 +109,10 @@ public class ControllerUtlizador {
 
     public void setModelUtlizador(ModelUtlizador modelUtlizador) {
         this.modelUtlizador = modelUtlizador;
+    }
+
+    public String getCodSistemaUtlizador(Utilizador utilizador)
+    {
+        return modelUtlizador.getCodSistemaUtlizador(utilizador);
     }
 }

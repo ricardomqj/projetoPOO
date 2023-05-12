@@ -47,6 +47,18 @@ public class Transportadora {
         return sb.toString();
     }
 
+    public String toStringTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.nome).append(":");
+        sb.append(this.valorBase).append(":");
+        sb.append(this.margemLucro).append("\n");
+
+        //sb.append("Valor de expedição total: ").append(this.valorExpedicao(this.valorBase,this.margemLucro)).append("\n");
+
+        return sb.toString();
+    }
+
     public double valorExpedicao(double valorBase, double margemLucro) {
         return (valorBase * (1+(margemLucro/100))*(1+(12/100))*0.9);
     }

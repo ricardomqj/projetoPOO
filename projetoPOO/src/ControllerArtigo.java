@@ -11,6 +11,10 @@ public class ControllerArtigo {
         this.setViewerArtigo(viewerArtigo);
     }
 
+    public String loadArtigos() {
+        return this.modelArtigo.loadArtigos();
+    }
+
     public Artigo getArtigoByCod(String codBarras) {
 
         return this.modelArtigo.getArtigoByCod(codBarras);

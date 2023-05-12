@@ -98,6 +98,26 @@ public abstract class Artigo {
         return sb.toString();
     }
 
+    public String toStringTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.codBarras).append(":");
+        sb.append(this.stock).append(":");
+        sb.append(this.dataLancamento).append(":");
+        //sb.append("Preço base: ").append(this.precoBase).append("\n");
+        //sb.append("Preço atual: ").append(this.precoAtual).append("\n");
+        sb.append(this.transportadora).append(":");
+        sb.append(this.precoBase).append(":");
+        sb.append(this.marca).append(":");
+        sb.append(this.descricao).append(":");
+        if(this.estado!=null) {
+            sb.append(this.estado.toString()).append(":");
+        }
+        sb.append(this.desconto).append(":");
+
+        return sb.toString();
+    }
+
     // Métodos
 
     public void changePrecoComDesconto (int desconto){

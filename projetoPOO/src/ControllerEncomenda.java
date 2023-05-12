@@ -13,8 +13,12 @@ public class ControllerEncomenda {
 
     //methods
 
-    public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArt) {
-        this.modelEncomenda.criaEncomenda(user, lstArt);
+    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArt) {
+        this.modelEncomenda.criaEncomenda(codSistemaUtlizador, lstArt);
+    }
+
+    public void loadEncomendas() {
+        this.modelEncomenda.loadEncomendas();
     }
 
     public void addArtigoEncomenda (Encomenda enc, Artigo artigo) {
@@ -29,8 +33,8 @@ public class ControllerEncomenda {
         return modelEncomenda.getListaTodasEncomendas();
     }
 
-    public String addEncomenda(List<Artigo> lstArt, Utilizador user) {
-        return modelEncomenda.addEncomenda(lstArt, user);
+    public String addEncomenda(List<Artigo> lstArt, String codSistemaUtlizador) {
+        return modelEncomenda.addEncomenda(lstArt, codSistemaUtlizador);
     }
 
     //getters e setters

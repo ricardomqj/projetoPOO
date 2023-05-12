@@ -12,36 +12,53 @@ public class ModelTransportadora {
         this.listaTransportadoras = new HashMap<String, Transportadora>();
     }
 
-    public void criaTransportadora(String nome, double valBase, double margemLucro) {
+    public Transportadora criaTransportadora(String nome, double valBase, double margemLucro) {
         Transportadora trans = new Transportadora(nome, valBase, margemLucro);
         this.listaTransportadoras.put(trans.getNome(), trans.clone());
+        return trans;
     }
 
-    public void loadTransportadoras() {
-        String filePath = System.getProperty("src/transportadoras.txt"); // VER ISTO DEPOIS
+    public String loadTransportadoras() {
+        String filePath = ("src/transportadoras.txt"); // VER ISTO DEPOIS
         File file = new File(filePath);
 
-        try {
-            Scanner scanner = new Scanner(file);
+        if(file.exists()) {
+            try {
+                Scanner scanner = new Scanner(file);
 
-            // Loop para ler todas as linhas do arquivo
-            while (scanner.hasNextLine()) {
+                StringBuilder stringBuilder = new StringBuilder();
 
-                String line = scanner.nextLine();
+                // Loop para ler todas as linhas do arquivo
+                while (scanner.hasNextLine()) {
 
-                // Divide a linha em campos usando o separador ":"
-                String[] fields = line.split(":");
+                    String line = scanner.nextLine();
+                    stringBuilder.append(line);
 
-                // Cria um novo objeto Utilizador e preenche suas informações
-                Transportadora transportadora = new Transportadora();
-                transportadora.setNome(fields[0]);
-                transportadora.setValorBase(Double.parseDouble(fields[1]));
-                transportadora.setMargemLucro(Double.parseDouble(fields[2]));
-                //transportadora.setImposto(fields[3]);
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+                    // Divide a linha em campos usando o separador ":"
+                    String[] fields = line.split(":");
+
+                    // Cria um novo objeto Utilizador e preenche suas informações
+                    Transportadora transportadora = new Transportadora();
+
+                    transportadora.setNome(fields[0]);
+                    transportadora.setValorBase(Double.parseDouble(fields[1]));
+                    transportadora.setMargemLucro(Double.parseDouble(fields[2]));
+                    //transportadora.setImposto(fields[3]);
+
+                    listaTransportadoras.put(transportadora.getNome(), transportadora);
+
+                    stringBuilder.append("\n");
+                }
+
+                return stringBuilder.toString();
+
+            } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
         }
+        else System.out.println("File does not exist!");
+
+        return "";
     }
 
     public boolean loginTransportadora(String nomeTrans) {

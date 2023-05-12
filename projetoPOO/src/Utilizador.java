@@ -107,6 +107,38 @@ public class Utilizador {
         return sb.toString();
     }
 
+    public String toStringTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.codigoSistema).append(":");
+        sb.append(this.email).append(":");
+        sb.append(this.nome).append(":");
+        sb.append(this.morada).append(":");
+        sb.append(this.nif).append(":");
+        //sb.append(this.profit).append("\n");
+        //sb.append("Lista de produtos à venda CodBarras: ").append(";");
+        int count = 0;
+        for(String art : this.produtosAVendaCodBarras) {
+            sb.append(art);
+            if (++count < this.produtosAVendaCodBarras.size()) {
+                sb.append(";");
+            }
+        }
+        sb.append(":");
+        //FAZER O toStringTxt da Encomenda
+        sb.append("Lista de produtos adquiridos: ").append("\n");
+        for(Encomenda art : this.encomendasFeitas) {
+            sb.append(art.toString()).append("\n");
+        }
+        //FAZER O toStringTxt do Artigo
+        sb.append("Lista de produtos vendidos: ").append("\n");
+        for(Artigo art : this.produtosVendidos.values()) {
+            sb.append(art.toString()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
     // METHODS
 
     public double profitTotal;

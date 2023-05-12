@@ -7,8 +7,12 @@ public class ControllerTransportadora {
         this.setViewerTransportadora(viewerTransportadora);
     }
 
-    public void criaTransportadora(String nome, double valorBase, double margemLucro) {
-        this.modelTransportadora.criaTransportadora(nome, valorBase, margemLucro);
+    public Transportadora criaTransportadora(String nome, double valorBase, double margemLucro) {
+        return this.modelTransportadora.criaTransportadora(nome, valorBase, margemLucro);
+    }
+
+    public String loadTransportadoras() {
+        return this.modelTransportadora.loadTransportadoras();
     }
 
     public String getInfoTrans(String nomeTrans) {

@@ -63,6 +63,31 @@ public class Mala extends Artigo {
 
         return sb.toString();
     }
+
+    public String toStringTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        if(super.getEstado().toString().toLowerCase().equals("Novo")) {
+            sb.append(super.toStringTxt());
+            sb.append(this.tamanho).append(":");
+            sb.append(this.material).append(":");
+            sb.append(this.anoColecao).append("\n");
+
+            return sb.toString();
+        }
+        else {
+            sb.append(super.toStringTxt());
+            sb.append(this.tamanho).append(":");
+            sb.append(this.material).append(":");
+            sb.append(this.anoColecao).append("\n");
+            //sb.append(super.getEstado()) // FODA-SE RUI SO ME FODES COM ISTO DO ESTADO USADO
+            //FALTA NUMDONOS
+            //FALTA AVALESTADO
+
+            return sb.toString();
+        }
+    }
+
     //getters
 
     public String getTamanho() {
