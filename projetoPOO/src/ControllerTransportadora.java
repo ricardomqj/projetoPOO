@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class ControllerTransportadora {
     private ViewerTransportadora viewerTransportadora;
     private ModelTransportadora modelTransportadora;
@@ -9,6 +11,10 @@ public class ControllerTransportadora {
 
     public void criaTransportadora(String nome, double valorBase, double margemLucro) {
         this.modelTransportadora.criaTransportadora(nome, valorBase, margemLucro);
+    }
+
+    public void loadTransportadoras() {
+        this.modelTransportadora.loadTransportadoras();
     }
 
     public String getInfoTrans(String nomeTrans) {
@@ -37,5 +43,9 @@ public class ControllerTransportadora {
 
     public void setModelTransportadora(ModelTransportadora modelTransportadora) {
         this.modelTransportadora = modelTransportadora;
+    }
+
+    public Map<String, Transportadora> getListaTransportadoras() {
+        return modelTransportadora.getListaTransportadoras();
     }
 }

@@ -11,6 +11,8 @@ public abstract class Artigo {
     private String descricao;
     private Estado estado;
     private int desconto; // 0 a 100
+    private String nome;
+    private LocalDate dataComprado; // se nao tiver sido comprado == null
 
     public Artigo() {
         this.codBarras = "n/a";
@@ -21,10 +23,12 @@ public abstract class Artigo {
         this.marca = "n/a";
         this.descricao = "n/a";
         this.desconto = 0;
+        this.nome = "";
         this.precoAtual = 0;
+        this.dataComprado = null;
     }
 
-    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto,int numDonos, int avalEstado) {
+    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome,int numDonos, int avalEstado) {
         this.codBarras = codBarras;
         this.stock = stock;
         this.dataLancamento = dataLancamento;
@@ -34,10 +38,12 @@ public abstract class Artigo {
         this.marca = marca;
         this.descricao = descricao;
         this.desconto = desconto;
+        this.nome = nome;
         this.estado = new Usado(numDonos, avalEstado);
+        this.dataComprado = null;
     }
 
-    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto) {
+    public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome) {
         this.codBarras = codBarras;
         this.stock = stock;
         this.dataLancamento = dataLancamento;
@@ -45,9 +51,11 @@ public abstract class Artigo {
         this.precoBase = precoBase;
         this.marca = marca;
         this.desconto = desconto;
+        this.nome = nome;
         this.descricao = descricao;
         this.estado = new Novo();
         this.precoAtual = precoBase;
+        this.dataComprado = null;
     }
 
     public Artigo(Artigo umArtigo) {
@@ -58,6 +66,7 @@ public abstract class Artigo {
         this.precoBase = umArtigo.getPrecoBase();
         this.marca = umArtigo.getMarca();
         this.descricao = umArtigo.getDescricao();
+        this.nome = umArtigo.getNome();
         this.precoAtual = umArtigo.getPrecoAtual();
     }
 
@@ -71,7 +80,7 @@ public abstract class Artigo {
         return this.codBarras.equals(art.getCodBarras()) && this.stock==art.getStock() &&
                 this.dataLancamento.equals(art.getDataLancamento()) &&
                 this.transportadora.equals(art.getNomeTransportadora()) &&
-                this.precoBase == art.getPrecoBase() && this.marca.equals(art.getDescricao()) &&
+                this.precoBase == art.getPrecoBase() && this.marca.equals(art.getDescricao()) && this.nome.equals(art.getNome()) &&
                 this.descricao.equals(art.getDescricao()) && this.precoAtual == art.getPrecoAtual();
 
     }
@@ -89,11 +98,18 @@ public abstract class Artigo {
         if(this.estado!=null) {
             sb.append(this.estado.toString()).append("\n");
         }
-
+        if(this.dataComprado != null) {
+            sb.append("Comprado em: ").append("\n");
+            sb.append(this.dataComprado.toString()).append("\n");
+        }
         return sb.toString();
     }
 
     // Métodos
+
+    public void setDataComprado() {
+        this.dataComprado = LocalDate.now();
+    }
 
     public void changePrecoComDesconto (int desconto){
         double desc = (double)desconto/100;
@@ -166,6 +182,10 @@ public abstract class Artigo {
     }
 
     public Estado getEstado() {return this.estado;}
+    public void setEstado(String estado){
+        if (estado.toLowerCase().equals("novo")) new Novo();
+        if (estado.toLowerCase().equals("usado")) new Usado();
+    }
 
     public int getDesconto() {
         return this.desconto;
@@ -181,5 +201,20 @@ public abstract class Artigo {
 
     public void setPrecoAtual(double precoAtual) {
         this.precoAtual = precoAtual;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public LocalDate getDataComprado() {
+        return this.dataComprado;
+    }
+
+    public void setDataComprado(LocalDate dataComprado) {
+        this.dataComprado = dataComprado;
     }
 }

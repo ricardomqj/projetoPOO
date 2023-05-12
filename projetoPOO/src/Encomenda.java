@@ -217,6 +217,12 @@ public class Encomenda {
         return this.tamanho;
     }
 
+    public void setTamanhoEncomenda() {
+        if (DimensaoEncomenda() == 1) this.tamanho = "Small";
+        if (DimensaoEncomenda() <= 5 && DimensaoEncomenda() >= 2) this.tamanho = "Medium";
+        if (DimensaoEncomenda() > 5) this.tamanho = "Large";
+    }
+
     public String getTamanhoEncomendaString(Map<String, Artigo> listaArtigos) {
         String ret = null;
         if (listaArtigos.size()==1) ret = "Small";
@@ -249,7 +255,6 @@ public class Encomenda {
     public double getVintageProfit() {
         return this.vintageProfit;
     }
-
     public void setVintageProfit() {
         this.vintageProfit = vintageProfit();
     }

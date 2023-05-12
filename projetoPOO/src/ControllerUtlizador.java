@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 public class ControllerUtlizador {
@@ -15,6 +16,14 @@ public class ControllerUtlizador {
         this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
+    public Map<String, Utilizador> getListaUtilizadores() {
+        return modelUtlizador.getListaUtilizadores();
+    }
+
+    public void loadUtilizadores() {
+        this.modelUtlizador.loadUtilizadores();
+    }
+
     public boolean userTemArtigo(String codBarras) {
         return this.modelUtlizador.userTemArtigo(codBarras);
     }
@@ -28,43 +37,20 @@ public class ControllerUtlizador {
         return this.modelUtlizador.criaUtlizadorSemNada();
     }
 
-    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
-        return this.modelUtlizador.getArtigoAVendaByUser(user, codBarras);
+    public void registarArtigoNoUtlizador(Utilizador user, String codBarras) {
+        this.modelUtlizador.registarArtigoNoUtlizador(user,codBarras);
     }
 
-    public void registarSapatilhaUser(Utilizador user, Sapatilha sapatilha) {
-        this.modelUtlizador.registarSapatilhaUser(user, sapatilha);
-    }
-
-    public void registarSapatilhaUsadaUser (Utilizador user, Sapatilha sapatilha) {
-        this.modelUtlizador.registarSapatilhaUsadaUser(user, sapatilha);
-    }
-
-    public void registarTShirtUser(Utilizador user, TShirt tshirt) {
-        this.modelUtlizador.registarTShirtUser(user, tshirt);
-    }
-
-    public void registarTShirtUsadaUser (Utilizador user, TShirt tshirt) {
-        this.modelUtlizador.registarTShirtUsadaUser(user, tshirt);
-    }
-
-    public void registarMalaUser(Utilizador user, Mala mala) {
-        this.modelUtlizador.registarMalaUser(user, mala);
-    }
-
-    public void registarMalaUsadaUser (Utilizador user, Mala mala) {
-        this.modelUtlizador.registarMalaUsadaUser(user, mala);
-    }
-
-    public Map<String, Artigo> percorreUsers() {
-        Map<String, Artigo> produtos = this.modelUtlizador.percorreUsers();
+    public List<String> percorreUsers() {
+        List<String> produtos = this.modelUtlizador.percorreUsers();
 
         return produtos;
     }
-
+    /*
     public Utilizador getUserByArtigo(Artigo art) {
         return modelUtlizador.getUserByArtigoAVenda(art);
     }
+     */
 
     public Utilizador loginUtlizador(String email)
     {
@@ -87,7 +73,7 @@ public class ControllerUtlizador {
         this.viewerUtlizador = viewerUtlizador;
     }
 
-    public void removeVariosArtigosUser(Utilizador user, Map<String, Artigo> lst) {
+    public void removeVariosArtigosUser(Utilizador user, List<String> lst) {
         modelUtlizador.removeVariosArtigosUser(user, lst);
     }
 
@@ -107,14 +93,12 @@ public class ControllerUtlizador {
         modelUtlizador.removeArtigoCarrinho(user, codBarras);
     }
 
-    public void setDiscountUser(String codSis, String codBarras, int desconto) {
-        this.modelUtlizador.setDiscountUser(codSis, codBarras, desconto);
-    }
+
 
     public String infoTodosArtigosAVenda() {
         return this.modelUtlizador.infoTodosArtigosAVenda();
     }
-
+    /*
     public String toStringArtigosVendaUser(String email) {
         return this.modelUtlizador.toStringArtigosVendaUser(email);
     }
@@ -122,6 +106,8 @@ public class ControllerUtlizador {
     public String toStringArtigoAVendaByType(String type) {
         return this.modelUtlizador.toStringArtigoAVendaByType(type);
     }
+
+     */
 
     public void addEncomendaUser(Utilizador user, Map<String, Artigo> lstArt) {
         this.modelUtlizador.addEncomendaUser(user, lstArt);
