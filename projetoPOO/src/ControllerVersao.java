@@ -57,8 +57,8 @@ public class ControllerVersao {
         this.modelVersao.atualizaUserTxt(userComprador, versaoUsersTxt);
     }
 
-    public void atualizaTransportadoraTxt(Transportadora trans, String versaoUsersTxt) {
-        this.modelVersao.atualizaTransportadoraTxt(trans, versaoUsersTxt);
+    public void atualizaTransportadoraTxt(Transportadora trans, String versaoTransportadorasTxt) {
+        this.modelVersao.atualizaTransportadoraTxt(trans, versaoTransportadorasTxt);
     }
 
     /*
@@ -67,11 +67,11 @@ public class ControllerVersao {
     }
     */
 
-    /*
-    public void atualizaTransportadoraTxt(Transportadora trans, String versaoUsersTxt) {
-        this.modelVersao.atualizaTransportadoraTxt(trans, versaoUsersTxt);
+
+    public void atualizaArtigoTxt(Artigo artigo, String versaoArtigosTxt) {
+        this.modelVersao.atualizaArtigoTxt(artigo, versaoArtigosTxt);
     }
-    */
+
 
     public void saveVersao(Versao versaoatual) {
         this.modelVersao.saveVersao(versaoatual);

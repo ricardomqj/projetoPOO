@@ -36,9 +36,9 @@ public class Controller {
             String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
             String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
             String versaoArtigosTxt = controllerArtigo.loadArtigos();
-            //String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
+            String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
 
-            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
+            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
 
             System.out.println("O que deseja fazer?");
             System.out.println(" 1 - Criar um utlizador");                         //feito
@@ -623,7 +623,7 @@ public class Controller {
 
                 controllerArtigo.setDiscountArtigo(codBarras, desconto);
                 controllerVersao.atualizaUserTxt(user, versaoatual.getVersaoUsersTxt());
-                controllerVersao.atualizaArtigoTxt(controllerArtigo.getArtigoByCod((codBarras)), versaoatual.getVersaoUsersTxt());
+                controllerVersao.atualizaArtigoTxt(controllerArtigo.getArtigoByCod(codBarras), versaoatual.getVersaoArtigosTxt());
                 System.out.println("Desconto inserido!");
             }
 
@@ -676,7 +676,7 @@ public class Controller {
                     controllerEncomenda.addEncomenda(userComprador.getArtigosCarrinho(), userComprador);
                     controllerUtlizador.addCarrinhoToEncomendas(userComprador.getEmail(), controllerEncomenda.getListaTodasEncomendas());
                     controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.atualizaEncomendaTxt(userComprador, userComprador.getArtigosCarrinho(), versaoatual.getVersaoUsersTxt());
+                    //controllerVersao.atualizaEncomendaTxt(userComprador, userComprador.getArtigosCarrinho(), versaoatual.getVersaoUsersTxt());
                     System.out.println("Encomenda feita!");
                     menuUtlizador(userComprador, versaoatual);
                     break;

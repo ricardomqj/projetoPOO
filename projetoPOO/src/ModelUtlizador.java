@@ -83,7 +83,7 @@ public class ModelUtlizador {
                         Encomenda encomenda = new Encomenda();
 
                         encomenda.setCodSistema(encfields[0]);
-                        encomenda.setUser(utilizador); // PROBLEMA USER
+                        encomenda.setcodSistemaUtlizador(utilizador.getCodigoSistema()); // PROBLEMA USER
 
                         String[] encprods = encfields[1].split(".");
 
@@ -487,7 +487,7 @@ public class ModelUtlizador {
 
     public void addEncomendaUser(Utilizador user, Map<String, Artigo> lst) {
         Utilizador uti = this.listaUtilizadores.get(user.getCodigoSistema());
-        Encomenda enc = new Encomenda(user.getCodigoSistema(), user, lst);
+        Encomenda enc = new Encomenda(user.getCodigoSistema(), user.getCodigoSistema(), lst); // ESTA MERDA TA MAL QUE FODE PUTA QUE PARIU
         uti.addEncomendaListaEncomendas(enc);
         this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
     }
@@ -580,7 +580,7 @@ public class ModelUtlizador {
         carrinho.addAll(ret.getArtigosCarrinho());
         String codEnc = gerarCodigoEncomenda(lstEncomendas);
         Map<String, Artigo> carrinhoMap = carrinho.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
-        Encomenda enc = new Encomenda(codEnc, ret, carrinhoMap);
+        Encomenda enc = new Encomenda(codEnc, ret.getCodigoSistema(), carrinhoMap);
         ret.addEncomendaListaEncomendas(enc);
         this.listaUtilizadores.put(ret.getCodigoSistema(),ret.clone());
     }

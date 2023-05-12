@@ -13,12 +13,12 @@ public class ControllerEncomenda {
 
     //methods
 
-    public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArt) {
-        this.modelEncomenda.criaEncomenda(user, lstArt);
+    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArt) {
+        this.modelEncomenda.criaEncomenda(codSistemaUtlizador, lstArt);
     }
 
-    public void loadEncomendas() {
-        this.modelEncomenda.loadEncomendas();
+    public String loadEncomendas() {
+        return this.modelEncomenda.loadEncomendas();
     }
 
     public void addArtigoEncomenda (Encomenda enc, Artigo artigo) {

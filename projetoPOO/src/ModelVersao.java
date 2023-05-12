@@ -23,11 +23,10 @@ public class ModelVersao {
 
         StringBuilder sb = new StringBuilder();
         if (versaoTransportadorasTxt.isEmpty()) {
-            sb.append(transTxt);
+            sb.append(transTxt).append("\n");
         } else {
             sb.append(versaoTransportadorasTxt).append("\n").append(transTxt);
         }
-
     }
 
     public void addSapatilhaTxt(Sapatilha tilha, String versaoArtigoTxt) {
@@ -39,7 +38,6 @@ public class ModelVersao {
         } else {
             sb.append(versaoArtigoTxt).append("\n").append(sapatilhaTxt);
         }
-
     }
     public void addSapatilhaUsadaTxt(Sapatilha tilha, String versaoArtigoTxt) {
         String sapatilhaUsadaTxt = tilha.toStringTxt();
@@ -73,13 +71,34 @@ public class ModelVersao {
         } else {
             sb.append(versaoArtigoTxt).append("\n").append(tshirtTxt);
         }
-
     }
+
     public void addTShirtUsadaTxt(TShirt tshirt, String versaoArtigoTxt) {
         String tshirtUsadaTxt = tshirt.toStringTxt();
 
         //Fazer acabar funçao toStringTxt
     }
+
+    /* VER se vale mais a pena fazer desta forma em vez de ter varios para cada tipo
+
+    public void addArtigoTxt(Artigo artigo, String versaoArtigosTxt) {
+
+        String artigoTxt = "";
+
+        StringBuilder output = new StringBuilder();
+
+        if (artigo instanceof Sapatilha) {
+            Sapatilha sapatilha = (Sapatilha) artigo;
+            artigoTxt = sapatilha.toStringTxt();
+        } else if (artigo instanceof TShirt) {
+            TShirt tshirt = (TShirt) artigo;
+            artigoTxt = tshirt.toStringTxt();
+        } else if (artigo instanceof Mala) {
+            Mala mala = (Mala) artigo;
+            artigoTxt = mala.toStringTxt();
+        }
+    }
+    */
 
     // ATUALIZA TXTS
 
@@ -91,13 +110,39 @@ public class ModelVersao {
         for (String line : versaoTransportadorasTxt.split("\n")) {
             String[] fields = line.split(":");
             if (fields[0].equals(trans.getNome())) {
-                output.append(trans).append("\n");
+                output.append(transTxt).append("\n");
+            } else {
+                output.append(line).append("\n");
+            }
+        }
+    }
+
+    public void atualizaArtigoTxt(Artigo artigo, String versaoArtigosTxt) {
+
+        String artigoTxt = "";
+
+        StringBuilder output = new StringBuilder();
+
+        if(artigo instanceof Sapatilha) {
+            Sapatilha sapatilha = (Sapatilha) artigo;
+            artigoTxt = sapatilha.toStringTxt();
+        } else if (artigo instanceof TShirt) {
+            TShirt tshirt = (TShirt) artigo;
+            artigoTxt = tshirt.toStringTxt();
+        } else if (artigo instanceof Mala) {
+            Mala mala = (Mala) artigo;
+            artigoTxt = mala.toStringTxt();
+        }
+
+        for (String line : versaoArtigosTxt.split("\n")) {
+            String[] fields = line.split(":");
+            if (fields[0].equals(artigo.getCodBarras())) {
+                output.append(artigoTxt).append("\n");
             } else {
                 output.append(line).append("\n");
             }
         }
 
-        //Fazer toStringTxtUser e toStringTxtEncomenda
     }
 
     public void atualizaUserTxt(Utilizador userComprador, String versaoUsersTxt) {

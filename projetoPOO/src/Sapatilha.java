@@ -65,7 +65,7 @@ public class Sapatilha extends Artigo{
     public String toStringTxt() {
         StringBuilder sb = new StringBuilder();
 
-        if(super.getEstado().toString().toLowerCase().equals("Novo")) {
+        if(super.getEstado().toString().toLowerCase().equals("novo")) {
             sb.append(super.toStringTxt());
             sb.append(this.tamanho).append(":");
             sb.append(this.temAtacadores).append(":");

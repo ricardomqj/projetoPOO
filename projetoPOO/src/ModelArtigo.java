@@ -17,8 +17,46 @@ public class ModelArtigo {
     }
 
     public Artigo getArtigoByCod(String codBarras) {
-        return this.listaArtigos.get(codBarras);
+        Artigo artigo = this.listaArtigos.get(codBarras);
+        if (artigo instanceof Sapatilha) {
+            return getSapatilhaByCod(codBarras);
+        } else if (artigo instanceof Mala) {
+            return getMalaByCod(codBarras);
+        } else if (artigo instanceof TShirt) {
+            return getTShirtByCod(codBarras);
+        } else {
+            return null;
+        }
     }
+
+    public Sapatilha getSapatilhaByCod(String codBarras) {
+        Artigo artigo = this.listaArtigos.get(codBarras);
+        if (artigo instanceof Sapatilha) {
+            return (Sapatilha) artigo;
+        } else {
+            return null;
+        }
+    }
+
+    public Mala getMalaByCod(String codBarras) {
+        Artigo artigo = this.listaArtigos.get(codBarras);
+        if (artigo instanceof Mala) {
+            return (Mala) artigo;
+        } else {
+            return null;
+        }
+    }
+
+    public TShirt getTShirtByCod(String codBarras) {
+        Artigo artigo = this.listaArtigos.get(codBarras);
+        if (artigo instanceof TShirt) {
+            return (TShirt) artigo;
+        } else {
+            return null;
+        }
+    }
+
+
 
     public String loadArtigos() {
         String filePath = ("src/artigos.txt"); // VER ISTO DEPOIS
