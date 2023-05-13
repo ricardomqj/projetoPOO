@@ -95,4 +95,8 @@ public class ModelTransportadora {
     public Transportadora getTransportadoraByName(String name) {
         return this.listaTransportadoras.get(name);
     }
+
+    public Map<String, Transportadora> getListaTransportadoras() {
+        return this.listaTransportadoras.values().stream().collect(Collectors.toMap(Transportadora::getNome, Transportadora::clone));
+    }
 }

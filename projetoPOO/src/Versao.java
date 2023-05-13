@@ -5,27 +5,28 @@ public class Versao {
     private String versaoArtigosTxt;
     private String versaoUsersTxt;
     private String versaoTransportadorasTxt;
-    //private String versaoEncomendasTxt;
+    private String versaoEncomendasTxt;
 
     public Versao() {
         this.time = null;
         this.versaoArtigosTxt = "";
         this.versaoUsersTxt = "";
         this.versaoTransportadorasTxt = "";
-        //this.versaoEncomendasTxt = "";
+        this.versaoEncomendasTxt = "";
     }
 
-    public Versao(String versaoArtigosTxt, String versaoUsersTxt, String versaoTransportadorasTxt) {
+    public Versao(String versaoArtigosTxt, String versaoUsersTxt, String versaoTransportadorasTxt, String versaoEncomendasTxt) {
         this.versaoArtigosTxt = versaoArtigosTxt;
         this.versaoUsersTxt = versaoUsersTxt;
         this.versaoTransportadorasTxt = versaoTransportadorasTxt;
+        this.versaoEncomendasTxt = versaoEncomendasTxt;
     }
 
     public Versao(Versao umaVersao) {
         this.versaoArtigosTxt = umaVersao.getVersaoArtigosTxt();
         this.versaoUsersTxt = umaVersao.getVersaoUsersTxt();
         this.versaoTransportadorasTxt = umaVersao.getVersaoTransportadorasTxt();
-        //this.versaoEncomendasTxt = umaVersao.getVersaoEncomendasTxt();
+        this.versaoEncomendasTxt = umaVersao.getVersaoEncomendasTxt();
     }
 
     public String toString() {
@@ -67,6 +68,14 @@ public class Versao {
 
     public void setVersaoTransportadorasTxt(String versaoTransportadorasTxt) {
         this.versaoTransportadorasTxt = versaoTransportadorasTxt;
+    }
+
+    public String getVersaoEncomendasTxt() {
+        return versaoEncomendasTxt;
+    }
+
+    public void setVersaoEncomendasTxt(String versaoEncomendasTxt) {
+        this.versaoEncomendasTxt = versaoEncomendasTxt;
     }
 /*
     public String getVersaoEncomendasTxt() {

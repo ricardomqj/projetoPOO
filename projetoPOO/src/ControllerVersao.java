@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.time.LocalTime;
 import java.util.Map;
 
@@ -48,8 +50,31 @@ public class ControllerVersao {
         this.modelVersao.addTShirtUsadaTxt(tshirt, versaoArtigosTxt);
     }
 
-
     // ATUALIZA TXT
+
+    public void atualizaUserTxt(Utilizador userComprador, String versaoUsersTxt) {
+        this.modelVersao.atualizaUserTxt(userComprador, versaoUsersTxt);
+    }
+
+    public void atualizaTransportadoraTxt(Transportadora trans, String versaoTransportadorasTxt) {
+        this.modelVersao.atualizaTransportadoraTxt(trans, versaoTransportadorasTxt);
+    }
+
+    /*
+    public void atualizaEncomendaTxt(Utilizador user, , String versaoUsersTxt) {
+        this.modelVersao.atualizaTransportadoraTxt(trans, versaoUsersTxt);
+    }
+    */
+
+
+    public void atualizaArtigoTxt(Artigo artigo, String versaoArtigosTxt) {
+        this.modelVersao.atualizaArtigoTxt(artigo, versaoArtigosTxt);
+    }
+
+
+    public void saveVersao(Versao versaoatual) {
+        this.modelVersao.saveVersao(versaoatual);
+    }
 
     // GETTERS E SETTERS
 
@@ -57,7 +82,6 @@ public class ControllerVersao {
         return this.viewerVersao.getListaVersoesToString(listaVersoes);
     }
 
-    //getters e setters
     public ModelVersao getModelVersao() {
         return modelVersao;
     }

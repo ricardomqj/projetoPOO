@@ -13,17 +13,16 @@ public class ModelEncomenda {
         this.listaEncomendas = new HashMap<String, Encomenda>();
     }
 
-    public void criaEncomenda(Utilizador user, Map<String, Artigo> lstArtigos) {
+    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArtigos) {
 
         String codigoEncomenda = gerarCodigoSistema(this.listaEncomendas);
 
-        Encomenda enc = new Encomenda(codigoEncomenda, user, lstArtigos);
+        Encomenda enc = new Encomenda(codigoEncomenda, codSistemaUtlizador, lstArtigos);
 
         this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
     }
 
-    /*
-    public void loadEncomendas() {
+    public String loadEncomendas() {
         String filePath = ("src/encomendas.txt");
 
         File file = new File(filePath);
@@ -32,10 +31,13 @@ public class ModelEncomenda {
             try {
                 Scanner scanner = new Scanner(file);
 
+                StringBuilder stringBuilder = new StringBuilder();
+
                 // Loop para ler todas as linhas do arquivo
                 while (scanner.hasNextLine()) {
 
                     String line = scanner.nextLine();
+                    stringBuilder.append(line);
 
                     // Divide a linha em campos usando o separador ":"
                     String[] fields = line.split(":");
@@ -43,7 +45,7 @@ public class ModelEncomenda {
                     Encomenda encomenda = new Encomenda();
 
                     encomenda.setCodSistema(fields[0]);
-                    //encomenda.setUser(); // PROBLEMA USER
+                    encomenda.setcodSistemaUtlizador(fields[1]);
 
                     String[] encprods = fields[2].split("/");
 
@@ -131,14 +133,19 @@ public class ModelEncomenda {
                     encomenda.setData(LocalDate.parse(fields[4]));
                     encomenda.setVintageProfit();
 
+                    stringBuilder.append("\n");
                 }
+
+                return stringBuilder.toString();
+
             } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
         }
         else System.out.println("File does not exist!");
+
+        return "";
     }
-     */
 
     public void addArtigoEncomenda (Encomenda enc, Artigo artigo) {
         enc.insereUmArtigo(artigo);
@@ -161,7 +168,7 @@ public class ModelEncomenda {
         Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
         lstArtigos = lstArt.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
         String codEncomenda = gerarCodigoSistema(listaEncomendas);
-        Encomenda enc = new Encomenda(codEncomenda, user, lstArtigos);
+        Encomenda enc = new Encomenda(codEncomenda, user.getCodigoSistema(), lstArtigos);
         this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
         return codEncomenda;
     }

@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class ControllerTransportadora {
     private ViewerTransportadora viewerTransportadora;
     private ModelTransportadora modelTransportadora;
@@ -35,11 +37,19 @@ public class ControllerTransportadora {
         this.modelTransportadora.changeMargemLucroTransportadora(nomeTrans, newMargemLucro);
     }
 
+    public Transportadora getTransportadoraByName(String nomeTrans) {
+        return this.modelTransportadora.getTransportadoraByName(nomeTrans);
+    }
+
     public void setViewerTransportadora(ViewerTransportadora viewerTransportadora) {
         this.viewerTransportadora = viewerTransportadora;
     }
 
     public void setModelTransportadora(ModelTransportadora modelTransportadora) {
         this.modelTransportadora = modelTransportadora;
+    }
+
+    public Map<String, Transportadora> getListaTransportadoras() {
+        return modelTransportadora.getListaTransportadoras();
     }
 }

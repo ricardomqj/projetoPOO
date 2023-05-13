@@ -16,6 +16,10 @@ public class ControllerUtlizador {
         return this.modelUtlizador.criaUtlizador(email,nome,morada,nif);
     }
 
+    public Map<String, Utilizador> getListaUtilizadores() {
+        return modelUtlizador.getListaUtilizadores();
+    }
+
     public String loadUtilizadores() {
         return this.modelUtlizador.loadUtilizadores();
     }

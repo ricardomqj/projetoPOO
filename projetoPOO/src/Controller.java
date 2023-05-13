@@ -36,9 +36,9 @@ public class Controller {
             String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
             String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
             String versaoArtigosTxt = controllerArtigo.loadArtigos();
-            //String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
+            String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
 
-            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
+            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
 
             System.out.println("O que deseja fazer?");
             System.out.println(" 1 - Criar um utlizador");                         //feito
@@ -94,11 +94,16 @@ public class Controller {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que query deseja executar?");
-            System.out.println("1 - query 1");
-            System.out.println("2 - query 2");
-            System.out.println("3 - query 3");
-            System.out.println("4 - query 4");
-            System.out.println("5 - query 5");
+            System.out.println("1 - Dar save da versão atual");
+            System.out.println("2 - Dar load de uma versão");
+            System.out.println("3 - Lista de encomendas emitidas por um vendedor"); // feito
+            System.out.println("4 - Transportadora com maior volume da faturação"); // feito(?)
+            System.out.println("5 - Dinheiro ganho pela Vintage no seu funcionamento"); // feito
+            System.out.println("6 - Vendedor que mais faturou desde sempre"); // feito (?)
+            System.out.println("7 - Vendedor que mais faturou num periodo de tempo");
+            System.out.println("8 - Top N maiores compradores num período de tempo"); // feito(?)
+            System.out.println("9 - Top N maiores vendedores num periodo de tempo");
+            System.out.println("0 - Sair");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -117,13 +122,62 @@ public class Controller {
                     Map<String, Encomenda> encsVendedor = controllerQueries.encsVendedor(controllerEncomenda.getListaTodasEncomendas(), controllerUtlizador.getUserByEmail(email));
                     String encsVendedorString = controllerQueries.encsVendedorToString(encsVendedor);
                     System.out.println(encsVendedorString);
+                    menuQueries();
                     break;
                 case 4:
-
+                    System.out.println(controllerQueries.transportadoraComMaisFaturação(controllerTransportadora.getListaTransportadoras(), controllerUtlizador.getListaUtilizadores()));
+                    menuQueries();
                     break;
                 case 5:
                     double lucro = controllerQueries.vintageProfit(controllerEncomenda.getListaTodasEncomendas());
                     System.out.println("A vintage ganhou " + Double.toString(lucro) + " durante o seu funcionamento.");
+                    menuQueries();
+                    break;
+                case 6:
+                    System.out.println("Utilizador que mais faturou: ");
+                    System.out.println(controllerQueries.getVendedorQueMaisFaturouSempre(controllerUtlizador.getListaUtilizadores()));
+                    menuQueries();
+                    break;
+                case 7:
+                    System.out.println("Insira a data inicial: ");
+                    String dataString1 = scanner.next();
+                    System.out.println("Digite o data final: ");
+                    String dataString2 = scanner.next();
+
+                    LocalDate data1 = LocalDate.parse(dataString1);
+                    LocalDate data2 = LocalDate.parse(dataString2);
+                    System.out.println(controllerQueries.utilizadorComMaiorDinheiroGanho(controllerUtlizador.getListaUtilizadores(), data1, data2));
+                    menuQueries();
+                    break;
+                case 8:
+                    System.out.println("Quantos compradores pretende ver: ");
+                    int num = scanner.nextInt();
+                    System.out.println("Insira a data inicial: ");
+                    String dataString3 = scanner.next();
+                    System.out.println("Insira a data final: ");
+                    String dataString4 = scanner.next();
+
+                    LocalDate data3 = LocalDate.parse(dataString3);
+                    LocalDate data4 = LocalDate.parse(dataString4);
+                    System.out.println(controllerQueries.topNCompradores(num, controllerUtlizador.getListaUtilizadores(), data3, data4));
+                    menuQueries();
+                    break;
+
+                case 9:
+                    System.out.println("Quantos vendedors pretende ver: ");
+                    int num1 = scanner.nextInt();
+                    System.out.println("Insira a data inicial: ");
+                    String dataString5 = scanner.next();
+                    System.out.println("Insira a data final: ");
+                    String dataString6 = scanner.next();
+
+                    LocalDate data5 = LocalDate.parse(dataString5);
+                    LocalDate data6 = LocalDate.parse(dataString6);
+                    System.out.println(controllerQueries.topNVendedores(num1, controllerUtlizador.getListaUtilizadores(), data5, data6));
+                    menuQueries();
+                    break;
+                case 0:
+                    menuInicial();
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -144,7 +198,7 @@ public class Controller {
             //Versão - 21:01
             //Versão - 22:03
 
-            System.out.println("Coloque a hora da versão que pretende carregar (hh:mm): ");//Coloque a hora da versão que pretende carregar (hh:mm)
+            System.out.println("Coloque a hora da versão que pretende carregar (hh:mm): "); //Coloque a hora da versão que pretende carregar (hh:mm)
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -177,7 +231,8 @@ public class Controller {
 
             switch (opcao) {
                 case 1:
-                    saveVersao(versaoAtual);
+                    controllerVersao.saveVersao(versaoAtual);
+                    //saveVersao(versaoAtual);
                     break;
                 case 2:
                     menuLoadVersoes();
@@ -187,12 +242,14 @@ public class Controller {
             }
         }
 
+
+        //apagar
         private void saveVersao(Versao versaoAtual) {
 
             //controllerVersao.saveEncomendas(versaoAtual.getVersaoEncomendasTxt());
-            controllerVersao.saveArtigos(versaoAtual.getVersaoArtigosTxt());
-            controllerVersao.saveTransportadoras(versaoAtual.getVersaoTransportadorasTxt());
-            controllerVersao.saveUtilizadores(versaoAtual.getVersaoUsersTxt());
+            //controllerVersao.saveArtigos(versaoAtual.getVersaoArtigosTxt());
+            //controllerVersao.saveTransportadoras(versaoAtual.getVersaoTransportadorasTxt());
+            //controllerVersao.saveUtilizadores(versaoAtual.getVersaoUsersTxt());
 
             controllerVersao.saveVersao(versaoAtual);
         }
@@ -619,8 +676,8 @@ public class Controller {
                 int desconto = sc.nextInt();
 
                 controllerArtigo.setDiscountArtigo(codBarras, desconto);
-                controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                controllerVersao.atualizaArtigoTxt(tshirtusa, versaoatual.getVersaoUsersTxt());
+                controllerVersao.atualizaUserTxt(user, versaoatual.getVersaoUsersTxt());
+                controllerVersao.atualizaArtigoTxt(controllerArtigo.getArtigoByCod(codBarras), versaoatual.getVersaoArtigosTxt());
                 System.out.println("Desconto inserido!");
             }
 
@@ -673,7 +730,7 @@ public class Controller {
                     controllerEncomenda.addEncomenda(userComprador.getArtigosCarrinho(), userComprador);
                     controllerUtlizador.addCarrinhoToEncomendas(userComprador.getEmail(), controllerEncomenda.getListaTodasEncomendas());
                     controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.atualizaEncomendaTxt(userComprador, userComprador.getArtigosCarrinho(), versaoatual.getVersaoUsersTxt());
+                    //controllerVersao.atualizaEncomendaTxt(userComprador, userComprador.getArtigosCarrinho(), versaoatual.getVersaoUsersTxt());
                     System.out.println("Encomenda feita!");
                     menuUtlizador(userComprador, versaoatual);
                     break;
@@ -771,13 +828,13 @@ public class Controller {
                         System.out.println("Insira o novo valor base de expedição: ");
                         double newValorExp = scanner.nextDouble();
                         controllerTransportadora.changeValBaseExpTransportadora(nomeTrans, newValorExp);
-                        controllerVersao.atualizaTransportadoraTxt(nomeTrans, versaoatual.getVersaoUsersTxt());
+                        controllerVersao.atualizaTransportadoraTxt(controllerTransportadora.getTransportadoraByName(nomeTrans), versaoatual.getVersaoTransportadorasTxt());
                         menuTransportadora(nomeTrans, versaoatual);
                     case 3:
                         System.out.println("Insira o valor em %(0 a 100) da margem de lucro: ");
                         double newMargemLucro = scanner.nextDouble();
                         controllerTransportadora.changeMargemDeLucroTransportadora(nomeTrans, newMargemLucro);
-                        controllerVersao.atualizaTransportadoraTxt(nomeTrans, versaoatual.getVersaoUsersTxt());
+                        controllerVersao.atualizaTransportadoraTxt(controllerTransportadora.getTransportadoraByName(nomeTrans), versaoatual.getVersaoTransportadorasTxt());
                         menuTransportadora(nomeTrans, versaoatual);
                     case 4:
                         menuInicial();

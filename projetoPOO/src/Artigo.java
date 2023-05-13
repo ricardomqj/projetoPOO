@@ -12,6 +12,7 @@ public abstract class Artigo {
     private Estado estado;
     private int desconto; // 0 a 100
     private String nome;
+    private LocalDate dataComprado; // se nao tiver sido comprado == null
 
     public Artigo() {
         this.codBarras = "n/a";
@@ -24,6 +25,7 @@ public abstract class Artigo {
         this.desconto = 0;
         this.nome = "";
         this.precoAtual = 0;
+        this.dataComprado = null;
     }
 
     public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome,int numDonos, int avalEstado) {
@@ -38,6 +40,7 @@ public abstract class Artigo {
         this.desconto = desconto;
         this.nome = nome;
         this.estado = new Usado(numDonos, avalEstado);
+        this.dataComprado = null;
     }
 
     public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome) {
@@ -52,6 +55,7 @@ public abstract class Artigo {
         this.descricao = descricao;
         this.estado = new Novo();
         this.precoAtual = precoBase;
+        this.dataComprado = null;
     }
 
     public Artigo(Artigo umArtigo) {
@@ -217,5 +221,12 @@ public abstract class Artigo {
     }
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public LocalDate getDataComprado() {
+        return this.dataComprado;
+    }
+    public void setDataComprado(LocalDate dataComprado) {
+        this.dataComprado = dataComprado;
     }
 }
