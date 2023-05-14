@@ -20,6 +20,26 @@ public class ControllerArtigo {
         return this.modelArtigo.getArtigoByCod(codBarras);
     }
 
+    public void tiraArtigoMap(Artigo artigo)
+    {
+        modelArtigo.tiraArtigoMap(artigo);
+    }
+
+    public String getArtigoCodBarras(Artigo artigo)
+    {
+        return modelArtigo.getArtigoCodBarras(artigo);
+    }
+
+    public Double getprecoArtigos(List<Artigo> artigos)
+    {
+        return modelArtigo.getPrecoArtigos(artigos);
+    }
+
+    public Double getProfitVi(List<Artigo> artigos)
+    {
+        return modelArtigo.getProfitVi(artigos);
+    }
+
     public String getArtigosParaVenda(List<Artigo> list)
     {
         modelArtigo.getArtigosParaVenda(list);

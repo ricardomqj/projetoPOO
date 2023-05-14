@@ -15,41 +15,38 @@ public class ControllerVersao {
 
     //methods
 
+    public void loadVersao(LocalTime time) {
+        Versao versaoLoad = this.modelVersao.getVersaoByTime(time);
+
+        this.modelVersao.saveVersao(versaoLoad);
+
+    }
+
     public Map<LocalTime, Versao> getListaVersoes() {
         return this.modelVersao.getListaVersoes();
     }
 
     // ADD TXT
 
-    public void addUserToTxt(Utilizador user, String versaoUserTxt) {
-        this.modelVersao.addUserToTxt(user, versaoUserTxt);
+    public void addUserToTxt(Utilizador user, Versao versaoatual) {
+        this.modelVersao.addUserToTxt(user, versaoatual);
     }
 
-    public void addTransportadoraTxt(Transportadora trans, String versaoTransportadorasTxt) {
-        this.modelVersao.addTransportadoraTxt(trans, versaoTransportadorasTxt);
+    public void addTransportadoraTxt(Transportadora trans, Versao versaoatual) {
+        this.modelVersao.addTransportadoraTxt(trans, versaoatual);
     }
 
-    public void addSapatilhaTxt(Sapatilha tilha, String versaoArtigosTxt) {
-        this.modelVersao.addSapatilhaTxt(tilha, versaoArtigosTxt);
-    }
-    public void addSapatilhaUsadaTxt(Sapatilha tilha, String versaoArtigosTxt) {
-        this.modelVersao.addSapatilhaUsadaTxt(tilha, versaoArtigosTxt);
+    public void addSapatilhaTxt(Sapatilha tilha, Versao versaoatual) {
+        this.modelVersao.addSapatilhaTxt(tilha, versaoatual);
     }
 
-    public void addMalaTxt(Mala mala, String versaoArtigosTxt) {
-        this.modelVersao.addMalaTxt(mala, versaoArtigosTxt);
-    }
-    public void addMalaUsadaTxt(Mala mala, String versaoArtigosTxt) {
-        this.modelVersao.addMalaUsadaTxt(mala, versaoArtigosTxt);
+    public void addMalaTxt(Mala mala, Versao versaoatual) {
+        this.modelVersao.addMalaTxt(mala, versaoatual);
     }
 
-    public void addTShirtTxt(TShirt tshirt, String versaoArtigosTxt) {
-        this.modelVersao.addTShirtTxt(tshirt, versaoArtigosTxt);
+    public void addTShirtTxt(TShirt tshirt, Versao versaoatual) {
+        this.modelVersao.addTShirtTxt(tshirt, versaoatual);
     }
-    public void addTShirtUsadaTxt(TShirt tshirt, String versaoArtigosTxt) {
-        this.modelVersao.addTShirtUsadaTxt(tshirt, versaoArtigosTxt);
-    }
-
 
     // ATUALIZA TXT
 

@@ -1,4 +1,5 @@
 import java.sql.Array;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -158,6 +159,65 @@ public class Utilizador {
 
     public void removeArtigoAVenda(String codBarras) {
         this.produtosAVendaCodBarras.remove(codBarras);
+    }
+
+    public double dinheiroGasto() {
+        double ret = 0.0;
+
+        for(Encomenda enc : this.encomendasFeitas) {
+            if(enc.getStatus().equals(Encomenda.StatusEncomenda.FINALIZADO)) {
+                for(Artigo art : enc.getArtigos().values()) {
+                    ret += art.getPrecoTotalArtigo();
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    public void retirarProdutoAVenda(String codBarras) {
+        for(String cb : this.produtosAVendaCodBarras) {
+            if(cb.equals(codBarras)) {
+                this.produtosAVendaCodBarras.remove(cb);
+                break;
+            }
+        }
+    }
+
+    public double dinheiroGanho(){
+        double ret = 0.0;
+
+        for(Artigo art : this.produtosVendidos.values()) {
+            ret += art.getPrecoBase();
+        }
+
+        return ret;
+    }
+
+    public double dinheiroGanho(LocalDate di, LocalDate df) {
+        double ret = 0.0;
+
+        for(Artigo art : this.produtosVendidos.values()) {
+            if(art.getDataComprado().isAfter(di) && art.getDataComprado().isBefore(df)) {
+                ret += art.getPrecoBase();
+            }
+        }
+
+        return ret;
+    }
+
+    public double dinheiroGasto(LocalDate di, LocalDate df) {
+        double ret = 0.0;
+
+        for(Encomenda enc : this.encomendasFeitas) {
+            if(enc.getStatus().equals(Encomenda.StatusEncomenda.FINALIZADO) && enc.getData().isAfter(di) && enc.getData().isBefore(df)) {
+                for(Artigo art : enc.getArtigos().values()) {
+                    ret += art.getPrecoTotalArtigo();
+                }
+            }
+        }
+
+        return ret;
     }
 
     // getters e setters

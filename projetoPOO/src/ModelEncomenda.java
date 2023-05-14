@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,18 +15,21 @@ public class ModelEncomenda {
         this.listaEncomendas = new HashMap<String, Encomenda>();
     }
 
-    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArtigos) {
+    public void criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArtigos,double preco,double profitVi) {
 
-        String codigoEncomenda = gerarCodigoSistema(this.listaEncomendas);
+        String codigoEncomenda = gerarCodigoSistema();
 
-        Encomenda enc = new Encomenda(codigoEncomenda, codSistemaUtlizador, lstArtigos);
+        Encomenda encomenda = new Encomenda(codigoEncomenda,codSistemaUtlizador,lstArtigos,preco,profitVi);
 
-        this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
+        this.listaEncomendas.put(codigoEncomenda,encomenda.clone());
     }
 
     public String loadEncomendas() {
-        String filePath = ("src/encomendas.txt");
 
+        this.listaEncomendas.clear();
+
+        String filePath = "projetoPOO-Rui/projetoPOO/src/encomendas.txt"; // VER ISTO DEPOIS
+        //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
         if (file.exists()) {
@@ -51,9 +56,9 @@ public class ModelEncomenda {
 
                     for (String prod : encprods) {
 
-                        String[] prodencfields = prod.split(".");
+                        String[] prodencfields = prod.split("\\.");
 
-                        if (prodencfields[9].equals("sapatilha")) {
+                        if (prodencfields[11].equals("sapatilha")) {
                             Sapatilha tilha = new Sapatilha();
 
                             tilha.setCodBarras(prodencfields[0]);
@@ -65,20 +70,17 @@ public class ModelEncomenda {
                             tilha.setDescricao(prodencfields[6]);
                             tilha.setEstado(prodencfields[7]);
                             tilha.setDesconto(Integer.parseInt(prodencfields[8]));
-                            tilha.setNome(prodencfields[9]);
-                            tilha.setTamanho(Integer.parseInt(prodencfields[10]));
-                            tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[11]));
-                            tilha.setCor(prodencfields[12]);
-
-                            if (prodencfields.length > 13) {
-                                //tilha.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                                //tilha.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            }
+                            tilha.setNumdonos(Integer.parseInt(prodencfields[9]));
+                            tilha.setAvalestado(Integer.parseInt(prodencfields[10]));
+                            tilha.setNome(prodencfields[11]);
+                            tilha.setTamanho(Integer.parseInt(prodencfields[12]));
+                            tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[13]));
+                            tilha.setCor(prodencfields[14]);
 
                             encomenda.insereUmArtigo(tilha);
                         }
 
-                        if (prodencfields[9].equals("mala")) {
+                        if (prodencfields[11].equals("mala")) {
                             Mala mala = new Mala();
 
                             mala.setCodBarras(prodencfields[0]);
@@ -90,19 +92,16 @@ public class ModelEncomenda {
                             mala.setDescricao(prodencfields[6]);
                             mala.setEstado(prodencfields[7]);
                             mala.setDesconto(Integer.parseInt(prodencfields[8]));
-                            mala.setNome(prodencfields[9]);
-                            mala.setTamanho(prodencfields[10]);
-                            mala.setMaterial(prodencfields[11]);
-                            mala.setAnoColecao(Integer.parseInt(prodencfields[12]));
-
-                            if (prodencfields.length > 13) {
-                                //mala.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                                //mala.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            }
+                            mala.setNumdonos(Integer.parseInt(prodencfields[9]));
+                            mala.setAvalestado(Integer.parseInt(prodencfields[10]));
+                            mala.setNome(prodencfields[11]);
+                            mala.setTamanho(prodencfields[12]);
+                            mala.setMaterial(prodencfields[13]);
+                            mala.setAnoColecao(Integer.parseInt(prodencfields[14]));
 
                             encomenda.insereUmArtigo(mala);
                         }
-                        if (prodencfields[9].equals("tshirt")) {
+                        if (prodencfields[11].equals("tshirt")) {
                             TShirt tshirt = new TShirt();
 
                             tshirt.setCodBarras(prodencfields[0]);
@@ -114,14 +113,11 @@ public class ModelEncomenda {
                             tshirt.setDescricao(prodencfields[6]);
                             tshirt.setEstado(prodencfields[7]);
                             tshirt.setDesconto(Integer.parseInt(prodencfields[8]));
-                            tshirt.setNome(prodencfields[9]);
-                            tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[10]));
-                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[11]));
-
-                            if (prodencfields.length > 12) {
-                                //tshirt.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                                //tshirt.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            }
+                            tshirt.setNumdonos(Integer.parseInt(prodencfields[9]));
+                            tshirt.setAvalestado(Integer.parseInt(prodencfields[10]));
+                            tshirt.setNome(prodencfields[11]);
+                            tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[12]));
+                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[13]));
 
                             encomenda.insereUmArtigo(tshirt);
                         }
