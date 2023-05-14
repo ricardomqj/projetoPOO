@@ -78,8 +78,23 @@ public class ControllerUtlizador {
         modelUtlizador.removeVariosArtigosUser(user, lst);
     }
 
-    public void addArtigoCarrinho(String email, Artigo art) {
-        modelUtlizador.addArtigoCarrinho(email, art);
+    public boolean addArtigoCarrinho(Utilizador utilizador, Artigo art) {
+        return modelUtlizador.addArtigoCarrinho(utilizador, art);
+    }
+
+    public List<Artigo> getArtigosCarrinho (Utilizador utilizador)
+    {
+        return modelUtlizador.getArtigosCarrinho(utilizador);
+    }
+
+    public String getCodSistemaUtlizador(Utilizador utilizador)
+    {
+        return modelUtlizador.getCodSistemaUtlizador(utilizador);
+    }
+
+    public void retiraArtigoDeVenda(String codBarras,Artigo artigo,String codSistemComprador)
+    {
+        modelUtlizador.retiraArtigoDeVenda(codBarras,artigo,codSistemComprador);
     }
 
     public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEnc) {

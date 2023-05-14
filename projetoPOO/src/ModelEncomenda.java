@@ -15,16 +15,18 @@ public class ModelEncomenda {
         this.listaEncomendas = new HashMap<String, Encomenda>();
     }
 
-    public void criaEncomenda(String codSistemaUtlizador, Map<String, Artigo> lstArtigos) {
+    public void criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArtigos,double preco,double profitVi) {
 
-        String codigoEncomenda = gerarCodigoSistema(this.listaEncomendas);
+        String codigoEncomenda = gerarCodigoSistema();
 
-        Encomenda enc = new Encomenda(codigoEncomenda, codSistemaUtlizador, lstArtigos);
+        Encomenda encomenda = new Encomenda(codigoEncomenda,codSistemaUtlizador,lstArtigos,preco,profitVi);
 
-        this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
+        this.listaEncomendas.put(codigoEncomenda,encomenda.clone());
     }
 
     public String loadEncomendas() {
+
+        this.listaEncomendas.clear();
 
         String filePath = "projetoPOO-Rui/projetoPOO/src/encomendas.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));

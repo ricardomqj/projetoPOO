@@ -22,6 +22,8 @@ public class ModelTransportadora {
 
     public String loadTransportadoras() {
 
+        this.listaTransportadoras.clear();
+
         //String filePath = "C:\\Users\\hugoa\\Desktop\\projetoPOO-Atual\\projetoPOO-Rui\\projetoPOO\\src\\transportadoras.txt"; // VER ISTO DEPOIS
         String filePath = "projetoPOO-Rui/projetoPOO/src/transportadoras.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));

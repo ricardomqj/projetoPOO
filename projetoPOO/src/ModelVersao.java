@@ -13,6 +13,20 @@ public class ModelVersao {
 
     // METHODS
 
+    public void carregaVersao(Versao versaoatual) {
+
+    }
+
+    public Versao getVersaoByTime(LocalTime time) {
+        for (Versao versao : this.listaVersoes.values()) {
+            if(versao.getTime().equals(time)) {
+                return versao;
+            }
+        }
+        System.out.println("Não foi efetuado o carregamento de qualquer versão, tente novamente.");
+        return new Versao();
+    }
+
     public void addUserToTxt(Utilizador user, Versao versaoatual) {
         String userTxt = user.toStringTxt();
 
@@ -176,7 +190,7 @@ public class ModelVersao {
             e.printStackTrace();
         }
 
-        this.listaVersoes.put(versaoatual.getTime(), versaoatual);
+        this.listaVersoes.put(versaoatual.getTime(), versaoatual.clone());
     }
 
     //getters e setters

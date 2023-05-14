@@ -1,5 +1,7 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -13,7 +15,7 @@ public class Encomenda {
 
     private String codSistema;
     private String codSistemaUtlizador;
-    private Map<String, Artigo> artigos;
+    private List<Artigo> artigos;
     private String tamanho;
     private double precoFinal;
     private StatusEncomenda status;
@@ -23,7 +25,7 @@ public class Encomenda {
     public Encomenda() {
         this.codSistema = "";
         this.codSistemaUtlizador = null;
-        this.artigos = new HashMap<>();
+        this.artigos = new ArrayList<>();
         this.tamanho = "";
         this.precoFinal = 0.0;
         this.status = null;
@@ -31,14 +33,14 @@ public class Encomenda {
         this.vintageProfit = 0.0;
     }
 
-    public Encomenda(String codSistema, String codSistemaUtlizador, Map<String, Artigo> artigos, String tamanho, double precoFinal, StatusEncomenda status, LocalDate data, double vintageProfit) {
+    public Encomenda(String codSistema, String codSistemaUtlizador, List<Artigo> artigos,double precoFinal, double vintageProfit) {
         this.codSistema = codSistema;
         this.codSistemaUtlizador = codSistemaUtlizador;
-        this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
-        this.tamanho = tamanho;
+        this.artigos = artigos;
+        this.tamanho = dimensaoEncomendaString(artigos);
         this.precoFinal = precoFinal;
-        this.status = status;
-        this.data = data;
+        this.status = StatusEncomenda.PENDENTE;
+        this.data = LocalDate.now();
         this.vintageProfit = vintageProfit;
     }
 
@@ -52,16 +54,6 @@ public class Encomenda {
         this.vintageProfit = artigos.values().stream().mapToDouble(Artigo::getProfitVintage).sum();
     }
 
-    public Encomenda(String codSistema, Utilizador user) { // ????
-        this.codSistema = codSistema;
-        this.codSistemaUtlizador = codSistemaUtlizador;
-        this.artigos = new HashMap<>(); //this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
-        this.tamanho = tamanho;
-        this.precoFinal = precoFinal;
-        this.status = status;
-        this.data = data;
-        this.vintageProfit = vintageProfit;
-    }
 
     public Encomenda(Encomenda umaEncomenda) {
         this.codSistema = umaEncomenda.getCodSistema();
@@ -97,7 +89,7 @@ public class Encomenda {
 
         sb.append("O código de Sistema do utlizador é: ").append(this.codSistemaUtlizador).append("\n");
         sb.append("Lista de artigos da encomenda: \n");
-        for(Artigo artigo : this.artigos.values()) {
+        for(Artigo artigo : this.artigos) {
             sb.append(artigo.toString());
         }
         sb.append("Tamanho da Encomenda: ").append(this.tamanho).append("\n");
@@ -107,46 +99,28 @@ public class Encomenda {
 
         return sb.toString();
     }
-/*
-FAZER O toStringTxt
-
-    public String toStringTxt() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Nome do utilizador: ").append(this.user.getNome()).append("\n");
-        sb.append("Lista de artigos da encomenda: \n");
-        for(Artigo artigo : this.artigos.values()) {
-            sb.append(artigo.toString());
-        }
-        sb.append("Tamanho da Encomenda: ").append(this.tamanho).append("\n");
-        sb.append("Preço Total: ").append(this.precoFinal).append("\n");
-        sb.append("Estado da encomenda: ").append(this.status).append("\n");
-        sb.append("Data da encomenda: ").append(this.data).append("\n");
-
-        return sb.toString();
-    }
-
- */
 
     // METHODS
 
     public void insereUmArtigo(Artigo artigo)
     {
-        this.artigos.put(artigo.getCodBarras(), artigo);
+        this.artigos.add(artigo);
     }
-
     /*
     public double taxaDeSatisfacao() {
         if(this.estado.equals(Estado.NOVO)) return 0.5;
         else return 0.25;
     }
-    public String dimensaoEncomendaString() {
-        if(this.artigos.size() < 1) return "SEM ARTIGOS";
-        if(this.artigos.size() == 1) return "PEQUENA";
-        if(this.artigos.size() >= 2 && this.artigos.size() <= 5) return "MÉDIA";
+    */
+
+    public String dimensaoEncomendaString(List<Artigo> listArtigos) {
+        if(listArtigos.size() <= 5) return "PEQUENA";
+        if(listArtigos.size() <= 10 ) return "MÉDIA";
         else return "GRANDE";
     }
-    */
+
+
+
 
     /* --------> VAI TER DE SER REPENSADA
     public double custoTotalExpedicao() {
@@ -165,9 +139,8 @@ FAZER O toStringTxt
 
         double custo = 0.0;
 
-        for (Map.Entry<String, Artigo> entry : this.artigos.entrySet()) {
-            String key = entry.getKey();
-            Artigo value = entry.getValue();
+        for (Artigo entry : this.artigos) {
+            Artigo value = entry;
 
             custo += value.getPrecoBase();
         }
@@ -187,14 +160,13 @@ FAZER O toStringTxt
     public double vintageProfit() {
         double lucro = 0.0;
 
-        for (Map.Entry<String, Artigo> entry : this.artigos.entrySet()) {
-            String key = entry.getKey();
-            Artigo value = entry.getValue();
+        for (Artigo entry : this.artigos) {
+            Artigo value = entry;
 
-            if (value.getEstado().toLowerCase().equals("usado")) {
+            if (value.getEstado() instanceof Usado) {
                 lucro += 0.25;
             }
-            if (value.getEstado().toLowerCase().equals("novo")) {
+            if (value.getEstado() instanceof Novo) {
                 lucro += 0.5;
             }
         }
@@ -224,12 +196,12 @@ FAZER O toStringTxt
         this.codSistemaUtlizador = codSistemaUtlizador;
     }
 
-    public Map<String, Artigo> getArtigos() {
-        return this.artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    public List<Artigo> getArtigos() {
+        return this.artigos;
     }
 
-    public void setArtigos(Map<String, Artigo> artigos) {
-        this.artigos = artigos.values().stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
+    public void setArtigos(List<Artigo> artigos) {
+        this.artigos = artigos;
     }
 
     public String getTamanhoEncomenda() {

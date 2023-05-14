@@ -15,6 +15,13 @@ public class ControllerVersao {
 
     //methods
 
+    public void loadVersao(LocalTime time) {
+        Versao versaoLoad = this.modelVersao.getVersaoByTime(time);
+
+        this.modelVersao.saveVersao(versaoLoad);
+
+    }
+
     public Map<LocalTime, Versao> getListaVersoes() {
         return this.modelVersao.getListaVersoes();
     }

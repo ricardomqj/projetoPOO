@@ -31,6 +31,8 @@ public class ModelUtlizador {
 
     public String loadUtilizadores() {
 
+        this.listaUtilizadores.clear();
+
         String filePath = "projetoPOO-Rui/projetoPOO/src/utilizadores.txt"; // VER ISTO DEPOIS
         File file = new File(filePath);
 
@@ -525,19 +527,51 @@ public class ModelUtlizador {
         this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
     }
 
-    public void addArtigoCarrinho(String email, Artigo art) {
-        Utilizador ret = new Utilizador();
-        for(Utilizador uti : this.listaUtilizadores.values()) {
-            if(uti.getEmail().equals(email)) {
-                ret = uti;
+    public boolean addArtigoCarrinho(Utilizador utilizador, Artigo art) {
+        for(Artigo aux_art : utilizador.getArtigosCarrinho())
+            if(aux_art.equals(art))
+                return false;
+
+        utilizador.addArtigoCarrinho(art);
+        return true;
+    }
+
+    public List<Artigo> getArtigosCarrinho(Utilizador utilizador)
+    {
+        return utilizador.getArtigosCarrinho();
+    }
+
+    public String getCodSistemaUtlizador(Utilizador utilizador)
+    {
+        return utilizador.getCodigoSistema();
+    }
+
+    public void retiraArtigoDeVenda(String codBarras,Artigo artigo,String codSistemaComprador)
+    {
+        int key = 0;
+
+        for(Map.Entry<String,Utilizador> utilizador : this.listaUtilizadores.entrySet())
+        {
+            List<String> lista = utilizador.getValue().getProdutosAVenda();;
+
+            for(String artigoParaVenda : lista)
+            {
+                if(artigoParaVenda.equals(codBarras))
+                {
+                    key = 1;
+                    lista.remove(artigoParaVenda);
+                    utilizador.getValue().addArtigoToProdutosVendidos(artigo);
+                    break;
+                }
+            }
+            if(key == 1) {
+                utilizador.getValue().setProdutosAVendaCodBarras(lista);
                 break;
             }
         }
-        List<Artigo> carrinho = new ArrayList<>();
-        carrinho.addAll(ret.getArtigosCarrinho());
-        carrinho.add(art);
-        ret.setArtigosCarrinho(carrinho);
-        this.listaUtilizadores.put(ret.getCodigoSistema(), ret.clone());
+
+        Utilizador utilizador = this.listaUtilizadores.get(codSistemaComprador);
+        utilizador.addArtigoToProdutosVendidos(artigo);
     }
 
     public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEncomendas) {

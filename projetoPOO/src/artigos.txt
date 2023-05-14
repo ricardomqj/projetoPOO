@@ -4,3 +4,10 @@
 302010:2:2018-02-01:UHL:40:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
 3213:1:2003-02-12:piçacaralho:10.0:marca:dsasda:Usado:0:233:3:10:true:azul
 31231231311111111111:1:2001-10-20:piçacaralho:10.0:luisVitor:dsad:Usado:13:32323:2:S::2018
+2130123021032103:1:2000-12-20:piçacaralho:1000.0:marca:dasdsad:Usado:0:230:4:10:true:azul
+101010:1:2000-02-12:piçacaralho:20.0:masr:ds:Usado:0:1002:2:100:true:azul
+1003023003:1:2000-02-12:piçacaralho:20.0:marca:123123:Novo:0:0:0:10:false:azul
+102301230:1:2000-02-12:piçacaralho:10.0:ds:ds:Novo:0:0:0:10:true:ds
+1032412030:1:2000-02-12:hugo:10.0:masd:123:Novo:0:0:0:10:true:azul
+11111111111111111111111111:1:2013-02-12:piçacaralho:1203.0:mac:das:Novo:0:0:0:10:true:azul
+3333333333333333333333333:1:2000-02-12:hugo:10.0:tr:pla:Novo:0:0:0:10:true:azulç

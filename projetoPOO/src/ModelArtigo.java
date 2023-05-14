@@ -62,6 +62,8 @@ public class ModelArtigo {
 
     public String loadArtigos() {
 
+        this.listaArtigos.clear();
+
         String filePath = "projetoPOO-Rui/projetoPOO/src/artigos.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
@@ -164,12 +166,45 @@ public class ModelArtigo {
         return umaSap.clone();
     }
 
+    public double getPrecoArtigos(List<Artigo> artigos)
+    {
+        double precototal = 0;
+
+        for(Artigo artigo : artigos)
+            precototal += artigo.getPrecoAtual();
+
+        return precototal;
+    }
+
     public void setDiscountArtigo(String codBarras, int desconto) {
         Artigo art = getArtigoByCod(codBarras);
         double precoBaseArt = art.getPrecoAtual();
         art.setDesconto(desconto);
         art.setPrecoAtual(precoBaseArt * (1-(desconto/100)));
         this.listaArtigos.put(art.getCodBarras(), art.clone());
+    }
+
+    public double getProfitVi(List<Artigo> artigos)
+    {
+        double profitTotalVi = 0;
+
+        for(Artigo artigo : artigos)
+        {
+            // COMPOR ISTO <-------------------------------------
+            profitTotalVi += 0.5;
+        }
+
+        return profitTotalVi;
+    }
+
+    public String getArtigoCodBarras(Artigo artigo)
+    {
+        return artigo.getCodBarras();
+    }
+
+    public void tiraArtigoMap(Artigo artigo)
+    {
+        this.listaArtigos.remove(artigo.getCodBarras());
     }
 
     public Sapatilha registarSapatilhaNova(String nome, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int tamanhoSapatilha,

@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.time.format.DateTimeParseException;
 
 public class Controller {
         ViewerUtlizador viewerUtlizador = new ViewerUtlizador();
@@ -96,6 +97,7 @@ public class Controller {
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
+                    menuInicial(versaoAtual);
             }
         }
 
@@ -106,8 +108,8 @@ public class Controller {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que query deseja executar?");
-            System.out.println("1 - Dar save da versão atual");
-            System.out.println("2 - Dar load de uma versão");
+            System.out.println("1 - Query 1");
+            System.out.println("2 - Query 2");
             System.out.println("3 - Lista de encomendas emitidas por um vendedor"); // feito
             System.out.println("4 - Transportadora com maior volume da faturação"); // feito(?)
             System.out.println("5 - Dinheiro ganho pela Vintage no seu funcionamento"); // feito
@@ -196,7 +198,7 @@ public class Controller {
             }
         }
 
-        private void menuLoadVersoes() {
+        private void menuLoadVersoes(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que versão deseja carregar?");
@@ -210,45 +212,57 @@ public class Controller {
             //Versão - 21:01
             //Versão - 22:03
 
-            System.out.println("Coloque a hora da versão que pretende carregar (hh:mm): "); //Coloque a hora da versão que pretende carregar (hh:mm)
+            System.out.println("Copie e cole a Hora de Criação da Versão que deseja carregar"); //Coloque a hora da versão que pretende carregar (hh:mm)
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String input = scanner.nextLine();
 
-            // VER COMO FAZER ESTA PARTE
+            try {
+                // parse the input string to create a LocalTime object
+                LocalTime time = LocalTime.parse(input);
 
-            /*
-            switch (opcao) {
-                case 1:
+                controllerVersao.loadVersao(time);
+                controllerArtigo.loadArtigos();
+                controllerUtlizador.loadUtilizadores();
+                controllerEncomenda.loadEncomendas();
+                controllerTransportadora.loadTransportadoras();
 
-                    break;
-                case 2:
-                    menuLoadVersoes();
-                    break;
-                default:
-                    System.out.println("Essa opção não está diponível");
+                System.out.println("Load efetuado!");
+                menuLoadSave(versaoatual);
+
+
+                // print the LocalTime variable and its components
+            } catch (DateTimeParseException e) {
+                // handle the case where the input string is not a valid LocalTime value
+                System.out.println("Input inválido: Por favor copie e cole a Hora de criação da versão:");
+                menuLoadSave(versaoatual);
             }
-            */
+
         }
 
-        private void menuLoadSave(Versao versaoAtual) {
+        private void menuLoadSave(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("O que deseja fazer?");
             System.out.println("1 - Dar save da versão atual");
             System.out.println("2 - Dar load de uma versão");
+            System.out.println("0 - Voltar atrás");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    controllerVersao.saveVersao(versaoAtual);
-                    menuInicial(versaoAtual);
-                    //saveVersao(versaoAtual);
+                    controllerVersao.saveVersao(versaoatual);
+
+                    Versao versaoNova = new Versao(versaoatual.getVersaoArtigosTxt(), versaoatual.getVersaoUsersTxt(), versaoatual.getVersaoTransportadorasTxt(), versaoatual.getVersaoEncomendasTxt());
+
+                    menuInicial(versaoNova);
                     break;
                 case 2:
-                    menuLoadVersoes();
+                    menuLoadVersoes(versaoatual);
+                    break;
+                case 0:
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -718,7 +732,7 @@ public class Controller {
 
             switch(option) {
                 case 1:
-
+                    adicionaArtigoCarrinho(userComprador,versaoatual);
                     menuUtlizador(userComprador, versaoatual);
                     break;
                 case 2:
@@ -731,9 +745,21 @@ public class Controller {
                     controllerUtlizador.removeArtigoCarrinho(userComprador, codBarras1);
                     controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
                 case 4:
-                    controllerEncomenda.addEncomenda(userComprador.getArtigosCarrinho(), userComprador);
-                    controllerUtlizador.addCarrinhoToEncomendas(userComprador.getEmail(), controllerEncomenda.getListaTodasEncomendas());
+                    List<Artigo> artigosCarrinho = controllerUtlizador.getArtigosCarrinho(userComprador);
+                    String codSistemaUtlizador = controllerUtlizador.getCodSistemaUtlizador(userComprador);
+                    Double preco = controllerArtigo.getprecoArtigos(artigosCarrinho);
+                    Double profitVi = controllerArtigo.getProfitVi(artigosCarrinho);
+
+                    controllerEncomenda.criaEncomenda(codSistemaUtlizador,artigosCarrinho,preco,profitVi);
+
+                    for(Artigo artigo : artigosCarrinho)
+                    {
+                        controllerArtigo.tiraArtigoMap(artigo);
+                        controllerUtlizador.retiraArtigoDeVenda(controllerArtigo.getArtigoCodBarras(artigo),artigo,codSistemaUtlizador);
+                    }
+
                     controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
+
                     //controllerVersao.atualizaEncomendaTxt(userComprador, userComprador.getArtigosCarrinho(), versaoatual.getVersaoUsersTxt());
                     System.out.println("Encomenda feita!");
                     menuUtlizador(userComprador, versaoatual);
@@ -757,7 +783,11 @@ public class Controller {
 
             Artigo art = controllerArtigo.getArtigoByCod(codBarras);
 
-            controllerUtlizador.addArtigoCarrinho(userComprador.getEmail(), art);
+            if(!controllerUtlizador.addArtigoCarrinho(userComprador, art)) {
+                System.out.println("Artiogo já está no carrinho");
+                efetuaEncomenda(userComprador,versaoatual);
+            }
+
             controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
 
             System.out.println("Artigo adicionado ao carrinho!");
@@ -765,7 +795,8 @@ public class Controller {
 
 
 
-            // Funções para criar transportadora
+
+    // Funções para criar transportadora
 
             private void infosTransportadoras (Versao versaoAtual) {
                 System.out.println(controllerTransportadora.infosTodasAsTransportadoras());
