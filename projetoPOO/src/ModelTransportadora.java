@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,7 +21,10 @@ public class ModelTransportadora {
     }
 
     public String loadTransportadoras() {
-        String filePath = ("src/transportadoras.txt"); // VER ISTO DEPOIS
+
+        //String filePath = "C:\\Users\\hugoa\\Desktop\\projetoPOO-Atual\\projetoPOO-Rui\\projetoPOO\\src\\transportadoras.txt"; // VER ISTO DEPOIS
+        String filePath = "projetoPOO-Rui/projetoPOO/src/transportadoras.txt"; // VER ISTO DEPOIS
+        //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
         if(file.exists()) {

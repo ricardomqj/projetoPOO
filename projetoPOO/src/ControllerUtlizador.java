@@ -9,6 +9,7 @@ public class ControllerUtlizador {
     {
         this.setModelUtlizador(modelUtlizador);
         this.setViewerUtlizador(viewerUtlizador);
+
     }
 
     public Utilizador criaUtlizador(String email,String nome,String morada,String nif)

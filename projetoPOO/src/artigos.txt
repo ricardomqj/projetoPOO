@@ -1,4 +1,6 @@
-12345:2:2018-02-01:UHL:10:nike:presente de ex:Novo:10:sapatilha:40:true:azul
-54321:2:2018-03-02:UHL:20:nike:presente de ex:Novo:10:mala:M:pele:2018
-102030:2:2018-02-01:UHL:15:nike:presente de ex:Novo:10:sapatilha:40:true:azul
-302010:2:2018-02-01:UHL:40:nike:presente de ex:Novo:10:sapatilha:40:true:azul
+12345:2:2018-02-01:UHL:10:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+54321:2:2018-03-02:UHL:20:nike:presente de ex:Usado:10:2:5:mala:M:pele:2018
+102030:2:2018-02-01:UHL:15:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+302010:2:2018-02-01:UHL:40:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+3213:1:2003-02-12:piçacaralho:10.0:marca:dsasda:Usado:0:233:3:10:true:azul
+31231231311111111111:1:2001-10-20:piçacaralho:10.0:luisVitor:dsad:Usado:13:32323:2:S::2018

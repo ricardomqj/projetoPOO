@@ -27,18 +27,30 @@ public class Controller {
         ModelQueries modelQueries = new ModelQueries();
         ControllerQueries controllerQueries = new ControllerQueries(viewerQueries,modelQueries);
 
-        public void menuInicial()
-        {
-            Scanner scanner = new Scanner(System.in);
-
-            //ver como se vai fazer acerca de quando se dá estes loads
+        public void loadInitialFiles() {
 
             String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
             String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
             String versaoArtigosTxt = controllerArtigo.loadArtigos();
             String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
 
-            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
+            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt);
+
+            menuInicial(versaoAtual);
+        }
+
+        public void menuInicial(Versao versaoAtual)
+        {
+            Scanner scanner = new Scanner(System.in);
+
+            //ver como se vai fazer acerca de quando se dá estes loads
+
+            //String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
+            //String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
+            //String versaoArtigosTxt = controllerArtigo.loadArtigos();
+            //String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
+
+            //Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
 
             System.out.println("O que deseja fazer?");
             System.out.println(" 1 - Criar um utlizador");                         //feito
@@ -69,10 +81,10 @@ public class Controller {
                     loginTransportadora(versaoAtual);
                     break;
                 case 6:
-                    infosTransportadoras();
+                    infosTransportadoras(versaoAtual);
                     break;
                 case 7:
-                    infosTodosUsers();
+                    infosTodosUsers(versaoAtual);
                     break;
                 case 8:
 
@@ -80,7 +92,7 @@ public class Controller {
                     menuLoadSave(versaoAtual);
                     break;
                 case 10:
-                    menuQueries();
+                    menuQueries(versaoAtual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -90,7 +102,7 @@ public class Controller {
 
         // Funções do user
 
-        private void menuQueries() {
+        private void menuQueries(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que query deseja executar?");
@@ -122,21 +134,21 @@ public class Controller {
                     Map<String, Encomenda> encsVendedor = controllerQueries.encsVendedor(controllerEncomenda.getListaTodasEncomendas(), controllerUtlizador.getUserByEmail(email));
                     String encsVendedorString = controllerQueries.encsVendedorToString(encsVendedor);
                     System.out.println(encsVendedorString);
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 4:
                     System.out.println(controllerQueries.transportadoraComMaisFaturação(controllerTransportadora.getListaTransportadoras(), controllerUtlizador.getListaUtilizadores()));
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 5:
                     double lucro = controllerQueries.vintageProfit(controllerEncomenda.getListaTodasEncomendas());
                     System.out.println("A vintage ganhou " + Double.toString(lucro) + " durante o seu funcionamento.");
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 6:
                     System.out.println("Utilizador que mais faturou: ");
                     System.out.println(controllerQueries.getVendedorQueMaisFaturouSempre(controllerUtlizador.getListaUtilizadores()));
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 7:
                     System.out.println("Insira a data inicial: ");
@@ -147,7 +159,7 @@ public class Controller {
                     LocalDate data1 = LocalDate.parse(dataString1);
                     LocalDate data2 = LocalDate.parse(dataString2);
                     System.out.println(controllerQueries.utilizadorComMaiorDinheiroGanho(controllerUtlizador.getListaUtilizadores(), data1, data2));
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 8:
                     System.out.println("Quantos compradores pretende ver: ");
@@ -160,7 +172,7 @@ public class Controller {
                     LocalDate data3 = LocalDate.parse(dataString3);
                     LocalDate data4 = LocalDate.parse(dataString4);
                     System.out.println(controllerQueries.topNCompradores(num, controllerUtlizador.getListaUtilizadores(), data3, data4));
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
 
                 case 9:
@@ -174,10 +186,10 @@ public class Controller {
                     LocalDate data5 = LocalDate.parse(dataString5);
                     LocalDate data6 = LocalDate.parse(dataString6);
                     System.out.println(controllerQueries.topNVendedores(num1, controllerUtlizador.getListaUtilizadores(), data5, data6));
-                    menuQueries();
+                    menuQueries(versaoatual);
                     break;
                 case 0:
-                    menuInicial();
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -232,6 +244,7 @@ public class Controller {
             switch (opcao) {
                 case 1:
                     controllerVersao.saveVersao(versaoAtual);
+                    menuInicial(versaoAtual);
                     //saveVersao(versaoAtual);
                     break;
                 case 2:
@@ -240,18 +253,6 @@ public class Controller {
                 default:
                     System.out.println("Essa opção não está diponível");
             }
-        }
-
-
-        //apagar
-        private void saveVersao(Versao versaoAtual) {
-
-            //controllerVersao.saveEncomendas(versaoAtual.getVersaoEncomendasTxt());
-            //controllerVersao.saveArtigos(versaoAtual.getVersaoArtigosTxt());
-            //controllerVersao.saveTransportadoras(versaoAtual.getVersaoTransportadorasTxt());
-            //controllerVersao.saveUtilizadores(versaoAtual.getVersaoUsersTxt());
-
-            controllerVersao.saveVersao(versaoAtual);
         }
 
         private void criaUtlizador(Versao versaoAtual) {
@@ -271,12 +272,12 @@ public class Controller {
             String nifUtilizador = scanner.nextLine();
 
             Utilizador user = controllerUtlizador.criaUtlizador(emailUtilizador,nomeUtilizador,moradaUtilizador,nifUtilizador);
-            controllerVersao.addUserToTxt(user, versaoAtual.getVersaoUsersTxt());
+            controllerVersao.addUserToTxt(user, versaoAtual);
 
-            menuInicial();
+            menuInicial(versaoAtual);
         }
 
-        private void loginUtlizador(Versao versaoatual) {
+        private void loginUtlizador(Versao versaoAtual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Digite o email do utilizador:");
@@ -285,12 +286,12 @@ public class Controller {
             Utilizador utilizador = controllerUtlizador.getUserByEmail(emailUtilizador);
             if(utilizador != null)
             {
-                menuUtlizador(utilizador, versaoatual);
+                menuUtlizador(utilizador, versaoAtual);
             }
             else
             {
                 System.out.println("Esse email não está registado!");
-                menuInicial();
+                menuInicial(versaoAtual);
             }
         }
 
@@ -327,7 +328,7 @@ public class Controller {
                     infoUser(utilizador.getEmail(), versaoatual);
                     break;
                 case 6:
-                    menuInicial();
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -336,9 +337,9 @@ public class Controller {
             }
         }
 
-        private void infosTodosUsers() {
+        private void infosTodosUsers(Versao versaoAtual) {
             System.out.println(controllerUtlizador.infoTodosUsers());
-            menuInicial();
+            menuInicial(versaoAtual);
         }
 
         private void infoUser(String email, Versao versaoatual) {
@@ -431,7 +432,7 @@ public class Controller {
                     Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addSapatilhaTxt(sapatilha, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addSapatilhaTxt(sapatilha, versaoatual);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -443,7 +444,7 @@ public class Controller {
                     Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addSapatilhaUsadaTxt(sapatilhausa, versaoatual.getVersaoArtigosTxt());
+                    controllerVersao.addSapatilhaTxt(sapatilhausa, versaoatual);
 
                 }
 
@@ -495,7 +496,6 @@ public class Controller {
 
                 System.out.println("Descrição: ");
                 String descricao = scanner.nextLine();
-                scanner.nextLine();
 
                 System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
                 int desconto = scanner.nextInt();
@@ -507,7 +507,7 @@ public class Controller {
                     Mala mala = controllerArtigo.registarMalaNova("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addMalaTxt(mala, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addMalaTxt(mala, versaoatual);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -519,7 +519,7 @@ public class Controller {
                     Mala malausa = controllerArtigo.registarMalaUsada("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addMalaUsadaTxt(malausa, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addMalaTxt(malausa, versaoatual);
                 }
             }
 
@@ -589,7 +589,7 @@ public class Controller {
                     TShirt tshirt = controllerArtigo.registarTShirtNova("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addTShirtTxt(tshirt, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addTShirtTxt(tshirt, versaoatual);
 
                 } else {
                     System.out.println("Quantos donos já teve: ");
@@ -601,7 +601,7 @@ public class Controller {
                     TShirt tshirtusa = controllerArtigo.registarTShirtUsada("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addTShirtUsadaTxt(tshirtusa, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addTShirtTxt(tshirtusa, versaoatual);
                 }
 
             }
@@ -654,7 +654,7 @@ public class Controller {
                         menuArtigosAvenda(user, versaoatual);
                         break;
                     case 0:
-                        menuInicial();
+                        menuInicial(versaoatual);
                     default:
                         System.out.println("Essa opção não está diponível");
                 }
@@ -676,7 +676,11 @@ public class Controller {
                 int desconto = sc.nextInt();
 
                 controllerArtigo.setDiscountArtigo(codBarras, desconto);
+                System.out.println("qual é o desconto aqui?");
+                System.out.println(desconto);
                 controllerVersao.atualizaUserTxt(user, versaoatual.getVersaoUsersTxt());
+                System.out.println("ARTIGO QUE FOI APLICADO O DESCONTO \n");
+                System.out.println(controllerArtigo.getArtigoByCod(codBarras).toString());
                 controllerVersao.atualizaArtigoTxt(controllerArtigo.getArtigoByCod(codBarras), versaoatual.getVersaoArtigosTxt());
                 System.out.println("Desconto inserido!");
             }
@@ -763,9 +767,9 @@ public class Controller {
 
             // Funções para criar transportadora
 
-            private void infosTransportadoras () {
+            private void infosTransportadoras (Versao versaoAtual) {
                 System.out.println(controllerTransportadora.infosTodasAsTransportadoras());
-                menuInicial();
+                menuInicial(versaoAtual);
             }
 
             private void criaTransportadora (Versao versaoatual) {
@@ -780,9 +784,12 @@ public class Controller {
                 double margemLucroTrans = scanner.nextDouble();
 
                 Transportadora trans = controllerTransportadora.criaTransportadora(nomeTrans, valBaseTrans, margemLucroTrans);
-                controllerVersao.addTransportadoraTxt(trans, versaoatual.getVersaoUsersTxt());
+                controllerVersao.addTransportadoraTxt(trans, versaoatual);
 
-                menuInicial();
+                System.out.println("versaoTransportadorasTxt (FORA):");
+                System.out.println(versaoatual.getVersaoTransportadorasTxt());
+
+                menuInicial(versaoatual);
             }
 
             private void loginTransportadora (Versao versaoatual) {
@@ -806,7 +813,7 @@ public class Controller {
                 }*/
                 } else {
                     System.out.println("Transportadora não encontrada!");
-                    menuInicial();
+                    menuInicial(versaoatual);
                 }
             }
 
@@ -837,7 +844,7 @@ public class Controller {
                         controllerVersao.atualizaTransportadoraTxt(controllerTransportadora.getTransportadoraByName(nomeTrans), versaoatual.getVersaoTransportadorasTxt());
                         menuTransportadora(nomeTrans, versaoatual);
                     case 4:
-                        menuInicial();
+                        menuInicial(versaoatual);
                     default:
                         menuTransportadora(nomeTrans, versaoatual);
                 }

@@ -1,3 +1,4 @@
+import java.io.BufferedWriter;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,93 +13,64 @@ public class ModelVersao {
 
     // METHODS
 
-    public void addUserToTxt(Utilizador user, String versaoUserTxt) {
+    public void addUserToTxt(Utilizador user, Versao versaoatual) {
         String userTxt = user.toStringTxt();
 
         //Fazer toStringTxtUser e toStringTxtEncomenda
     }
 
-    public void addTransportadoraTxt(Transportadora trans, String versaoTransportadorasTxt) {
+    public void addTransportadoraTxt(Transportadora trans, Versao versaoatual) {
         String transTxt = trans.toStringTxt();
 
         StringBuilder sb = new StringBuilder();
-        if (versaoTransportadorasTxt.isEmpty()) {
+        if (versaoatual.getVersaoTransportadorasTxt().equals("")) {
             sb.append(transTxt).append("\n");
         } else {
-            sb.append(versaoTransportadorasTxt).append("\n").append(transTxt);
+            sb.append(versaoatual.getVersaoTransportadorasTxt()).append(transTxt);
         }
+
+        versaoatual.setVersaoTransportadorasTxt(sb.toString());
+
     }
 
-    public void addSapatilhaTxt(Sapatilha tilha, String versaoArtigoTxt) {
+    public void addSapatilhaTxt(Sapatilha tilha, Versao versaoatual) {
         String sapatilhaTxt = tilha.toStringTxt();
 
         StringBuilder sb = new StringBuilder();
-        if (versaoArtigoTxt.isEmpty()) {
+        if (versaoatual.getVersaoArtigosTxt().equals("")) {
             sb.append(sapatilhaTxt);
         } else {
-            sb.append(versaoArtigoTxt).append("\n").append(sapatilhaTxt);
+            sb.append(versaoatual.getVersaoArtigosTxt()).append(sapatilhaTxt);
         }
-    }
-    public void addSapatilhaUsadaTxt(Sapatilha tilha, String versaoArtigoTxt) {
-        String sapatilhaUsadaTxt = tilha.toStringTxt();
 
-        //Fazer acabar funçao toStringTxt
+        versaoatual.setVersaoArtigosTxt(sb.toString());
     }
 
-    public void addMalaTxt(Mala mala, String versaoArtigoTxt) {
+    public void addMalaTxt(Mala mala, Versao versaoatual) {
         String malaTxt = mala.toStringTxt();
 
         StringBuilder sb = new StringBuilder();
-        if (versaoArtigoTxt.isEmpty()) {
+        if (versaoatual.getVersaoArtigosTxt().equals("")) {
             sb.append(malaTxt);
         } else {
-            sb.append(versaoArtigoTxt).append("\n").append(malaTxt);
+            sb.append(versaoatual.getVersaoArtigosTxt()).append(malaTxt);
         }
 
-    }
-    public void addMalaUsadaTxt(Mala mala, String versaoArtigoTxt) {
-        String malaUsadaTxt = mala.toStringTxt();
-
-        //Fazer acabar funçao toStringTxt
+        versaoatual.setVersaoArtigosTxt(sb.toString());
     }
 
-    public void addTShirtTxt(TShirt tshirt, String versaoArtigoTxt) {
+    public void addTShirtTxt(TShirt tshirt, Versao versaoatual) {
         String tshirtTxt = tshirt.toStringTxt();
 
         StringBuilder sb = new StringBuilder();
-        if (versaoArtigoTxt.isEmpty()) {
+        if (versaoatual.getVersaoArtigosTxt().equals("")) {
             sb.append(tshirtTxt);
         } else {
-            sb.append(versaoArtigoTxt).append("\n").append(tshirtTxt);
+            sb.append(versaoatual.getVersaoArtigosTxt()).append(tshirtTxt);
         }
+
+        versaoatual.setVersaoArtigosTxt(sb.toString());
     }
-
-    public void addTShirtUsadaTxt(TShirt tshirt, String versaoArtigoTxt) {
-        String tshirtUsadaTxt = tshirt.toStringTxt();
-
-        //Fazer acabar funçao toStringTxt
-    }
-
-    /* VER se vale mais a pena fazer desta forma em vez de ter varios para cada tipo
-
-    public void addArtigoTxt(Artigo artigo, String versaoArtigosTxt) {
-
-        String artigoTxt = "";
-
-        StringBuilder output = new StringBuilder();
-
-        if (artigo instanceof Sapatilha) {
-            Sapatilha sapatilha = (Sapatilha) artigo;
-            artigoTxt = sapatilha.toStringTxt();
-        } else if (artigo instanceof TShirt) {
-            TShirt tshirt = (TShirt) artigo;
-            artigoTxt = tshirt.toStringTxt();
-        } else if (artigo instanceof Mala) {
-            Mala mala = (Mala) artigo;
-            artigoTxt = mala.toStringTxt();
-        }
-    }
-    */
 
     // ATUALIZA TXTS
 
@@ -126,6 +98,8 @@ public class ModelVersao {
         if(artigo instanceof Sapatilha) {
             Sapatilha sapatilha = (Sapatilha) artigo;
             artigoTxt = sapatilha.toStringTxt();
+            System.out.println("ARTIGO TXT: ");
+            System.out.println(artigoTxt);
         } else if (artigo instanceof TShirt) {
             TShirt tshirt = (TShirt) artigo;
             artigoTxt = tshirt.toStringTxt();
@@ -161,50 +135,49 @@ public class ModelVersao {
     }
 
     public void saveVersao(Versao versaoatual) {
-        String pathArtigos = "src/artigos.txt";
-        String pathUsers = "src/utilizadores.txt";
-        String pathTransp = "src/transportadoras.txt";
-        //String pathEncomendas = "src/data.txt";
+        String pathArtigos = "projetoPOO-Rui/projetoPOO/src/artigos.txt";
+        String pathUsers = "projetoPOO-Rui/projetoPOO/src/utilizadores.txt";
+        String pathTransp = "projetoPOO-Rui/projetoPOO/src/transportadoras.txt";
+        String pathEncomendas = "projetoPOO-Rui/projetoPOO/src/encomendas.txt";
 
-        try (FileWriter writer = new FileWriter(pathArtigos)) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(pathArtigos));
             writer.write(versaoatual.getVersaoArtigosTxt());
-            //System.out.println("File saved successfully!");
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (FileWriter writer = new FileWriter(pathUsers)) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(pathUsers));
             writer.write(versaoatual.getVersaoUsersTxt());
-            //System.out.println("File saved successfully!");
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (FileWriter writer = new FileWriter(pathTransp)) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(pathTransp));
             writer.write(versaoatual.getVersaoTransportadorasTxt());
-            //System.out.println("File saved successfully!");
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        /*
-        try (FileWriter writer = new FileWriter(pathEncomendas)) {
+        try  {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(pathEncomendas));
             writer.write(versaoatual.getVersaoEncomendasTxt());
-            System.out.println("File saved successfully!");
+            writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-         */
 
         this.listaVersoes.put(versaoatual.getTime(), versaoatual);
     }
-
-    /*
-    public void saveVersao(String versaoUsersTxt) {
-        String filepath = "src/data.txt"
-    }
-
-    */
 
     //getters e setters
 

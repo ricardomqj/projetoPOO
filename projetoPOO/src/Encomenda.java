@@ -191,10 +191,10 @@ FAZER O toStringTxt
             String key = entry.getKey();
             Artigo value = entry.getValue();
 
-            if (value.getEstado() instanceof Usado) {
+            if (value.getEstado().toLowerCase().equals("usado")) {
                 lucro += 0.25;
             }
-            if (value.getEstado() instanceof Novo) {
+            if (value.getEstado().toLowerCase().equals("novo")) {
                 lucro += 0.5;
             }
         }

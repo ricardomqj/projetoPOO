@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +61,9 @@ public class ModelArtigo {
 
 
     public String loadArtigos() {
-        String filePath = ("src/artigos.txt"); // VER ISTO DEPOIS
+
+        String filePath = "projetoPOO-Rui/projetoPOO/src/artigos.txt"; // VER ISTO DEPOIS
+        //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
         if(file.exists()) {
@@ -78,7 +82,7 @@ public class ModelArtigo {
                     // Divide a linha em campos usando o separador ":"
                     String[] fields = line.split(":");
 
-                    if (fields[9].equals("sapatilha")) {
+                    if (fields.length >= 12 && fields[11].equals("sapatilha")) {
                         Sapatilha tilha = new Sapatilha();
 
                         tilha.setCodBarras(fields[0]);
@@ -90,20 +94,17 @@ public class ModelArtigo {
                         tilha.setDescricao(fields[6]);
                         tilha.setEstado(fields[7]);
                         tilha.setDesconto(Integer.parseInt(fields[8]));
-                        tilha.setNome(fields[9]);
-                        tilha.setTamanho(Integer.parseInt(fields[10]));
-                        tilha.setTemAtacadores(Boolean.parseBoolean(fields[11]));
-                        tilha.setCor(fields[12]);
-
-                        if (fields.length > 13) {
-                            //tilha.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            //tilha.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                        }
+                        tilha.setNumdonos(Integer.parseInt(fields[9]));
+                        tilha.setAvalestado(Integer.parseInt(fields[10]));
+                        tilha.setNome(fields[11]);
+                        tilha.setTamanho(Integer.parseInt(fields[12]));
+                        tilha.setTemAtacadores(Boolean.parseBoolean(fields[13]));
+                        tilha.setCor(fields[14]);
 
                         listaArtigos.put(tilha.getCodBarras(), tilha);
                     }
 
-                    if (fields[9].equals("mala")) {
+                    if (fields.length >= 12 && fields[11].equals("mala")) {
                         Mala mala = new Mala();
 
                         mala.setCodBarras(fields[0]);
@@ -115,19 +116,16 @@ public class ModelArtigo {
                         mala.setDescricao(fields[6]);
                         mala.setEstado(fields[7]);
                         mala.setDesconto(Integer.parseInt(fields[8]));
-                        mala.setNome(fields[9]);
-                        mala.setTamanho(fields[10]);
-                        mala.setMaterial(fields[11]);
-                        mala.setAnoColecao(Integer.parseInt(fields[12]));
-
-                        if (fields.length > 13) {
-                            //mala.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            //mala.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                        }
+                        mala.setNumdonos(Integer.parseInt(fields[9]));
+                        mala.setAvalestado(Integer.parseInt(fields[10]));
+                        mala.setNome(fields[11]);
+                        mala.setTamanho(fields[12]);
+                        mala.setMaterial(fields[13]);
+                        mala.setAnoColecao(Integer.parseInt(fields[14]));
 
                         listaArtigos.put(mala.getCodBarras(), mala);
                     }
-                    if (fields[9].equals("tshirt")) {
+                    if (fields.length >= 12 && fields[11].equals("tshirt")) {
                         TShirt tshirt = new TShirt();
 
                         tshirt.setCodBarras(fields[0]);
@@ -139,14 +137,11 @@ public class ModelArtigo {
                         tshirt.setDescricao(fields[6]);
                         tshirt.setEstado(fields[7]);
                         tshirt.setDesconto(Integer.parseInt(fields[8]));
-                        tshirt.setNome(fields[9]);
-                        tshirt.setTam(TShirt.Tamanho.valueOf(fields[10]));
-                        tshirt.setPadrao(TShirt.Padrao.valueOf(fields[11]));
-
-                        if (fields.length > 12) {
-                            //tshirt.setNumDonos;        COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                            //tshirt.setAvalEstado       COMO FAZER ESTE CARALHO ? GT3 GT3 QUERO UM BRANCO
-                        }
+                        tshirt.setNumdonos(Integer.parseInt(fields[9]));
+                        tshirt.setAvalestado(Integer.parseInt(fields[10]));
+                        tshirt.setNome(fields[11]);
+                        tshirt.setTam(TShirt.Tamanho.valueOf(fields[12]));
+                        tshirt.setPadrao(TShirt.Padrao.valueOf(fields[13]));
 
                         listaArtigos.put(tshirt.getCodBarras(), tshirt);
                     }
