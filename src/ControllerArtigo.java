@@ -20,16 +20,31 @@ public class ControllerArtigo {
         return this.modelArtigo.getArtigoByCod(codBarras);
     }
 
+    public void tiraArtigoMap(Artigo artigo)
+    {
+        modelArtigo.tiraArtigoMap(artigo);
+    }
+
+    public String getArtigoCodBarras(Artigo artigo)
+    {
+        return modelArtigo.getArtigoCodBarras(artigo);
+    }
+
+    public Double getprecoArtigos(List<Artigo> artigos)
+    {
+        return modelArtigo.getPrecoArtigos(artigos);
+    }
+
+    public Double getProfitVi(List<Artigo> artigos)
+    {
+        return modelArtigo.getProfitVi(artigos);
+    }
+
     public String getArtigosParaVenda(List<Artigo> list)
     {
         modelArtigo.getArtigosParaVenda(list);
 
         return viewerArtigo.listaDeArtigosParaVenda(list);
-    }
-
-    public String infoArtigo(Artigo artigo)
-    {
-        return viewerArtigo.infoArtigo(artigo);
     }
 
     public Sapatilha registarSapatilhaNova(Sapatilha umaSap) {
@@ -92,25 +107,5 @@ public class ControllerArtigo {
 
     public void setModelArtigo(ModelArtigo modelArtigo) {
         this.modelArtigo = modelArtigo;
-    }
-
-    public Double getprecoArtigos(List<Artigo> artigos)
-    {
-        return modelArtigo.getPrecoArtigos(artigos);
-    }
-
-    public Double getProfitVi(List<Artigo> artigos)
-    {
-        return modelArtigo.getProfitVi(artigos);
-    }
-
-    public void tiraArtigoMap(Artigo artigo)
-    {
-        modelArtigo.tiraArtigoMap(artigo);
-    }
-
-    public String getArtigoCodBarras(Artigo artigo)
-    {
-        return modelArtigo.getArtigoCodBarras(artigo);
     }
 }

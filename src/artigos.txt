@@ -1,4 +1,7 @@
-12345:2:2018-02-01:UHL:10:nike:presente de ex:Novo:10:sapatilha:40:true:azul
-54321:2:2018-03-02:UHL:20:nike:presente de ex:Novo:10:mala:M:pele:2018
-102030:2:2018-02-01:UHL:15:nike:presente de ex:Novo:10:sapatilha:40:true:azul
-302010:2:2018-02-01:UHL:40:nike:presente de ex:Novo:10:sapatilha:40:true:azul
+12345:2:2018-02-01:UHL:10:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+54321:2:2018-03-02:UHL:20:nike:presente de ex:Usado:10:2:5:mala:M:pele:2018
+102030:2:2018-02-01:UHL:15:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+302010:2:2018-02-01:UHL:40:nike:presente de ex:Novo:10:0:0:sapatilha:40:true:azul
+1232312313123123:1:2000-10-20:UHL:304043.0:luisVitor:mala boa:mala:Novo:0:0:0:S::2005
+341231231231231:1:2000-02-12:UHL:10.0:lusi:dasdsd:tshirt:Usado:0:10:2:S:LISO
+12302130213013:1:2000-02-12:hugo:30.0:luis:burro:mala:Novo:0:0:0:S::2020

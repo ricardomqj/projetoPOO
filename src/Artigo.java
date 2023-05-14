@@ -9,9 +9,12 @@ public abstract class Artigo {
     private double precoAtual;
     private String marca;
     private String descricao;
-    private Estado estado;
+    private String estado;
     private int desconto; // 0 a 100
     private String nome;
+    private LocalDate dataComprado; // se nao tiver sido comprado == null
+    private int numdonos;
+    private int avalestado;
 
     public Artigo() {
         this.codBarras = "n/a";
@@ -24,6 +27,7 @@ public abstract class Artigo {
         this.desconto = 0;
         this.nome = "";
         this.precoAtual = 0;
+        this.dataComprado = null;
     }
 
     public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome,int numDonos, int avalEstado) {
@@ -32,12 +36,15 @@ public abstract class Artigo {
         this.dataLancamento = dataLancamento;
         this.transportadora = trans;
         this.precoBase = precoBase;
-        this.precoAtual = getprecoreal(precoBase);
+        this.precoAtual = precoBase;
         this.marca = marca;
         this.descricao = descricao;
         this.desconto = desconto;
         this.nome = nome;
-        this.estado = new Usado(numDonos, avalEstado);
+        this.estado = "Usado";
+        this.numdonos = numDonos;
+        this.avalestado = avalEstado;
+        this.dataComprado = null;
     }
 
     public Artigo(String codBarras, int stock, LocalDate dataLancamento, String trans, double precoBase, String marca, String descricao, int desconto, String nome) {
@@ -50,8 +57,11 @@ public abstract class Artigo {
         this.desconto = desconto;
         this.nome = nome;
         this.descricao = descricao;
-        this.estado = new Novo();
+        this.estado = "Novo";
+        this.numdonos = 0;
+        this.avalestado = 0;
         this.precoAtual = precoBase;
+        this.dataComprado = null;
     }
 
     public Artigo(Artigo umArtigo) {
@@ -62,6 +72,7 @@ public abstract class Artigo {
         this.precoBase = umArtigo.getPrecoBase();
         this.marca = umArtigo.getMarca();
         this.descricao = umArtigo.getDescricao();
+        this.estado = umArtigo.getEstado();
         this.nome = umArtigo.getNome();
         this.precoAtual = umArtigo.getPrecoAtual();
     }
@@ -78,7 +89,6 @@ public abstract class Artigo {
                 this.transportadora.equals(art.getNomeTransportadora()) &&
                 this.precoBase == art.getPrecoBase() && this.marca.equals(art.getDescricao()) && this.nome.equals(art.getNome()) &&
                 this.descricao.equals(art.getDescricao()) && this.precoAtual == art.getPrecoAtual();
-
     }
 
     public String toString() {
@@ -91,9 +101,8 @@ public abstract class Artigo {
         sb.append("Preço atual: ").append(this.precoAtual).append("\n");
         sb.append("Marca: ").append(this.marca).append("\n");
         sb.append("Descricao: ").append(this.descricao).append("\n");
-        if(this.estado!=null) {
-            sb.append(this.estado.toString()).append("\n");
-        }
+        sb.append("Estado: ").append(this.estado).append("\n");
+        sb.append("Desconto: ").append(this.desconto).append("\n");
 
         return sb.toString();
     }
@@ -110,10 +119,11 @@ public abstract class Artigo {
         sb.append(this.precoBase).append(":");
         sb.append(this.marca).append(":");
         sb.append(this.descricao).append(":");
-        if(this.estado!=null) {
-            sb.append(this.estado.toString()).append(":");
-        }
+        sb.append(this.nome).append(":");
+        sb.append(this.estado).append(":");
         sb.append(this.desconto).append(":");
+        sb.append(this.numdonos).append(":");
+        sb.append(this.avalestado).append(":");
 
         return sb.toString();
     }
@@ -124,12 +134,6 @@ public abstract class Artigo {
         double desc = (double)desconto/100;
         this.desconto = desconto;
         this.precoAtual = this.getPrecoBase() * (1-desc);
-    }
-
-    public double getprecoreal(double precoBase)
-    {
-        return precoBase;
-        // FAZER CARALHOOOOOO<---------------------------------
     }
 
     public double getProfitVintage() { // neste caso assumo que a vintage fica com 5% do valor da compra
@@ -196,10 +200,9 @@ public abstract class Artigo {
         return this.descricao;
     }
 
-    public Estado getEstado() {return this.estado;}
+    public String getEstado() {return this.estado;}
     public void setEstado(String estado){
-        if (estado.toLowerCase().equals("novo")) new Novo();
-        if (estado.toLowerCase().equals("usado")) new Usado();
+        this.estado = estado;
     }
 
     public int getDesconto() {
@@ -223,5 +226,28 @@ public abstract class Artigo {
     }
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public LocalDate getDataComprado() {
+        return this.dataComprado;
+    }
+    public void setDataComprado(LocalDate dataComprado) {
+        this.dataComprado = dataComprado;
+    }
+
+    public int getNumdonos() {
+        return numdonos;
+    }
+
+    public void setNumdonos(int numdonos) {
+        this.numdonos = numdonos;
+    }
+
+    public int getAvalestado() {
+        return avalestado;
+    }
+
+    public void setAvalestado(int avalestado) {
+        this.avalestado = avalestado;
     }
 }

@@ -11,11 +11,6 @@ public class ViewerArtigo {
         return ultimateString.toString();
     }
 
-    public String infoArtigo(Artigo artigo)
-    {
-        return artigo.toString();
-    }
-
     public String listaDeArtigosParaVenda(List<Artigo> list)
     {
         StringBuilder ultimateString = new StringBuilder();

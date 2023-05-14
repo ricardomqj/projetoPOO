@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.time.format.DateTimeParseException;
 
 public class Controller {
         ViewerUtlizador viewerUtlizador = new ViewerUtlizador();
@@ -27,112 +28,167 @@ public class Controller {
         ModelQueries modelQueries = new ModelQueries();
         ControllerQueries controllerQueries = new ControllerQueries(viewerQueries,modelQueries);
 
-        public void menuInicial()
+        public void loadInitialFiles() {
+
+            String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
+            String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
+            String versaoArtigosTxt = controllerArtigo.loadArtigos();
+            String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
+
+            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt);
+
+            menuInicial(versaoAtual);
+        }
+
+        public void menuInicial(Versao versaoAtual)
         {
             Scanner scanner = new Scanner(System.in);
 
             //ver como se vai fazer acerca de quando se dá estes loads
 
-            String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
-            String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
-            String versaoArtigosTxt = controllerArtigo.loadArtigos();
+            //String versaoUsersTxt = controllerUtlizador.loadUtilizadores();
+            //String versaoTransportadorasTxt = controllerTransportadora.loadTransportadoras();
+            //String versaoArtigosTxt = controllerArtigo.loadArtigos();
             //String versaoEncomendasTxt = controllerEncomenda.loadEncomendas();
-            String versaoEncomendasTxt = null;
 
-            Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
+            //Versao versaoAtual = new Versao(versaoArtigosTxt, versaoUsersTxt, versaoTransportadorasTxt, versaoEncomendasTxt); // a data de criação é definida aqui caralho gt3 gt3 quero...
 
             System.out.println("O que deseja fazer?");
-            System.out.println(" 1 - Criar um utlizador");                         //feito
-            System.out.println(" 2 - Efetuar login com utlizador");                //feito
-            System.out.println(" 3 - Criar uma transportadora");
-            System.out.println(" 4 - Efetuar login com transportadora");
-            System.out.println(" 5 - Funções gerais");
-            System.out.println(" 6 - Ver lista de transportadoras disponíveis");
-            System.out.println(" 7 - Ver lista de utilizadores criados");
-            System.out.println(" 8 - Ver lista de encomendas");
-            System.out.println(" 9 - Load & Save");
-            System.out.println("10 - ADMIN");
+            System.out.println(" 1. Criar um utlizador");
+            System.out.println(" 2. Efetuar login com utlizador");
+            System.out.println(" 3. Criar uma transportadora");
+            System.out.println(" 4. Efetuar login com transportadora");
+            System.out.println(" 5. Funções gerais");
+            System.out.println(" 6. Ver lista de transportadoras disponíveis");
+            System.out.println(" 7. Ver lista de utilizadores criados");
+            System.out.println(" 8. Ver lista de encomendas");
+            System.out.println(" 9. Load & Save");
+            System.out.println("10. ADMIN");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String opcao = scanner.next();
 
             switch (opcao) {
-                case 1:
-                    criaUtlizador(versaoAtual);
+                case "1":
+                    criaUtlizador(versaoAtual) ;
                     break;
-                case 2:
+                case "2":
                     loginUtlizador(versaoAtual);
                     break;
-                case 3 :
+                case "3":
                     criaTransportadora(versaoAtual);
                     break;
-                case 4:
+                case "4":
                     loginTransportadora(versaoAtual);
                     break;
-                case 6:
-                    infosTransportadoras();
+                case "6":
+                    infosTransportadoras(versaoAtual);
                     break;
-                case 7:
-                    infosTodosUsers();
+                case "7":
+                    infosTodosUsers(versaoAtual);
                     break;
-                case 8:
+                case "8":
                     infoTodasEncomendas();
                     break;
-                case 9:
+                case "9":
                     menuLoadSave(versaoAtual);
                     break;
-                case 10:
-                    menuQueries();
+                case "10":
+                    menuQueries(versaoAtual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
+                    menuInicial(versaoAtual);
             }
         }
 
-
         // Funções do user
 
-        private void menuQueries() {
+        private void menuQueries(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que query deseja executar?");
-            System.out.println("1 - query 1");
-            System.out.println("2 - query 2");
-            System.out.println("3 - query 3");
-            System.out.println("4 - query 4");
-            System.out.println("5 - query 5");
+            System.out.println("1. Lista de encomendas emitidas por um vendedor"); // feito
+            System.out.println("2. Transportadora com maior volume da faturação"); // feito(?)
+            System.out.println("3. Dinheiro ganho pela Vintage no seu funcionamento"); // feito
+            System.out.println("4. Vendedor que mais faturou desde sempre"); // feito (?)
+            System.out.println("5. Vendedor que mais faturou num periodo de tempo");
+            System.out.println("6. Top N maiores compradores num período de tempo"); // feito(?)
+            System.out.println("7. Top N maiores vendedores num periodo de tempo");
+            System.out.println("8. Voltar");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String opcao = scanner.next();
 
             switch (opcao) {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
+                case "1":
                     System.out.println("Email do vendedor que pretende analisar: ");
                     String email = scanner.next();
 
                     Map<String, Encomenda> encsVendedor = controllerQueries.encsVendedor(controllerEncomenda.getListaTodasEncomendas(), controllerUtlizador.getUserByEmail(email));
                     String encsVendedorString = controllerQueries.encsVendedorToString(encsVendedor);
                     System.out.println(encsVendedorString);
+                    menuQueries(versaoatual);
                     break;
-                case 4:
-
+                case "2":
+                    System.out.println(controllerQueries.transportadoraComMaisFaturação(controllerTransportadora.getListaTransportadoras(), controllerUtlizador.getListaUtilizadores()));
+                    menuQueries(versaoatual);
                     break;
-                case 5:
+                case "3":
                     double lucro = controllerQueries.vintageProfit(controllerEncomenda.getListaTodasEncomendas());
                     System.out.println("A vintage ganhou " + Double.toString(lucro) + " durante o seu funcionamento.");
+                    menuQueries(versaoatual);
+                    break;
+                case "4":
+                    System.out.println("Utilizador que mais faturou: ");
+                    System.out.println(controllerQueries.getVendedorQueMaisFaturouSempre(controllerUtlizador.getListaUtilizadores()));
+                    menuQueries(versaoatual);
+                    break;
+                case "5":
+                    System.out.println("Insira a data inicial: ");
+                    String dataString1 = scanner.next();
+                    System.out.println("Digite o data final: ");
+                    String dataString2 = scanner.next();
+
+                    LocalDate data1 = LocalDate.parse(dataString1);
+                    LocalDate data2 = LocalDate.parse(dataString2);
+                    System.out.println(controllerQueries.utilizadorComMaiorDinheiroGanho(controllerUtlizador.getListaUtilizadores(), data1, data2));
+                    menuQueries(versaoatual);
+                    break;
+                case "6":
+                    System.out.println("Quantos compradores pretende ver: ");
+                    int num = scanner.nextInt();
+                    System.out.println("Insira a data inicial: ");
+                    String dataString3 = scanner.next();
+                    System.out.println("Insira a data final: ");
+                    String dataString4 = scanner.next();
+
+                    LocalDate data3 = LocalDate.parse(dataString3);
+                    LocalDate data4 = LocalDate.parse(dataString4);
+                    System.out.println(controllerQueries.topNCompradores(num, controllerUtlizador.getListaUtilizadores(), data3, data4));
+                    menuQueries(versaoatual);
+                    break;
+
+                case "8":
+                    System.out.println("Quantos vendedors pretende ver: ");
+                    int num1 = scanner.nextInt();
+                    System.out.println("Insira a data inicial: ");
+                    String dataString5 = scanner.next();
+                    System.out.println("Insira a data final: ");
+                    String dataString6 = scanner.next();
+
+                    LocalDate data5 = LocalDate.parse(dataString5);
+                    LocalDate data6 = LocalDate.parse(dataString6);
+                    System.out.println(controllerQueries.topNVendedores(num1, controllerUtlizador.getListaUtilizadores(), data5, data6));
+                    menuQueries(versaoatual);
+                    break;
+                case "9":
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
             }
         }
 
-        private void menuLoadVersoes() {
+        private void menuLoadVersoes(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Que versão deseja carregar?");
@@ -141,65 +197,56 @@ public class Controller {
             String listaVersoesString = controllerVersao.getListaVersoesToString(listaVersoes);    //vai ao viewer transformar tudo isto numa string só;
             System.out.println(listaVersoesString);                                               //apresenta aqui todas as versoes por ordem crescente exemplo:
 
-            //Versão - 20:18
-            //Versão - 20:23
-            //Versão - 21:01
-            //Versão - 22:03
+            System.out.println("Copie e cole a Hora de Criação da Versão que deseja carregar"); //Coloque a hora da versão que pretende carregar (hh:mm)
 
-            System.out.println("Coloque a hora da versão que pretende carregar (hh:mm): "); //Coloque a hora da versão que pretende carregar (hh:mm)
+            String input = scanner.nextLine();
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                LocalTime time = LocalTime.parse(input);
 
-            // VER COMO FAZER ESTA PARTE
+                controllerVersao.loadVersao(time);
+                controllerArtigo.loadArtigos();
+                controllerUtlizador.loadUtilizadores();
+                controllerEncomenda.loadEncomendas();
+                controllerTransportadora.loadTransportadoras();
 
-            /*
-            switch (opcao) {
-                case 1:
+                System.out.println("Load efetuado!");
+                menuLoadSave(versaoatual);
 
-                    break;
-                case 2:
-                    menuLoadVersoes();
-                    break;
-                default:
-                    System.out.println("Essa opção não está diponível");
+            } catch (DateTimeParseException e) {
+                System.out.println("Input inválido: Por favor copie e cole a Hora de criação da versão:");
+                menuLoadSave(versaoatual);
             }
-            */
+
         }
 
-        private void menuLoadSave(Versao versaoAtual) {
+        private void menuLoadSave(Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("O que deseja fazer?");
-            System.out.println("1 - Dar save da versão atual");
-            System.out.println("2 - Dar load de uma versão");
+            System.out.println("1. Dar save da versão atual");
+            System.out.println("2. Dar load de uma versão");
+            System.out.println("0. Voltar");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String opcao = scanner.next();
 
             switch (opcao) {
-                case 1:
-                    controllerVersao.saveVersao(versaoAtual);
-                    //saveVersao(versaoAtual);
+                case "1":
+                    controllerVersao.saveVersao(versaoatual);
+
+                    Versao versaoNova = new Versao(versaoatual.getVersaoArtigosTxt(), versaoatual.getVersaoUsersTxt(), versaoatual.getVersaoTransportadorasTxt(), versaoatual.getVersaoEncomendasTxt());
+
+                    menuInicial(versaoNova);
                     break;
-                case 2:
-                    menuLoadVersoes();
+                case "2":
+                    menuLoadVersoes(versaoatual);
+                    break;
+                case "0":
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
             }
-        }
-
-
-        //apagar
-        private void saveVersao(Versao versaoAtual) {
-
-            //controllerVersao.saveEncomendas(versaoAtual.getVersaoEncomendasTxt());
-            //controllerVersao.saveArtigos(versaoAtual.getVersaoArtigosTxt());
-            //controllerVersao.saveTransportadoras(versaoAtual.getVersaoTransportadorasTxt());
-            //controllerVersao.saveUtilizadores(versaoAtual.getVersaoUsersTxt());
-
-            controllerVersao.saveVersao(versaoAtual);
         }
 
         private void criaUtlizador(Versao versaoAtual) {
@@ -219,12 +266,19 @@ public class Controller {
             String nifUtilizador = scanner.nextLine();
 
             Utilizador user = controllerUtlizador.criaUtlizador(emailUtilizador,nomeUtilizador,moradaUtilizador,nifUtilizador);
-            controllerVersao.addUserToTxt(user, versaoAtual.getVersaoUsersTxt());
 
-            menuInicial();
+            if(user == null)
+            {
+                System.out.println("Esse email já está a ser utilizado");
+                criaUtlizador(versaoAtual);
+            }
+
+            controllerVersao.addUserToTxt(user, versaoAtual);
+
+            menuInicial(versaoAtual);
         }
 
-        private void loginUtlizador(Versao versaoatual) {
+        private void loginUtlizador(Versao versaoAtual) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Digite o email do utilizador:");
@@ -233,12 +287,12 @@ public class Controller {
             Utilizador utilizador = controllerUtlizador.getUserByEmail(emailUtilizador);
             if(utilizador != null)
             {
-                menuUtlizador(utilizador, versaoatual);
+                menuUtlizador(utilizador, versaoAtual);
             }
             else
             {
                 System.out.println("Esse email não está registado!");
-                menuInicial();
+                menuInicial(versaoAtual);
             }
         }
 
@@ -247,35 +301,33 @@ public class Controller {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("O que deseja fazer?");
-            System.out.println("1 - Vender um artigo.");
-            System.out.println("2 - Ver artigos à venda no momento.");
-            System.out.println("3 - Efetuar uma encomenda.");
-            System.out.println("4 - Devolver uma encomenda.");
-            System.out.println("5 - Consultar informações do utilizador.");
-            System.out.println("6 - Sair.");
+            System.out.println("1. Vender um artigo");
+            System.out.println("2. Ver artigos à venda no momento");
+            System.out.println("3. Efetuar uma encomenda");
+            System.out.println("4. Devolver uma encomenda");
+            System.out.println("5. Consultar informações do utilizador");
+            System.out.println("0. Voltar");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String opcao = scanner.next();
 
             switch (opcao) {
-                case 1:
+                case "1":
                     adicionarArtigoParaVenda(utilizador, versaoatual);
                     break;
-                case 2:
+                case "2":
                     menuArtigosAvenda(utilizador, versaoatual);
                     break;
-                case 3:
+                case "3":
                     efetuaEncomenda(utilizador, versaoatual);
                     break;
-                case 4:
-
+                case "4":
+                    System.out.println("Essa opção não está diponível");
                     break;
-
-                case 5:
+                case "5":
                     infoUser(utilizador.getEmail(), versaoatual);
                     break;
-                case 6:
-                    menuInicial();
+                case "0":
+                    menuInicial(versaoatual);
                     break;
                 default:
                     System.out.println("Essa opção não está diponível");
@@ -284,20 +336,20 @@ public class Controller {
             }
         }
 
-        public void infoTodasEncomendas(){
-            System.out.println(controllerEncomenda.infoTodasEncomendas());
+        private void infosTodosUsers(Versao versaoAtual) {
+            System.out.println(controllerUtlizador.infoTodosUsers());
+            menuInicial(versaoAtual);
         }
 
-        private void infosTodosUsers() {
-            System.out.println(controllerUtlizador.infoTodosUsers());
-            menuInicial();
-        }
+        public void infoTodasEncomendas(){
+        System.out.println(controllerEncomenda.infoTodasEncomendas());
+    }
 
         private void infoUser(String email, Versao versaoatual) {
             System.out.println(controllerUtlizador.infoUserByEmail(email));
             menuUtlizador(controllerUtlizador.getUserByEmail(email), versaoatual);
         }
-        
+
         private void adicionarArtigoParaVenda(Utilizador utilizador, Versao versaoatual) {
             Scanner scanner = new Scanner(System.in);
 
@@ -307,27 +359,26 @@ public class Controller {
             System.out.println("3 - Mala");
             System.out.println("4 - Outro");
 
-            int opcao = scanner.nextInt();
-            scanner.nextLine();
+            String opcao = scanner.next();
 
             switch (opcao) {
-                case 1:
+                case "1":
                     registarSapatilha(utilizador, versaoatual);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador, versaoatual);
                     break;
-                case 2:
+                case "2":
                     registarTShirt(utilizador, versaoatual);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador, versaoatual);
                     break;
-                case 3:
+                case "3":
                     registarMala(utilizador, versaoatual);
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador, versaoatual);
                     break;
-                case 4:
-                    //fazer ainda
+                case "4":
+                    //  fazer ainda
                     System.out.println("O artigo foi colocado à venda!");
                     menuUtlizador(utilizador, versaoatual);
                     break;
@@ -347,10 +398,7 @@ public class Controller {
                 System.out.println("Digite o preço de base do artigo: ");
                 double precoBase = scanner.nextDouble();
 
-                System.out.println("Digite a data de lançamento do artigo no formato yyyy-mm-dd: ");
-                String dataString = scanner.next();
-
-                LocalDate dataop = LocalDate.parse(dataString);
+                LocalDate dataop = LocalDate.now();
 
                 System.out.println("Digite o nome da transportadora: ");
                 String nomeTrans = scanner.next();
@@ -360,7 +408,7 @@ public class Controller {
                     System.out.println("Digite o nome de outra transportadora: ");
                     nomeTrans = scanner.next();
                 }
-                
+
                 System.out.println("Insira o tamanho: ");
                 int tamanhoSapatilha = scanner.nextInt();
 
@@ -383,7 +431,7 @@ public class Controller {
                     Sapatilha sapatilha = controllerArtigo.registarSapatilhaNova("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addSapatilhaTxt(sapatilha, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addSapatilhaTxt(sapatilha, versaoatual);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -395,17 +443,9 @@ public class Controller {
                     Sapatilha sapatilhausa = controllerArtigo.registarSapatilhaUsada("sapatilha", codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addSapatilhaUsadaTxt(sapatilhausa, versaoatual.getVersaoArtigosTxt());
+                    controllerVersao.addSapatilhaTxt(sapatilhausa, versaoatual);
 
                 }
-
-
-                //System.out.println("Sapatilha premium(true ou false)? ");
-                //boolean isPremium = scanner.nextBoolean();
-
-                //Sapatilha sap = new Sapatilha(codBarras, transArticle, stock, numDonos, avalEstado, precoBase, dataop1, desconto, tamanhoSpatilha, temAtacadores, cor, isPremium);
-                //artigos.put(sap.getCodBarras(), sap.clone());
-                //artigosVenda.put(sap.getCodBarras(), sap.clone());
             }
 
             private void registarMala(Utilizador utilizador, Versao versaoatual) {
@@ -447,19 +487,15 @@ public class Controller {
 
                 System.out.println("Descrição: ");
                 String descricao = scanner.nextLine();
-                scanner.nextLine();
-
-                System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
-                int desconto = scanner.nextInt();
 
                 System.out.println("Mala Nova (true ou false)? ");
                 boolean resposta = scanner.nextBoolean();
 
                 if(resposta == true) {
-                    Mala mala = controllerArtigo.registarMalaNova("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao);
+                    Mala mala = controllerArtigo.registarMalaNova("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanho, material, anoColecao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addMalaTxt(mala, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addMalaTxt(mala, versaoatual);
                 }
                 else {
                     System.out.println("Quantos donos já teve: ");
@@ -468,10 +504,10 @@ public class Controller {
                     System.out.println("Estado da Mala (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    Mala malausa = controllerArtigo.registarMalaUsada("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, material, anoColecao, numDonos, avalEstado);
+                    Mala malausa = controllerArtigo.registarMalaUsada("mala", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanho, material, anoColecao, numDonos, avalEstado);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addMalaUsadaTxt(malausa, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addMalaTxt(malausa, versaoatual);
                 }
             }
 
@@ -531,29 +567,34 @@ public class Controller {
                 System.out.println("Descrição: ");
                 String descricao = scanner.next();
 
-                System.out.println("Insira o desconto: "); // COMO É CALCULADO O DESCONTO???
-                int desconto = scanner.nextInt();
-
                 System.out.println("TShirt Nova (true ou false)? ");
                 boolean resposta = scanner.nextBoolean();
 
                 if (resposta) {
-                    TShirt tshirt = controllerArtigo.registarTShirtNova("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao);
+                    TShirt tshirt = controllerArtigo.registarTShirtNova("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanho, padrao);
                     controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
                     controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addTShirtTxt(tshirt, versaoatual.getVersaoUsersTxt());
+                    controllerVersao.addTShirtTxt(tshirt, versaoatual);
 
                 } else {
+
                     System.out.println("Quantos donos já teve: ");
                     int numDonos = scanner.nextInt();
 
                     System.out.println("Estado da TShirt (0-5): ");
                     int avalEstado = scanner.nextInt();
 
-                    TShirt tshirtusa = controllerArtigo.registarTShirtUsada("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
-                    controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
-                    controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
-                    controllerVersao.addTShirtUsadaTxt(tshirtusa, versaoatual.getVersaoUsersTxt());
+                    if (padrao == 2 || padrao == 3) {
+                        TShirt tshirtusa = controllerArtigo.registarTShirtUsada("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, 50, tamanho, padrao, numDonos, avalEstado);
+                        controllerUtlizador.registarArtigoNoUtlizador(utilizador, codBarras);
+                        controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
+                        controllerVersao.addTShirtTxt(tshirtusa, versaoatual);
+                    } else {
+                        TShirt tshirtusa = controllerArtigo.registarTShirtUsada("tshirt", utilizador, codBarras, dataop, precoBase, nomeTrans, marca, descricao, 0, tamanho, padrao, numDonos, avalEstado);
+                        controllerUtlizador.registarArtigoNoUtlizador(utilizador,codBarras);
+                        controllerVersao.atualizaUserTxt(utilizador, versaoatual.getVersaoUsersTxt());
+                        controllerVersao.addTShirtTxt(tshirtusa, versaoatual);
+                    }
                 }
 
             }
@@ -562,51 +603,50 @@ public class Controller {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println("Que artigo deseja ver? ");
-                System.out.println("1 - Todos os Artigos");
-                System.out.println("2 - Todos os Artigos de um User específico");
-                System.out.println("3 - Todas as Sapatilhas");
-                System.out.println("4 - Todas as TShirts");
-                System.out.println("5 - Todas as Malas");
-                System.out.println("6 - Aplicar desconto num artigo");
-                System.out.println("7 - Os meus artigos à venda");
-                System.out.println("0 - Sair");
+                System.out.println("1. Todos os Artigos");
+                System.out.println("2. Todos os Artigos de um User específico");
+                System.out.println("3. Todas as Sapatilhas");
+                System.out.println("4. Todas as TShirts");
+                System.out.println("5. Todas as Malas");
+                System.out.println("6. Aplicar desconto num artigo");
+                System.out.println("7. Os meus artigos à venda");
+                System.out.println("0. Voltar");
 
-                int opcao = scanner.nextInt();
-                scanner.nextLine();
+                String opcao = scanner.next();
 
                 switch (opcao) {
-                    case 1:
+                    case "1":
                         verTodosArtigosVenda();
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 2:
+                    case "2":
                         System.out.println("Digite o email do utilizador: ");
                         String email = scanner.next();
                         //verArtigosVendaUser(email);
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 3:
+                    case "3":
                         //artigosAVendaPorTipo("Sapatilha");
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 4:
+                    case "4":
                         //artigosAVendaPorTipo("TShirt");
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 5:
+                    case "5":
                         //artigosAVendaPorTipo("Mala");
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 6:
+                    case "6":
                         aplicarDescontoArtigo(user, versaoatual);
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 7:
+                    case "7":
                         //verArtigosVendaUser(user.getEmail());
                         menuArtigosAvenda(user, versaoatual);
                         break;
-                    case 0:
-                        menuInicial();
+                    case "0":
+                        menuInicial(versaoatual);
                     default:
                         System.out.println("Essa opção não está diponível");
                 }
@@ -630,7 +670,6 @@ public class Controller {
                 controllerArtigo.setDiscountArtigo(codBarras, desconto);
                 controllerVersao.atualizaUserTxt(user, versaoatual.getVersaoUsersTxt());
                 controllerVersao.atualizaArtigoTxt(controllerArtigo.getArtigoByCod(codBarras), versaoatual.getVersaoArtigosTxt());
-                System.out.println("Desconto inserido!");
             }
 
             public void verTodosArtigosVenda() {
@@ -662,29 +701,36 @@ public class Controller {
             System.out.println("3. Remover artigo do carrinho.");
             System.out.println("4. Checkout do carrinho.");
             System.out.println("0. Voltar");
-            int option = scanner.nextInt();
 
-            switch(option) {
-                case 1:
+            String opcao = scanner.next();
+
+            switch(opcao) {
+                case "1":
                     adicionaArtigoCarrinho(userComprador,versaoatual);
                     menuUtlizador(userComprador, versaoatual);
                     break;
-                case 2:
+                case "2":
                     controllerUtlizador.getInfoCarrinho(userComprador);
                     menuUtlizador(userComprador, versaoatual);
                     break;
-                case 3:
+                case "3":
                     System.out.println("Insira o código de barras do produto a remover: ");
                     String codBarras1 = scanner.next();
                     controllerUtlizador.removeArtigoCarrinho(userComprador, codBarras1);
                     controllerVersao.atualizaUserTxt(userComprador, versaoatual.getVersaoUsersTxt());
-                case 4:
+                    break;
+                case "4":
                     List<Artigo> artigosCarrinho = controllerUtlizador.getArtigosCarrinho(userComprador);
                     String codSistemaUtlizador = controllerUtlizador.getCodSistemaUtlizador(userComprador);
                     Double preco = controllerArtigo.getprecoArtigos(artigosCarrinho);
                     Double profitVi = controllerArtigo.getProfitVi(artigosCarrinho);
 
                     controllerEncomenda.criaEncomenda(codSistemaUtlizador,artigosCarrinho,preco,profitVi);
+
+                    controllerUtlizador.limpaCarrinho(userComprador);
+
+                    Encomenda enc = controllerEncomenda.criaEncomenda(codSistemaUtlizador,artigosCarrinho,preco,profitVi);
+                    controllerVersao.addEncomendaTxt(enc, versaoatual); // mudei
 
                     for(Artigo artigo : artigosCarrinho)
                     {
@@ -698,7 +744,7 @@ public class Controller {
                     System.out.println("Encomenda feita!");
                     menuUtlizador(userComprador, versaoatual);
                     break;
-                case 0:
+                case "0":
                     menuUtlizador(userComprador, versaoatual);
                     break;
                 default:
@@ -727,13 +773,11 @@ public class Controller {
             System.out.println("Artigo adicionado ao carrinho!");
         }
 
+    // Funções para criar transportadora
 
-
-            // Funções para criar transportadora
-
-            private void infosTransportadoras () {
+            private void infosTransportadoras (Versao versaoAtual) {
                 System.out.println(controllerTransportadora.infosTodasAsTransportadoras());
-                menuInicial();
+                menuInicial(versaoAtual);
             }
 
             private void criaTransportadora (Versao versaoatual) {
@@ -748,9 +792,12 @@ public class Controller {
                 double margemLucroTrans = scanner.nextDouble();
 
                 Transportadora trans = controllerTransportadora.criaTransportadora(nomeTrans, valBaseTrans, margemLucroTrans);
-                controllerVersao.addTransportadoraTxt(trans, versaoatual.getVersaoUsersTxt());
+                controllerVersao.addTransportadoraTxt(trans, versaoatual);
 
-                menuInicial();
+                System.out.println("versaoTransportadorasTxt (FORA):");
+                System.out.println(versaoatual.getVersaoTransportadorasTxt());
+
+                menuInicial(versaoatual);
             }
 
             private void loginTransportadora (Versao versaoatual) {
@@ -761,20 +808,10 @@ public class Controller {
 
                 if (controllerTransportadora.loginTransportadora(nomeTrans)) {
                     menuTransportadora(nomeTrans, versaoatual);
-                /*
-                System.out.println("Transportadora encontrada!");
-                System.out.println("O que pretende fazer? ");
-                System.out.println("1. Informações da Transportadora.");
-                System.out.println("2. Alterar valor base do preço de expedição.");
-                System.out.println("3. Alterar % da margem de lucro da transportadora.");
-                int option = scanner.nextInt();
-                switch (option) {
-                    case 1 :
 
-                }*/
                 } else {
                     System.out.println("Transportadora não encontrada!");
-                    menuInicial();
+                    menuInicial(versaoatual);
                 }
             }
 
@@ -786,129 +823,33 @@ public class Controller {
                 System.out.println("2. Alterar valor base do preço de expedição.");
                 System.out.println("3. Alterar % da margem de lucro da transportadora.");
                 System.out.println("4. Voltar para o menu principal");
-                int option = scanner.nextInt();
 
-                switch (option) {
-                    case 1:
+                String opcao = scanner.next();
+
+                switch (opcao) {
+                    case "1":
                         System.out.println(controllerTransportadora.getInfoTrans(nomeTrans));
                         menuTransportadora(nomeTrans, versaoatual);
-                    case 2:
+                        break;
+                    case "2":
                         System.out.println("Insira o novo valor base de expedição: ");
                         double newValorExp = scanner.nextDouble();
                         controllerTransportadora.changeValBaseExpTransportadora(nomeTrans, newValorExp);
                         controllerVersao.atualizaTransportadoraTxt(controllerTransportadora.getTransportadoraByName(nomeTrans), versaoatual.getVersaoTransportadorasTxt());
                         menuTransportadora(nomeTrans, versaoatual);
-                    case 3:
+                        break;
+                    case "3":
                         System.out.println("Insira o valor em %(0 a 100) da margem de lucro: ");
                         double newMargemLucro = scanner.nextDouble();
                         controllerTransportadora.changeMargemDeLucroTransportadora(nomeTrans, newMargemLucro);
                         controllerVersao.atualizaTransportadoraTxt(controllerTransportadora.getTransportadoraByName(nomeTrans), versaoatual.getVersaoTransportadorasTxt());
                         menuTransportadora(nomeTrans, versaoatual);
-                    case 4:
-                        menuInicial();
+                        break;
+                    case "4":
+                        menuInicial(versaoatual);
+                        break;
                     default:
                         menuTransportadora(nomeTrans, versaoatual);
                 }
             }
-
-        /*
-        public void criaEncomendaController() {
-
-            Scanner scanner = new Scanner(System.in);
-
-            Map<String, Artigo> artigos = new HashMap<>();
-
-            System.out.println("Digite o email associado ao utilizador:");
-            String emailUser = scanner.next();
-
-            ModelEncomenda.criaEncomendaModel(emailUser);
-
-            addArtigoEncomendaController(artigos);
-
-            menu();
-        }
-
-
-
-        Scanner scanner = new Scanner(System.in);
-            Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
-
-            //System.out.println("Quantos artigos deseja encomendar?");
-
-
-            /*
-            int numArt = scanner.nextInt();
-            for(int i = 0; i < numArt; i++) {
-                System.out.println("Insira o código de barras do produto: ");
-                String codBarras = scanner.next();
-                Artigo art = controllerArtigo.getArtigoByCod(codBarras);
-                lstArtigos.put(art.getCodBarras(), art.clone());
-            }
-            */
-            /*
-            String codBarras;
-            System.out.println("Digite o codigo de barras do artigo: ");
-            codBarras = scanner.next();
-
-            Artigo art = controllerArtigo.getArtigoByCod(codBarras);
-            /*
-            while(art == null) {
-                System.out.println("Código de barras errado.");
-                System.out.println("Digite o código de barras novamente: ");
-                codBarras = scanner.next();
-            } */
-            /*
-            art = controllerArtigo.getArtigoByCod(codBarras);
-            System.out.println("get artigo feito");
-            lstArtigos.put(art.getCodBarras(), art.clone());
-            */
-
-            /*
-            while(true) {
-                System.out.println("Deseja adicionar mais algum produto? (S ou N)");
-                String resposta = scanner.next();
-
-                if(resposta.equals("N")) break;
-                else{
-                    System.out.println("Digite o código de barras do artigo que deseja adicionar à encomenda: ");
-                    codBarras = scanner.next();
-                    Artigo art2 = controllerArtigo.getArtigoByCod(codBarras);
-                    lstArtigos.put(art2.getCodBarras(), art2.clone());
-                }
-            }
-            controllerEncomenda.criaEncomenda(userComprador, lstArtigos);
-            controllerUtlizador.addEncomendaUser(userComprador, lstArtigos);
-            for(Artigo article : lstArtigos.values()) {
-                Utilizador uti = controllerUtlizador.getUserByArtigo(article);
-                uti.removeArtigoAVenda(article);
-                controllerUtlizador.criaUtilizador2(uti);
-            }
-
-        }*/
-
-
-
-        /*
-        public void addArtigoEncomendaController(Map<String, Artigo> artigos) {
-
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.println("Digite o código de barras do Artigo que deseja adicionar: ");
-            String codBarras = scanner.next();
-
-            //Artigo retrievedArtigo = Model.getListaArtigos.get(codBarras);
-
-            ModelEncomenda.addArtigoEncomendaModel(artigos, codBarras);
-
-            System.out.println("Deseja adicionar mais algum artigo? (S/N)");
-            String simnao = scanner.next();
-
-            if (simnao.equals("S")) addArtigoEncomendaController(artigos);
-
-        }
-        */
-
-
-
-
         }

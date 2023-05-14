@@ -13,8 +13,8 @@ public class ControllerEncomenda {
 
     //methods
 
-    public void criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArt,double preco,double profitVi) {
-        this.modelEncomenda.criaEncomenda(codSistemaUtlizador, lstArt,preco,profitVi);
+    public Encomenda criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArt,double preco,double profitVi) {
+        return this.modelEncomenda.criaEncomenda(codSistemaUtlizador, lstArt,preco,profitVi);
     }
 
     public String loadEncomendas() {
