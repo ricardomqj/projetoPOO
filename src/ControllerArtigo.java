@@ -27,6 +27,11 @@ public class ControllerArtigo {
         return viewerArtigo.listaDeArtigosParaVenda(list);
     }
 
+    public String infoArtigo(Artigo artigo)
+    {
+        return viewerArtigo.infoArtigo(artigo);
+    }
+
     public Sapatilha registarSapatilhaNova(Sapatilha umaSap) {
         return this.modelArtigo.registarSapatilhaNova(umaSap);
     }

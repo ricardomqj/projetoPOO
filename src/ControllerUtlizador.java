@@ -73,8 +73,8 @@ public class ControllerUtlizador {
         modelUtlizador.removeVariosArtigosUser(user, lst);
     }
 
-    public boolean addArtigoCarrinho(String codSistema, Artigo art) {
-       return modelUtlizador.addArtigoCarrinho(codSistema, art);
+    public boolean addArtigoCarrinho(Utilizador utilizador, Artigo art) {
+       return modelUtlizador.addArtigoCarrinho(utilizador, art);
     }
 
     public String getInfoCarrinho(Utilizador user) {

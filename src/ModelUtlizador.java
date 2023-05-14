@@ -553,9 +553,7 @@ public class ModelUtlizador {
         this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
     }
 
-    public boolean addArtigoCarrinho(String codSistema, Artigo art) {
-        Utilizador utilizador = this.listaUtilizadores.get(codSistema);
-
+    public boolean addArtigoCarrinho(Utilizador utilizador, Artigo art) {
         for(Artigo aux_art : utilizador.getArtigosCarrinho())
             if(aux_art.equals(art))
                 return false;

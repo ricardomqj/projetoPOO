@@ -239,7 +239,7 @@ public class Utilizador {
     }
 
     public List<Artigo> getArtigosCarrinho() {
-        return this.artigosCarrinho.stream().map(Artigo::clone).collect(Collectors.toList());
+        return this.artigosCarrinho;
     }
 
     public void setArtigosCarrinho(List<Artigo> artigosCarrinho) {
