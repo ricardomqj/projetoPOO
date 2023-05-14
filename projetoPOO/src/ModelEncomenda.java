@@ -15,24 +15,26 @@ public class ModelEncomenda {
         this.listaEncomendas = new HashMap<String, Encomenda>();
     }
 
-    public void criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArtigos,double preco,double profitVi) {
+    public Encomenda criaEncomenda(String codSistemaUtlizador, List<Artigo> lstArtigos,double preco,double profitVi) {
 
         String codigoEncomenda = gerarCodigoSistema();
 
         Encomenda encomenda = new Encomenda(codigoEncomenda,codSistemaUtlizador,lstArtigos,preco,profitVi);
 
         this.listaEncomendas.put(codigoEncomenda,encomenda.clone());
+
+        return encomenda;
     }
 
     public String loadEncomendas() {
 
         this.listaEncomendas.clear();
 
-        String filePath = "projetoPOO-Rui/projetoPOO/src/encomendas.txt"; // VER ISTO DEPOIS
+        String filePath = "src/encomendas.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
-        if (file.exists()) {
+        if (file.exists() && file.length() > 1) {
             try {
                 Scanner scanner = new Scanner(file);
 
@@ -58,7 +60,7 @@ public class ModelEncomenda {
 
                         String[] prodencfields = prod.split("\\.");
 
-                        if (prodencfields[11].equals("sapatilha")) {
+                        if (fields.length >= 11 && fields[10].equals("sapatilha")) {
                             Sapatilha tilha = new Sapatilha();
 
                             tilha.setCodBarras(prodencfields[0]);
@@ -69,18 +71,17 @@ public class ModelEncomenda {
                             tilha.setMarca(prodencfields[5]);
                             tilha.setDescricao(prodencfields[6]);
                             tilha.setEstado(prodencfields[7]);
-                            tilha.setDesconto(Integer.parseInt(prodencfields[8]));
-                            tilha.setNumdonos(Integer.parseInt(prodencfields[9]));
-                            tilha.setAvalestado(Integer.parseInt(prodencfields[10]));
-                            tilha.setNome(prodencfields[11]);
-                            tilha.setTamanho(Integer.parseInt(prodencfields[12]));
-                            tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[13]));
-                            tilha.setCor(prodencfields[14]);
+                            tilha.setNumdonos(Integer.parseInt(prodencfields[8]));
+                            tilha.setAvalestado(Integer.parseInt(prodencfields[9]));
+                            tilha.setNome(prodencfields[10]);
+                            tilha.setTamanho(Integer.parseInt(prodencfields[11]));
+                            tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[12]));
+                            tilha.setCor(prodencfields[13]);
 
                             encomenda.insereUmArtigo(tilha);
                         }
 
-                        if (prodencfields[11].equals("mala")) {
+                        if (fields.length >= 11 && fields[10].equals("mala")) {
                             Mala mala = new Mala();
 
                             mala.setCodBarras(prodencfields[0]);
@@ -91,17 +92,16 @@ public class ModelEncomenda {
                             mala.setMarca(prodencfields[5]);
                             mala.setDescricao(prodencfields[6]);
                             mala.setEstado(prodencfields[7]);
-                            mala.setDesconto(Integer.parseInt(prodencfields[8]));
-                            mala.setNumdonos(Integer.parseInt(prodencfields[9]));
-                            mala.setAvalestado(Integer.parseInt(prodencfields[10]));
-                            mala.setNome(prodencfields[11]);
-                            mala.setTamanho(prodencfields[12]);
-                            mala.setMaterial(prodencfields[13]);
-                            mala.setAnoColecao(Integer.parseInt(prodencfields[14]));
+                            mala.setNumdonos(Integer.parseInt(prodencfields[8]));
+                            mala.setAvalestado(Integer.parseInt(prodencfields[9]));
+                            mala.setNome(prodencfields[10]);
+                            mala.setTamanho(prodencfields[11]);
+                            mala.setMaterial(prodencfields[12]);
+                            mala.setAnoColecao(Integer.parseInt(prodencfields[13]));
 
                             encomenda.insereUmArtigo(mala);
                         }
-                        if (prodencfields[11].equals("tshirt")) {
+                        if (fields.length >= 11 && fields[11].equals("tshirt")) {
                             TShirt tshirt = new TShirt();
 
                             tshirt.setCodBarras(prodencfields[0]);
@@ -112,12 +112,11 @@ public class ModelEncomenda {
                             tshirt.setMarca(prodencfields[5]);
                             tshirt.setDescricao(prodencfields[6]);
                             tshirt.setEstado(prodencfields[7]);
-                            tshirt.setDesconto(Integer.parseInt(prodencfields[8]));
-                            tshirt.setNumdonos(Integer.parseInt(prodencfields[9]));
-                            tshirt.setAvalestado(Integer.parseInt(prodencfields[10]));
-                            tshirt.setNome(prodencfields[11]);
-                            tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[12]));
-                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[13]));
+                            tshirt.setNumdonos(Integer.parseInt(prodencfields[8]));
+                            tshirt.setAvalestado(Integer.parseInt(prodencfields[9]));
+                            tshirt.setNome(prodencfields[10]);
+                            tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[11]));
+                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[12]));
 
                             encomenda.insereUmArtigo(tshirt);
                         }
@@ -125,7 +124,15 @@ public class ModelEncomenda {
 
                     encomenda.setTamanhoEncomenda();
                     encomenda.setPrecoFinal();
-                    encomenda.setStatus(Encomenda.StatusEncomenda.valueOf(fields[3])); // NAO SEI
+                    //encomenda.setStatus(Encomenda.StatusEncomenda.valueOf(fields[3]));
+
+                    if (fields[3].equals("PENDENTE")) encomenda.setStatus(Encomenda.StatusEncomenda.PENDENTE);
+                    if (fields[3].equals("FINALIZADO")) encomenda.setStatus(Encomenda.StatusEncomenda.FINALIZADO);
+                    if (fields[3].equals("EXPEDIDO")) encomenda.setStatus(Encomenda.StatusEncomenda.EXPEDIDO);
+
+
+
+
                     encomenda.setData(LocalDate.parse(fields[4]));
                     encomenda.setVintageProfit();
 
@@ -138,7 +145,7 @@ public class ModelEncomenda {
                     throw new RuntimeException(e);
                 }
         }
-        else System.out.println("File does not exist!");
+        else System.out.println("File is empty or doesn't exist");
 
         return "";
     }
@@ -163,7 +170,7 @@ public class ModelEncomenda {
     public String addEncomenda(List<Artigo> lstArt, Utilizador user) {
         Map<String, Artigo> lstArtigos = new HashMap<String, Artigo>();
         lstArtigos = lstArt.stream().collect(Collectors.toMap(Artigo::getCodBarras, Artigo::clone));
-        String codEncomenda = gerarCodigoSistema(listaEncomendas);
+        String codEncomenda = gerarCodigoSistema();
         Encomenda enc = new Encomenda(codEncomenda, user.getCodigoSistema(), lstArtigos);
         this.listaEncomendas.put(enc.getCodSistema(), enc.clone());
         return codEncomenda;
@@ -183,10 +190,10 @@ public class ModelEncomenda {
         return sb.toString();
     }
 
-    private String gerarCodigoSistema(Map<String, Encomenda> listaEncomendas)
+    private String gerarCodigoSistema()
     {
         String codigoSistema = UUID.randomUUID().toString();
-        while (listaEncomendas.containsKey(codigoSistema))
+        while (this.listaEncomendas.containsKey(codigoSistema))
         {
             codigoSistema = UUID.randomUUID().toString();
         }

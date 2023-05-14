@@ -3,7 +3,6 @@ public class Transportadora {
     private String nome;
     private double valorBase; // valor base para preco de expedição
     private double margemLucro; // percentagem margem de lucro para preço de expedição
-    private double imposto; // imposto supostamente já devia de vir no sistema
 
     public Transportadora() {
         this.nome = "n/a";

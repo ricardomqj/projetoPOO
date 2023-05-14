@@ -50,11 +50,12 @@ public class Versao {
         //sb.append("Informações da Versão: \n");
 
         //sb.append("versaoTxt: ").append(this.versaoTxt).append("\n"); não acho necessario estar no toString
-        sb.append("Hora de Criação: ").append(this.time);
+        sb.append("Hora de Criação: ").append(this.time).append("\n");
         //.append(":").append(this.time.getMinute()).
 
         return sb.toString();
     }
+
 
     public LocalTime getTime() {
         return time;

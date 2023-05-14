@@ -29,15 +29,6 @@ public class ControllerUtlizador {
         return this.modelUtlizador.userTemArtigo(codBarras);
     }
 
-    public void criaUtilizador2(Utilizador user) {
-        this.modelUtlizador.criaUtilizador2(user);
-    }
-
-    public Utilizador criaUtlizadorVazio()
-    {
-        return this.modelUtlizador.criaUtlizadorSemNada();
-    }
-
     public void registarArtigoNoUtlizador(Utilizador user, String codBarras) {
         this.modelUtlizador.registarArtigoNoUtlizador(user,codBarras);
     }
@@ -52,11 +43,6 @@ public class ControllerUtlizador {
         return modelUtlizador.getUserByArtigoAVenda(art);
     }
      */
-
-    public Utilizador loginUtlizador(String email)
-    {
-        return modelUtlizador.loginUtlizador(email);
-    }
 
     public Utilizador getUserByEmail(String email) {
         return this.modelUtlizador.getUserByEmail(email);
@@ -109,19 +95,14 @@ public class ControllerUtlizador {
         modelUtlizador.removeArtigoCarrinho(user, codBarras);
     }
 
+    public void limpaCarrinho(Utilizador utlizador)
+    {
+        modelUtlizador.limparCarrinho(utlizador);
+    }
+
     public String infoTodosArtigosAVenda() {
         return this.modelUtlizador.infoTodosArtigosAVenda();
     }
-    /*
-    public String toStringArtigosVendaUser(String email) {
-        return this.modelUtlizador.toStringArtigosVendaUser(email);
-    }
-
-    public String toStringArtigoAVendaByType(String type) {
-        return this.modelUtlizador.toStringArtigoAVendaByType(type);
-    }
-
-     */
 
     public void addEncomendaUser(Utilizador user, Map<String, Artigo> lstArt) {
         this.modelUtlizador.addEncomendaUser(user, lstArt);

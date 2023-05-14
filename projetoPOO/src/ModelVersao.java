@@ -46,6 +46,17 @@ public class ModelVersao {
         versaoatual.setVersaoTransportadorasTxt(sb.toString());
 
     }
+    public void addEncomendaTxt(Encomenda enc, Versao versaoatual) { // adicionei
+        String transTxt = enc.toStringTxt();
+
+        StringBuilder sb = new StringBuilder();
+        if (versaoatual.getVersaoEncomendasTxt().equals("")) {
+            sb.append(transTxt).append("\n");
+        } else {
+            sb.append(versaoatual.getVersaoEncomendasTxt()).append(transTxt);
+        }
+        versaoatual.setVersaoEncomendasTxt(sb.toString());
+    }
 
     public void addSapatilhaTxt(Sapatilha tilha, Versao versaoatual) {
         String sapatilhaTxt = tilha.toStringTxt();
@@ -149,10 +160,10 @@ public class ModelVersao {
     }
 
     public void saveVersao(Versao versaoatual) {
-        String pathArtigos = "projetoPOO-Rui/projetoPOO/src/artigos.txt";
-        String pathUsers = "projetoPOO-Rui/projetoPOO/src/utilizadores.txt";
-        String pathTransp = "projetoPOO-Rui/projetoPOO/src/transportadoras.txt";
-        String pathEncomendas = "projetoPOO-Rui/projetoPOO/src/encomendas.txt";
+        String pathArtigos = "src/artigos.txt";
+        String pathUsers = "src/utilizadores.txt";
+        String pathTransp = "src/transportadoras.txt";
+        String pathEncomendas = "src/encomendas.txt";
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(pathArtigos));

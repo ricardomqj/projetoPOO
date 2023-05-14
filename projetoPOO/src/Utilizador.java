@@ -156,7 +156,6 @@ public class Utilizador {
     public void addArtigoToProdutosVendidos(Artigo artigo) {
         this.produtosVendidos.put(artigo.getCodBarras(), artigo);
     }
-
     public void removeArtigoAVenda(String codBarras) {
         this.produtosAVendaCodBarras.remove(codBarras);
     }
@@ -166,7 +165,7 @@ public class Utilizador {
 
         for(Encomenda enc : this.encomendasFeitas) {
             if(enc.getStatus().equals(Encomenda.StatusEncomenda.FINALIZADO)) {
-                for(Artigo art : enc.getArtigos().values()) {
+                for(Artigo art : enc.getArtigos()) {
                     ret += art.getPrecoTotalArtigo();
                 }
             }
@@ -211,7 +210,7 @@ public class Utilizador {
 
         for(Encomenda enc : this.encomendasFeitas) {
             if(enc.getStatus().equals(Encomenda.StatusEncomenda.FINALIZADO) && enc.getData().isAfter(di) && enc.getData().isBefore(df)) {
-                for(Artigo art : enc.getArtigos().values()) {
+                for(Artigo art : enc.getArtigos()) {
                     ret += art.getPrecoTotalArtigo();
                 }
             }

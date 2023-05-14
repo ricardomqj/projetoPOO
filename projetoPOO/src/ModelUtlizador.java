@@ -1,9 +1,5 @@
-import jdk.jshell.execution.Util;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,6 +13,10 @@ public class ModelUtlizador {
     public Utilizador criaUtlizador(String email,String nome,String morada,String nif)
     {
         String codigoSistema = gerarCodigoSistema(this.listaUtilizadores);
+
+        if(infoUserByEmail(email) != null) {
+            return null;
+        }
 
         Utilizador utilizador = new Utilizador(codigoSistema,email,nome,morada,nif);
 
@@ -33,10 +33,10 @@ public class ModelUtlizador {
 
         this.listaUtilizadores.clear();
 
-        String filePath = "projetoPOO-Rui/projetoPOO/src/utilizadores.txt"; // VER ISTO DEPOIS
+        String filePath = "src/utilizadores.txt"; // VER ISTO DEPOIS
         File file = new File(filePath);
 
-        if (file.exists()) {
+        if (file.exists() && file.length() > 1) {
             try {
                 // Cria um objeto Scanner para ler as informações do arquivo
                 Scanner scanner = new Scanner(file);
@@ -98,7 +98,7 @@ public class ModelUtlizador {
 
                             String[] prodencfields = prod.split("/");
 
-                            if (prodencfields[11].equals("sapatilha")) {
+                            if (prodencfields[10].equals("sapatilha")) {
                                 Sapatilha tilha = new Sapatilha();
 
                                 tilha.setCodBarras(prodencfields[0]);
@@ -109,18 +109,17 @@ public class ModelUtlizador {
                                 tilha.setMarca(prodencfields[5]);
                                 tilha.setDescricao(prodencfields[6]);
                                 tilha.setEstado(prodencfields[7]);
-                                tilha.setDesconto(Integer.parseInt(prodencfields[8]));
-                                tilha.setNumdonos(Integer.parseInt(prodencfields[9]));
-                                tilha.setAvalestado(Integer.parseInt(prodencfields[10]));
-                                tilha.setNome(prodencfields[11]);
-                                tilha.setTamanho(Integer.parseInt(prodencfields[12]));
-                                tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[13]));
-                                tilha.setCor(prodencfields[14]);
+                                tilha.setNumdonos(Integer.parseInt(prodencfields[8]));
+                                tilha.setAvalestado(Integer.parseInt(prodencfields[9]));
+                                tilha.setNome(prodencfields[10]);
+                                tilha.setTamanho(Integer.parseInt(prodencfields[11]));
+                                tilha.setTemAtacadores(Boolean.parseBoolean(prodencfields[12]));
+                                tilha.setCor(prodencfields[13]);
 
                                 encomenda.insereUmArtigo(tilha);
                             }
 
-                            if (prodencfields[11].equals("mala")) {
+                            if (prodencfields[10].equals("mala")) {
                                 Mala mala = new Mala();
 
                                 mala.setCodBarras(prodencfields[0]);
@@ -131,17 +130,16 @@ public class ModelUtlizador {
                                 mala.setMarca(prodencfields[5]);
                                 mala.setDescricao(prodencfields[6]);
                                 mala.setEstado(prodencfields[7]);
-                                mala.setDesconto(Integer.parseInt(prodencfields[8]));
-                                mala.setNumdonos(Integer.parseInt(prodencfields[9]));
-                                mala.setAvalestado(Integer.parseInt(prodencfields[10]));
-                                mala.setNome(prodencfields[11]);
-                                mala.setTamanho(prodencfields[12]);
-                                mala.setMaterial(prodencfields[13]);
-                                mala.setAnoColecao(Integer.parseInt(prodencfields[14]));
+                                mala.setNumdonos(Integer.parseInt(prodencfields[8]));
+                                mala.setAvalestado(Integer.parseInt(prodencfields[9]));
+                                mala.setNome(prodencfields[10]);
+                                mala.setTamanho(prodencfields[11]);
+                                mala.setMaterial(prodencfields[12]);
+                                mala.setAnoColecao(Integer.parseInt(prodencfields[13]));
 
                                 encomenda.insereUmArtigo(mala);
                             }
-                            if (prodencfields[11].equals("tshirt")) {
+                            if (prodencfields[10].equals("tshirt")) {
                                 TShirt tshirt = new TShirt();
 
                                 tshirt.setCodBarras(prodencfields[0]);
@@ -152,12 +150,11 @@ public class ModelUtlizador {
                                 tshirt.setMarca(prodencfields[5]);
                                 tshirt.setDescricao(prodencfields[6]);
                                 tshirt.setEstado(prodencfields[7]);
-                                tshirt.setDesconto(Integer.parseInt(prodencfields[8]));
-                                tshirt.setNumdonos(Integer.parseInt(prodencfields[9]));
-                                tshirt.setAvalestado(Integer.parseInt(prodencfields[10]));
-                                tshirt.setNome(prodencfields[11]);
-                                tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[12]));
-                                tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[13]));
+                                tshirt.setNumdonos(Integer.parseInt(prodencfields[8]));
+                                tshirt.setAvalestado(Integer.parseInt(prodencfields[9]));
+                                tshirt.setNome(prodencfields[10]);
+                                tshirt.setTam(TShirt.Tamanho.valueOf(prodencfields[11]));
+                                tshirt.setPadrao(TShirt.Padrao.valueOf(prodencfields[12]));
 
                                 encomenda.insereUmArtigo(tshirt);
                             }
@@ -184,7 +181,7 @@ public class ModelUtlizador {
 
                         String[] prodfields = prod.split(",");
 
-                        if (prodfields[11].equals("sapatilha")) {
+                        if (prodfields[10].equals("sapatilha")) {
                             Sapatilha tilha = new Sapatilha();
 
                             tilha.setCodBarras(prodfields[0]);
@@ -195,18 +192,17 @@ public class ModelUtlizador {
                             tilha.setMarca(prodfields[5]);
                             tilha.setDescricao(prodfields[6]);
                             tilha.setEstado(prodfields[7]);
-                            tilha.setDesconto(Integer.parseInt(prodfields[8]));
-                            tilha.setNumdonos(Integer.parseInt(prodfields[9]));
-                            tilha.setAvalestado(Integer.parseInt(prodfields[10]));
-                            tilha.setNome(prodfields[11]);
-                            tilha.setTamanho(Integer.parseInt(prodfields[12]));
-                            tilha.setTemAtacadores(Boolean.parseBoolean(prodfields[13]));
-                            tilha.setCor(prodfields[14]);
+                            tilha.setNumdonos(Integer.parseInt(prodfields[8]));
+                            tilha.setAvalestado(Integer.parseInt(prodfields[9]));
+                            tilha.setNome(prodfields[10]);
+                            tilha.setTamanho(Integer.parseInt(prodfields[11]));
+                            tilha.setTemAtacadores(Boolean.parseBoolean(prodfields[12]));
+                            tilha.setCor(prodfields[13]);
 
                             utilizador.addArtigoCarrinho(tilha);
                         }
 
-                        if (prodfields[11].equals("mala")) {
+                        if (prodfields[10].equals("mala")) {
                             Mala mala = new Mala();
 
                             mala.setCodBarras(prodfields[0]);
@@ -217,17 +213,16 @@ public class ModelUtlizador {
                             mala.setMarca(prodfields[5]);
                             mala.setDescricao(prodfields[6]);
                             mala.setEstado(prodfields[7]);
-                            mala.setDesconto(Integer.parseInt(prodfields[8]));
-                            mala.setNumdonos(Integer.parseInt(prodfields[9]));
-                            mala.setAvalestado(Integer.parseInt(prodfields[10]));
-                            mala.setNome(prodfields[11]);
-                            mala.setTamanho(prodfields[12]);
-                            mala.setMaterial(prodfields[13]);
-                            mala.setAnoColecao(Integer.parseInt(prodfields[14]));
+                            mala.setNumdonos(Integer.parseInt(prodfields[8]));
+                            mala.setAvalestado(Integer.parseInt(prodfields[9]));
+                            mala.setNome(prodfields[10]);
+                            mala.setTamanho(prodfields[11]);
+                            mala.setMaterial(prodfields[12]);
+                            mala.setAnoColecao(Integer.parseInt(prodfields[13]));
 
                             utilizador.addArtigoCarrinho(mala);
                         }
-                        if (prodfields[11].equals("tshirt")) {
+                        if (prodfields[10].equals("tshirt")) {
                             TShirt tshirt = new TShirt();
 
                             tshirt.setCodBarras(prodfields[0]);
@@ -238,12 +233,11 @@ public class ModelUtlizador {
                             tshirt.setMarca(prodfields[5]);
                             tshirt.setDescricao(prodfields[6]);
                             tshirt.setEstado(prodfields[7]);
-                            tshirt.setDesconto(Integer.parseInt(prodfields[8]));
-                            tshirt.setNumdonos(Integer.parseInt(prodfields[9]));
-                            tshirt.setAvalestado(Integer.parseInt(prodfields[10]));
-                            tshirt.setNome(prodfields[11]);
-                            tshirt.setTam(TShirt.Tamanho.valueOf(prodfields[12]));
-                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodfields[13]));
+                            tshirt.setNumdonos(Integer.parseInt(prodfields[8]));
+                            tshirt.setAvalestado(Integer.parseInt(prodfields[9]));
+                            tshirt.setNome(prodfields[10]);
+                            tshirt.setTam(TShirt.Tamanho.valueOf(prodfields[11]));
+                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodfields[12]));
 
                             utilizador.addArtigoCarrinho(tshirt);
                         }
@@ -265,7 +259,7 @@ public class ModelUtlizador {
 
                         String[] prodfields = prod.split(",");
 
-                        if (prodfields[11].equals("sapatilha")) {
+                        if (prodfields[10].equals("sapatilha")) {
                             Sapatilha tilha = new Sapatilha();
 
                             tilha.setCodBarras(prodfields[0]);
@@ -276,19 +270,18 @@ public class ModelUtlizador {
                             tilha.setMarca(prodfields[5]);
                             tilha.setDescricao(prodfields[6]);
                             tilha.setEstado(prodfields[7]);
-                            tilha.setDesconto(Integer.parseInt(prodfields[8]));
-                            tilha.setNumdonos(Integer.parseInt(prodfields[9]));
-                            tilha.setAvalestado(Integer.parseInt(prodfields[10]));
-                            tilha.setNome(prodfields[11]);
-                            tilha.setTamanho(Integer.parseInt(prodfields[12]));
-                            tilha.setTemAtacadores(Boolean.parseBoolean(prodfields[13]));
-                            tilha.setCor(prodfields[14]);
+                            tilha.setNumdonos(Integer.parseInt(prodfields[8]));
+                            tilha.setAvalestado(Integer.parseInt(prodfields[9]));
+                            tilha.setNome(prodfields[10]);
+                            tilha.setTamanho(Integer.parseInt(prodfields[11]));
+                            tilha.setTemAtacadores(Boolean.parseBoolean(prodfields[12]));
+                            tilha.setCor(prodfields[13]);
 
 
                             utilizador.addArtigoToProdutosVendidos(tilha);
                         }
 
-                        if (prodfields[11].equals("mala")) {
+                        if (prodfields[10].equals("mala")) {
                             Mala mala = new Mala();
 
                             mala.setCodBarras(prodfields[0]);
@@ -299,17 +292,16 @@ public class ModelUtlizador {
                             mala.setMarca(prodfields[5]);
                             mala.setDescricao(prodfields[6]);
                             mala.setEstado(prodfields[7]);
-                            mala.setDesconto(Integer.parseInt(prodfields[8]));
-                            mala.setNumdonos(Integer.parseInt(prodfields[9]));
-                            mala.setAvalestado(Integer.parseInt(prodfields[10]));
-                            mala.setNome(prodfields[11]);
-                            mala.setTamanho(prodfields[12]);
-                            mala.setMaterial(prodfields[13]);
-                            mala.setAnoColecao(Integer.parseInt(prodfields[14]));
+                            mala.setNumdonos(Integer.parseInt(prodfields[8]));
+                            mala.setAvalestado(Integer.parseInt(prodfields[9]));
+                            mala.setNome(prodfields[10]);
+                            mala.setTamanho(prodfields[11]);
+                            mala.setMaterial(prodfields[12]);
+                            mala.setAnoColecao(Integer.parseInt(prodfields[13]));
 
                             utilizador.addArtigoToProdutosVendidos(mala);
                         }
-                        if (prodfields[11].equals("tshirt")) {
+                        if (prodfields[10].equals("tshirt")) {
                             TShirt tshirt = new TShirt();
 
                             tshirt.setCodBarras(prodfields[0]);
@@ -320,12 +312,11 @@ public class ModelUtlizador {
                             tshirt.setMarca(prodfields[5]);
                             tshirt.setDescricao(prodfields[6]);
                             tshirt.setEstado(prodfields[7]);
-                            tshirt.setDesconto(Integer.parseInt(prodfields[8]));
-                            tshirt.setNumdonos(Integer.parseInt(prodfields[9]));
-                            tshirt.setAvalestado(Integer.parseInt(prodfields[10]));
-                            tshirt.setNome(prodfields[11]);
-                            tshirt.setTam(TShirt.Tamanho.valueOf(prodfields[12]));
-                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodfields[13]));
+                            tshirt.setNumdonos(Integer.parseInt(prodfields[8]));
+                            tshirt.setAvalestado(Integer.parseInt(prodfields[9]));
+                            tshirt.setNome(prodfields[10]);
+                            tshirt.setTam(TShirt.Tamanho.valueOf(prodfields[11]));
+                            tshirt.setPadrao(TShirt.Padrao.valueOf(prodfields[12]));
 
                             utilizador.addArtigoToProdutosVendidos(tshirt);
                         }
@@ -345,7 +336,7 @@ public class ModelUtlizador {
                     throw new RuntimeException(e);
                 }
         }
-        else System.out.println("File does not exist!");
+        else System.out.println("File is empty or doesn't exist");
 
         return "";
     }
@@ -366,17 +357,6 @@ public class ModelUtlizador {
             todosProdutos.addAll(produtosAVenda);
         }
         return todosProdutos;
-    }
-
-    public Utilizador getObjectUserByEmail(String email) {
-        Utilizador uti = null;
-
-        for(Utilizador user : this.listaUtilizadores.values()) {
-            if(user.getEmail().equals(email)) {
-                uti = user;
-            }
-        }
-        return uti;
     }
 
     public String infoUserByEmail(String email) {
@@ -403,19 +383,6 @@ public class ModelUtlizador {
         return sb.toString();
     }
 
-    /*
-    public String toStringArtigosVendaUser(String email) {
-        StringBuilder sb = new StringBuilder();
-        Utilizador uti = getObjectUserByEmail(email);
-        for(Artigo art : uti.getProdutosAVenda()) {
-            sb.append(art.toString());
-            sb.append("\n________________________\n");
-        }
-
-        return sb.toString();
-    }
-    */
-
     public String infoTodosUsers() {
         StringBuilder sb = new StringBuilder();
 
@@ -441,14 +408,7 @@ public class ModelUtlizador {
 
         return sb.toString();
     }
-
-    /*
      */
-    public Utilizador criaUtlizadorSemNada()
-    {
-        Utilizador utlizador = new Utilizador();
-        return utlizador;
-    }
     private String gerarCodigoSistema(Map<String, Utilizador> listaUtilizadores)
     {
         String codigoSistema = UUID.randomUUID().toString();
@@ -474,57 +434,18 @@ public class ModelUtlizador {
         user.setProdutosAVendaCodBarras(lstArtigosNova);
         this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
     }
-
-    /*
-    public Utilizador getUserByArtigoAVenda(Artigo art) {
-        Utilizador ret = null;
-
-        for(Utilizador uti : this.listaUtilizadores.values()) {
-            for(Artigo article : uti.getProdutosAVenda().val) {
-                if(article.getCodBarras().equals(art.getCodBarras())) {
-                    ret = null;
-                    break;
-                }
-            }
-        }
-        return ret;
-    }
-    */
-    public void criaUtilizador2(Utilizador user) {
-        this.listaUtilizadores.put(user.getCodigoSistema(), user.clone());
-    }
-    /*
-    public Artigo getArtigoAVendaByUser(Utilizador user, String codBarras) {
-        Artigo ret = null;
-
-        for(Utilizador uti : this.listaUtilizadores.values()) {
-            for(Artigo art : uti.getProdutosAVenda().) {
-                if(art.getCodBarras().equals(codBarras)) {
-                    ret = art;
-                    break;
-                }
-            }
-        }
-        return ret;
-    }
-    */
     public void removeArtigoCarrinho(Utilizador user, String codBarras) {
-        Utilizador uti = new Utilizador();
-        for(Utilizador elem : this.listaUtilizadores.values()) {
-            if(elem.getEmail().equals(user.getEmail())) {
-                uti = elem;
-                break;
-            }
-        }
-        List<Artigo> newCarrinho = uti.getArtigosCarrinho();
+        List<Artigo> newCarrinho = user.getArtigosCarrinho();
+
         for(Artigo art : newCarrinho) {
             if(art.getCodBarras().equals(codBarras)) {
                 newCarrinho.remove(art);
                 break;
             }
         }
-        uti.setArtigosCarrinho(newCarrinho);
-        this.listaUtilizadores.put(uti.getCodigoSistema(), uti.clone());
+
+        user.setArtigosCarrinho(newCarrinho);
+        this.listaUtilizadores.put(user.getCodigoSistema(),user);
     }
 
     public boolean addArtigoCarrinho(Utilizador utilizador, Artigo art) {
@@ -533,6 +454,8 @@ public class ModelUtlizador {
                 return false;
 
         utilizador.addArtigoCarrinho(art);
+
+        this.listaUtilizadores.put(utilizador.getCodigoSistema(),utilizador);
         return true;
     }
 
@@ -552,7 +475,7 @@ public class ModelUtlizador {
 
         for(Map.Entry<String,Utilizador> utilizador : this.listaUtilizadores.entrySet())
         {
-            List<String> lista = utilizador.getValue().getProdutosAVenda();;
+            List<String> lista = utilizador.getValue().getProdutosAVenda();
 
             for(String artigoParaVenda : lista)
             {
@@ -572,6 +495,13 @@ public class ModelUtlizador {
 
         Utilizador utilizador = this.listaUtilizadores.get(codSistemaComprador);
         utilizador.addArtigoToProdutosVendidos(artigo);
+    }
+
+    public void limparCarrinho(Utilizador utilizador)
+    {
+        List<Artigo> list = new ArrayList<Artigo>();
+        utilizador.setArtigosCarrinho(list);
+
     }
 
     public void addCarrinhoToEncomendas(String email, Map<String, Encomenda> lstEncomendas) {

@@ -25,11 +25,11 @@ public class ModelTransportadora {
         this.listaTransportadoras.clear();
 
         //String filePath = "C:\\Users\\hugoa\\Desktop\\projetoPOO-Atual\\projetoPOO-Rui\\projetoPOO\\src\\transportadoras.txt"; // VER ISTO DEPOIS
-        String filePath = "projetoPOO-Rui/projetoPOO/src/transportadoras.txt"; // VER ISTO DEPOIS
+        String filePath = "src/transportadoras.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
-        if(file.exists()) {
+        if(file.exists() && file.length() > 1) {
             try {
                 Scanner scanner = new Scanner(file);
 

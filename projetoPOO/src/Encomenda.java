@@ -100,6 +100,40 @@ public class Encomenda {
         return sb.toString();
     }
 
+    public String toStringTxt() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.codSistema).append(":");
+        sb.append(this.codSistemaUtlizador).append(":");
+        //sb.append("Lista de artigos da encomenda: \);
+        for(Artigo artigo : this.artigos) {
+            if(artigo instanceof Sapatilha) {
+                Sapatilha sapatilha = (Sapatilha) artigo;
+                String str = sapatilha.toStringTxt().replace(":",".");
+                sb.append(str);
+            }
+            if(artigo instanceof TShirt) {
+                TShirt tshirt = (TShirt) artigo;
+                String str = tshirt.toStringTxt().replace(":",".");
+                sb.append(str);
+            }
+            if(artigo instanceof Mala) {
+                Mala mala = (Mala) artigo;
+                String str = mala.toStringTxt().replace(":",".");
+                sb.append(str);
+            }
+
+            if (this.artigos.size() > 1) sb.append("/");
+        }
+
+        sb.append(this.tamanho).append(":");
+        sb.append(this.precoFinal).append(":");
+        sb.append(this.status).append(":");
+        sb.append(this.data).append("\n");
+
+        return sb.toString();
+    }
+
     // METHODS
 
     public void insereUmArtigo(Artigo artigo)
@@ -159,9 +193,9 @@ public class Encomenda {
 
     public double vintageProfit() {
         double lucro = 0.0;
-        for (Map.Entry<String, Artigo> entry : this.artigos.entrySet()) {
-            String key = entry.getKey();
-            Artigo value = entry.getValue();
+
+        for (Artigo entry : this.artigos) {
+            Artigo value = entry;
 
             if (value.getEstado().toLowerCase().equals("usado")) {
                 lucro += 0.25;

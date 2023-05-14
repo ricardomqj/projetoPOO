@@ -17,7 +17,7 @@ public class ModelQueries {
         Map<String, Encomenda> encsUser = new HashMap<String, Encomenda>();
 
         for(Encomenda enc : listaEncomendas.values()) {
-            for(Artigo art : enc.getArtigos().values()) {
+            for(Artigo art : enc.getArtigos()) {
                 if (user.getProdutosVendidos().containsValue(art)) {
                     encsUser.put(enc.getCodSistema(), enc);
                 }
@@ -101,11 +101,17 @@ public class ModelQueries {
         double maiorProfit = Double.NEGATIVE_INFINITY;
 
         for(Utilizador uti : lstUsers.values()) {
+            double profitAtual = 0.0;
             for(Artigo art : uti.getProdutosVendidos().values()) {
-
+                if(art.getDataComprado().isAfter(di) && art.getDataComprado().isBefore(df)) {
+                    profitAtual += art.getPrecoBase();
+                }
+            }
+            if(profitAtual>maiorProfit) {
+                maiorProfit = profitAtual;
+                ret = uti.clone();
             }
         }
-
         return ret;
     }
 
@@ -119,6 +125,7 @@ public class ModelQueries {
                 for(Artigo art : user.getProdutosVendidos().values()) {
                     if(art.getNomeTransportadora().equals(trans.getNome())) {
                         currentVal = currentVal + (trans.valorExpedicao() * (1 - trans.getMargemLucro())/100);
+                        break;
                     }
                 }
             }

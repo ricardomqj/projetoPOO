@@ -13,6 +13,10 @@ public class ControllerVersao {
         this.setViewerVersao(viewerVersao);
     }
 
+    public void addEncomendaTxt(Encomenda enc, Versao versaoatual) {
+        this.modelVersao.addEncomendaTxt(enc, versaoatual);
+    }
+
     //methods
 
     public void loadVersao(LocalTime time) {

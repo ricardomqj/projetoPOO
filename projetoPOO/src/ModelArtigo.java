@@ -64,11 +64,11 @@ public class ModelArtigo {
 
         this.listaArtigos.clear();
 
-        String filePath = "projetoPOO-Rui/projetoPOO/src/artigos.txt"; // VER ISTO DEPOIS
+        String filePath = "src/artigos.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
-        if(file.exists()) {
+        if(file.exists() && file.length() > 1) {
             try {
                 Scanner scanner = new Scanner(file);
 
@@ -84,7 +84,7 @@ public class ModelArtigo {
                     // Divide a linha em campos usando o separador ":"
                     String[] fields = line.split(":");
 
-                    if (fields.length >= 12 && fields[11].equals("sapatilha")) {
+                    if (fields.length >= 11 && fields[10].equals("sapatilha")) {
                         Sapatilha tilha = new Sapatilha();
 
                         tilha.setCodBarras(fields[0]);
@@ -95,18 +95,17 @@ public class ModelArtigo {
                         tilha.setMarca(fields[5]);
                         tilha.setDescricao(fields[6]);
                         tilha.setEstado(fields[7]);
-                        tilha.setDesconto(Integer.parseInt(fields[8]));
-                        tilha.setNumdonos(Integer.parseInt(fields[9]));
-                        tilha.setAvalestado(Integer.parseInt(fields[10]));
-                        tilha.setNome(fields[11]);
-                        tilha.setTamanho(Integer.parseInt(fields[12]));
-                        tilha.setTemAtacadores(Boolean.parseBoolean(fields[13]));
-                        tilha.setCor(fields[14]);
+                        tilha.setNumdonos(Integer.parseInt(fields[8]));
+                        tilha.setAvalestado(Integer.parseInt(fields[9]));
+                        tilha.setNome(fields[10]);
+                        tilha.setTamanho(Integer.parseInt(fields[11]));
+                        tilha.setTemAtacadores(Boolean.parseBoolean(fields[12]));
+                        tilha.setCor(fields[13]);
 
                         listaArtigos.put(tilha.getCodBarras(), tilha);
                     }
 
-                    if (fields.length >= 12 && fields[11].equals("mala")) {
+                    if (fields.length >= 11 && fields[10].equals("mala")) {
                         Mala mala = new Mala();
 
                         mala.setCodBarras(fields[0]);
@@ -117,17 +116,16 @@ public class ModelArtigo {
                         mala.setMarca(fields[5]);
                         mala.setDescricao(fields[6]);
                         mala.setEstado(fields[7]);
-                        mala.setDesconto(Integer.parseInt(fields[8]));
-                        mala.setNumdonos(Integer.parseInt(fields[9]));
-                        mala.setAvalestado(Integer.parseInt(fields[10]));
-                        mala.setNome(fields[11]);
-                        mala.setTamanho(fields[12]);
-                        mala.setMaterial(fields[13]);
-                        mala.setAnoColecao(Integer.parseInt(fields[14]));
+                        mala.setNumdonos(Integer.parseInt(fields[8]));
+                        mala.setAvalestado(Integer.parseInt(fields[9]));
+                        mala.setNome(fields[10]);
+                        mala.setTamanho(fields[11]);
+                        mala.setMaterial(fields[12]);
+                        mala.setAnoColecao(Integer.parseInt(fields[13]));
 
                         listaArtigos.put(mala.getCodBarras(), mala);
                     }
-                    if (fields.length >= 12 && fields[11].equals("tshirt")) {
+                    if (fields.length >= 11 && fields[10].equals("tshirt")) {
                         TShirt tshirt = new TShirt();
 
                         tshirt.setCodBarras(fields[0]);
@@ -138,12 +136,11 @@ public class ModelArtigo {
                         tshirt.setMarca(fields[5]);
                         tshirt.setDescricao(fields[6]);
                         tshirt.setEstado(fields[7]);
-                        tshirt.setDesconto(Integer.parseInt(fields[8]));
-                        tshirt.setNumdonos(Integer.parseInt(fields[9]));
-                        tshirt.setAvalestado(Integer.parseInt(fields[10]));
-                        tshirt.setNome(fields[11]);
-                        tshirt.setTam(TShirt.Tamanho.valueOf(fields[12]));
-                        tshirt.setPadrao(TShirt.Padrao.valueOf(fields[13]));
+                        tshirt.setNumdonos(Integer.parseInt(fields[8]));
+                        tshirt.setAvalestado(Integer.parseInt(fields[9]));
+                        tshirt.setNome(fields[10]);
+                        tshirt.setTam(TShirt.Tamanho.valueOf(fields[11]));
+                        tshirt.setPadrao(TShirt.Padrao.valueOf(fields[12]));
 
                         listaArtigos.put(tshirt.getCodBarras(), tshirt);
                     }
@@ -156,7 +153,7 @@ public class ModelArtigo {
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        } System.out.println("File does not exist!");
+        } System.out.println("File is empty or doesn't exist");
 
         return "";
     }
@@ -171,17 +168,9 @@ public class ModelArtigo {
         double precototal = 0;
 
         for(Artigo artigo : artigos)
-            precototal += artigo.getPrecoAtual();
+            precototal += artigo.getPrecoBase();
 
         return precototal;
-    }
-
-    public void setDiscountArtigo(String codBarras, int desconto) {
-        Artigo art = getArtigoByCod(codBarras);
-        double precoBaseArt = art.getPrecoAtual();
-        art.setDesconto(desconto);
-        art.setPrecoAtual(precoBaseArt * (1-(desconto/100)));
-        this.listaArtigos.put(art.getCodBarras(), art.clone());
     }
 
     public double getProfitVi(List<Artigo> artigos)
@@ -212,9 +201,8 @@ public class ModelArtigo {
 
         Sapatilha sapatilha = new Sapatilha(nome,codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, 0, tamanhoSapatilha, temAtacadores, cor);
         this.listaArtigos.put(sapatilha.getCodBarras(), sapatilha.clone());
-
-        // STOCK A 1
-        return sapatilha;
+        this.listaArtigos.put(codBarras,sapatilha);
+        return sapatilha.clone();
     }
 
     public Sapatilha registarSapatilhaUsada(String nome, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanhoSapatilha,
@@ -222,24 +210,16 @@ public class ModelArtigo {
 
         Sapatilha sapatilhaUsa = new Sapatilha(nome, codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, desconto, tamanhoSapatilha,
                 temAtacadores, cor, numDonos, avalEstado);
-        // falta stock
-        return sapatilhaUsa;
-    }
-
-    public String getTipoArtigo(String codBarras) {
-        StringBuilder sb = new StringBuilder();
-        Artigo art = getArtigoByCod(codBarras);
-        String type = art.getEstado().getClass().getSimpleName();
-        sb.append(art.getClass().getSimpleName()).append(type);
-        return sb.toString();
+        this.listaArtigos.put(codBarras,sapatilhaUsa);
+        return sapatilhaUsa.clone();
     }
 
     public Mala registarMalaNova(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
                                  String material, int anoColecao) {
 
         Mala mala = new Mala(nome, codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, desconto, tamanho, material, anoColecao);
-        // falta stock
-        return mala;
+        this.listaArtigos.put(codBarras,mala);
+        return mala.clone();
     }
 
     public Mala registarMalaUsada(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, String tamanho,
@@ -247,24 +227,26 @@ public class ModelArtigo {
 
         Mala malausa = new Mala(nome, codBarras,1, dataop,  nomeTrans, precoBase, marca, descricao, desconto, tamanho,
                 material, anoColecao, numDonos, avalEstado);
-        // falta stock
-        return malausa;
+        this.listaArtigos.put(codBarras,malausa);
+        return malausa.clone();
     }
 
     public TShirt registarTShirtNova(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
                                    int padrao) {
 
         TShirt tshirt = new TShirt(nome,codBarras, 1, dataop, nomeTrans, precoBase, marca, descricao, desconto, tamanho, padrao);
+        this.listaArtigos.put(codBarras,tshirt);
 
-        return tshirt;
+        return tshirt.clone();
     }
 
     public TShirt registarTShirtUsada(String nome, Utilizador utilizador, String codBarras, LocalDate dataop, double precoBase, String nomeTrans, String marca, String descricao, int desconto, int tamanho,
                                     int padrao, int numDonos, int avalEstado) {
 
         TShirt tshirtUsa = new TShirt(nome, codBarras,1, dataop, nomeTrans, precoBase, marca, descricao, desconto, tamanho, padrao, numDonos, avalEstado);
+        this.listaArtigos.put(codBarras,tshirtUsa);
 
-        return tshirtUsa;
+        return tshirtUsa.clone();
     }
 
     public List<Artigo> getArtigosParaVenda(List<Artigo> list)
