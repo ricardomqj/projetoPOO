@@ -25,7 +25,7 @@ public class ModelTransportadora {
         this.listaTransportadoras.clear();
 
         //String filePath = "C:\\Users\\hugoa\\Desktop\\projetoPOO-Atual\\projetoPOO-Rui\\projetoPOO\\src\\transportadoras.txt"; // VER ISTO DEPOIS
-        String filePath = "src/transportadoras.txt"; // VER ISTO DEPOIS
+        String filePath = "transportadoras.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
@@ -63,7 +63,7 @@ public class ModelTransportadora {
                     throw new RuntimeException(e);
                 }
         }
-        else System.out.println("File does not exist!");
+        else System.out.println("File " + file.getName() + "does not exist!");
 
         return "";
     }

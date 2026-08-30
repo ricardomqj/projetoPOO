@@ -160,10 +160,10 @@ public class ModelVersao {
     }
 
     public void saveVersao(Versao versaoatual) {
-        String pathArtigos = "src/artigos.txt";
-        String pathUsers = "src/utilizadores.txt";
-        String pathTransp = "src/transportadoras.txt";
-        String pathEncomendas = "src/encomendas.txt";
+        String pathArtigos = "artigos.txt";
+        String pathUsers = "utilizadores.txt";
+        String pathTransp = "transportadoras.txt";
+        String pathEncomendas = "encomendas.txt";
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(pathArtigos));

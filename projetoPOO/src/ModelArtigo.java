@@ -64,7 +64,7 @@ public class ModelArtigo {
 
         this.listaArtigos.clear();
 
-        String filePath = "src/artigos.txt"; // VER ISTO DEPOIS
+        String filePath = "artigos.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
@@ -153,7 +153,7 @@ public class ModelArtigo {
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        } System.out.println("File is empty or doesn't exist");
+        } System.out.println("File " + file.getName() + "is empty or doesn't exist");
 
         return "";
     }

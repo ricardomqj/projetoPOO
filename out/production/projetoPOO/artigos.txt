@@ -1,0 +1,6 @@
+12345:2:2018-02-01:UHL:10.0:nike:presente de ex:Novo:10:0:sapatilha:40:true:azul
+54321:2:2018-03-02:UHL:20.0:nike:presente de ex:Usado:10:2:mala:M:pele:2018
+102030:2:2018-02-01:UHL:15.0:nike:presente de ex:Novo:10:0:sapatilha:40:true:azul
+302010:2:2018-02-01:UHL:40.0:nike:presente de ex:Novo:10:0:sapatilha:40:true:azul
+123232:1:2020-10-22:UHL:25.0:Adidas:linda:Usado:2:4:tshirt:S:PALMEIRAS
+34567:1:2023-10-20:UHL:150.0:LuisVitu:linda:Novo:0:0:mala:S::2023

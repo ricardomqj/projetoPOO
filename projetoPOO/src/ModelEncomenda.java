@@ -30,7 +30,7 @@ public class ModelEncomenda {
 
         this.listaEncomendas.clear();
 
-        String filePath = "src/encomendas.txt"; // VER ISTO DEPOIS
+        String filePath = "encomendas.txt"; // VER ISTO DEPOIS
         //System.out.println(System.getProperty("user.dir"));
         File file = new File(filePath);
 
@@ -145,7 +145,7 @@ public class ModelEncomenda {
                     throw new RuntimeException(e);
                 }
         }
-        else System.out.println("File is empty or doesn't exist");
+        else System.out.println("File " + file.getName() + " is empty or doesn't exist");
 
         return "";
     }

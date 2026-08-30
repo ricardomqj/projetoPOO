@@ -33,7 +33,7 @@ public class ModelUtlizador {
 
         this.listaUtilizadores.clear();
 
-        String filePath = "src/utilizadores.txt"; // VER ISTO DEPOIS
+        String filePath = "utilizadores.txt"; // VER ISTO DEPOIS
         File file = new File(filePath);
 
         if (file.exists() && file.length() > 1) {
@@ -336,7 +336,7 @@ public class ModelUtlizador {
                     throw new RuntimeException(e);
                 }
         }
-        else System.out.println("File is empty or doesn't exist");
+        else System.out.println("File " + file.getName() + " is empty or doesn't exist");
 
         return "";
     }
